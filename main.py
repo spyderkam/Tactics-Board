@@ -1,3 +1,4 @@
+
 import pygame
 import sys
 import os
@@ -22,43 +23,77 @@ BLUE = (0, 0, 255)
 
 # Player positions for 4-4-2 formation
 BLUE_TEAM = [
-    (150, 300),  # GK
-    (200, 150),  # DEF
-    (200, 250),  # DEF
-    (200, 350),  # DEF
-    (200, 450),  # DEF
-    (350, 150),  # MID
-    (350, 250),  # MID
-    (350, 350),  # MID
-    (350, 450),  # MID
-    (450, 250),  # FWD
-    (450, 350),  # FWD
+    [150, 300],  # GK
+    [200, 150],  # DEF
+    [200, 250],  # DEF
+    [200, 350],  # DEF
+    [200, 450],  # DEF
+    [350, 150],  # MID
+    [350, 250],  # MID
+    [350, 350],  # MID
+    [350, 450],  # MID
+    [450, 250],  # FWD
+    [450, 350],  # FWD
 ]
 
 RED_TEAM = [
-    (650, 300),  # GK
-    (600, 150),  # DEF
-    (600, 250),  # DEF
-    (600, 350),  # DEF
-    (600, 450),  # DEF
-    (450, 150),  # MID
-    (450, 250),  # MID
-    (450, 350),  # MID
-    (450, 450),  # MID
-    (350, 250),  # FWD
-    (350, 350),  # FWD
+    [650, 300],  # GK
+    [600, 150],  # DEF
+    [600, 250],  # DEF
+    [600, 350],  # DEF
+    [600, 450],  # DEF
+    [450, 150],  # MID
+    [450, 250],  # MID
+    [450, 350],  # MID
+    [450, 450],  # MID
+    [350, 250],  # FWD
+    [350, 350],  # FWD
 ]
 
 def draw_player(screen, pos, color):
     pygame.draw.circle(screen, color, pos, 10)
 
+def get_clicked_player(pos, team):
+    for i, player_pos in enumerate(team):
+        distance = ((pos[0] - player_pos[0])**2 + (pos[1] - player_pos[1])**2)**0.5
+        if distance < 10:
+            return i
+    return None
+
 # Main game loop
 def main():
     running = True
+    dragging = False
+    selected_team = None
+    selected_player = None
+    
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                blue_player = get_clicked_player(mouse_pos, BLUE_TEAM)
+                red_player = get_clicked_player(mouse_pos, RED_TEAM)
+                
+                if blue_player is not None:
+                    selected_team = BLUE_TEAM
+                    selected_player = blue_player
+                    dragging = True
+                elif red_player is not None:
+                    selected_team = RED_TEAM
+                    selected_player = red_player
+                    dragging = True
+                    
+            elif event.type == pygame.MOUSEBUTTONUP:
+                dragging = False
+                selected_team = None
+                selected_player = None
+                
+            elif event.type == pygame.MOUSEMOTION and dragging:
+                mouse_pos = pygame.mouse.get_pos()
+                selected_team[selected_player][0] = mouse_pos[0]
+                selected_team[selected_player][1] = mouse_pos[1]
 
         # Fill background with green
         SCREEN.fill(GREEN)
