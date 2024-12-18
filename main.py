@@ -1,10 +1,12 @@
+#!/user/bin/env python3
 
+__author__ = "spyderkam"
+
+from formations import formation
+import os
 import pygame
 import sys
-import os
 
-# Configure SDL to use a compatible display driver
-os.environ['SDL_VIDEODRIVER'] = 'x11'
 
 # Initialize Pygame
 pygame.init()
@@ -21,34 +23,11 @@ GREEN = (50, 168, 82)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 
-# Player positions; [0,0] would be top left corner.
-BLUE_TEAM = [
-    [75, 300],   # GK
-    [235, 140],  # LB
-    [190, 250],  # LCB
-    [190, 350],  # RCB
-    [235, 460],  # RB
-    [350, 200],  # LCM
-    [350, 300],  # CM
-    [350, 400],  # RCM
-    [500, 150],  # LW
-    [500, 300],  # ST
-    [500, 450],  # RW
-]
-
-RED_TEAM = [
-    [725, 300],  # GK
-    [565, 140],  # LB
-    [610, 250],  # LCB
-    [610, 350],  # RCB
-    [565, 460],  # RB
-    [450, 200],  # LCM
-    [450, 300],  # CM
-    [450, 400],  # RCM
-    [300, 150],  # LW
-    [300, 300],  # ST
-    [300, 450],  # RW
-]
+# Team formations
+ORIGINAL_BLUE = formation("433")[0]
+ORIGINAL_RED = formation("442")[1]
+BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]  # Create a copy
+RED_TEAM = [pos[:] for pos in ORIGINAL_RED]    # Create a copy
 
 def draw_player(screen, pos, color):
     pygame.draw.circle(screen, color, pos, 10)
@@ -89,6 +68,10 @@ def main():
                 dragging = False
                 selected_team = None
                 selected_player = None
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:  # Reset positions when 'R' is pressed
+                    BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
+                    RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
                 
             elif event.type == pygame.MOUSEMOTION and dragging:
                 mouse_pos = pygame.mouse.get_pos()
@@ -110,12 +93,12 @@ def main():
         pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 5)
 
         # Penalty areas
-        pygame.draw.rect(SCREEN, WHITE, (50, 175, 150, 250), 2)  # Left
+        pygame.draw.rect(SCREEN, WHITE, (50, 175, 150, 250), 2)         # Left
         pygame.draw.rect(SCREEN, WHITE, (WIDTH-200, 175, 150, 250), 2)  # Right
 
         # Goal areas
-        pygame.draw.rect(SCREEN, WHITE, (50, 225, 60, 150), 2)  # Left
-        pygame.draw.rect(SCREEN, WHITE, (WIDTH-110, 225, 60, 150), 2)  # Right
+        pygame.draw.rect(SCREEN, WHITE, (50, 225, 60, 150), 2)          # Left
+        pygame.draw.rect(SCREEN, WHITE, (WIDTH-110, 225, 60, 150), 2)   # Right
 
         # Draw players
         for pos in BLUE_TEAM:
