@@ -13,41 +13,41 @@ pygame.init()
 WIDTH = 800
 HEIGHT = 600
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Soccer Field")
+pygame.display.set_caption("Football Field")
 
 # Colors
-GREEN = (50, 168, 82)
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
 BLUE = (0, 0, 255)
+GREEN = (50, 168, 82)
+RED = (255, 0, 0)
+WHITE = (255, 255, 255)
 
-# Player positions for 4-4-2 formation
+# Player positions; [0,0] would be top left corner.
 BLUE_TEAM = [
-    [150, 300],  # GK
-    [200, 150],  # DEF
-    [200, 250],  # DEF
-    [200, 350],  # DEF
-    [200, 450],  # DEF
-    [350, 150],  # MID
-    [350, 250],  # MID
-    [350, 350],  # MID
-    [350, 450],  # MID
-    [450, 250],  # FWD
-    [450, 350],  # FWD
+    [75, 300],   # GK
+    [235, 140],  # LB
+    [190, 250],  # LCB
+    [190, 350],  # RCB
+    [235, 460],  # RB
+    [350, 200],  # LCM
+    [350, 300],  # CM
+    [350, 400],  # RCM
+    [500, 150],  # LW
+    [500, 300],  # ST
+    [500, 450],  # RW
 ]
 
 RED_TEAM = [
-    [650, 300],  # GK
-    [600, 150],  # DEF
-    [600, 250],  # DEF
-    [600, 350],  # DEF
-    [600, 450],  # DEF
-    [450, 150],  # MID
-    [450, 250],  # MID
-    [450, 350],  # MID
-    [450, 450],  # MID
-    [350, 250],  # FWD
-    [350, 350],  # FWD
+    [725, 300],  # GK
+    [565, 140],  # LB
+    [610, 250],  # LCB
+    [610, 350],  # RCB
+    [565, 460],  # RB
+    [450, 200],  # LCM
+    [450, 300],  # CM
+    [450, 400],  # RCM
+    [300, 150],  # LW
+    [300, 300],  # ST
+    [300, 450],  # RW
 ]
 
 def draw_player(screen, pos, color):
