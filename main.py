@@ -24,8 +24,10 @@ RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 
 # Team formations
-BLUE_TEAM = formation("433")[0]
-RED_TEAM = formation("442")[1]
+ORIGINAL_BLUE = formation("433")[0]
+ORIGINAL_RED = formation("442")[1]
+BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]
+RED_TEAM = [pos[:] for pos in ORIGINAL_RED]
 
 def draw_player(screen, pos, color):
     pygame.draw.circle(screen, color, pos, 10)
@@ -66,6 +68,10 @@ def main():
                 dragging = False
                 selected_team = None
                 selected_player = None
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:  # Press 'R' to reset
+                    BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
+                    RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
             elif event.type == pygame.MOUSEMOTION and dragging:
                 mouse_pos = pygame.mouse.get_pos()
                 selected_team[selected_player][0] = mouse_pos[0]
