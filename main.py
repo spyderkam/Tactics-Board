@@ -94,7 +94,6 @@ def main():
         elif event.key == pygame.K_n:  # Press 'N' to toggle jersey numbers
           show_numbers = not show_numbers
         elif event.key == pygame.K_b:  # Press 'B' to toggle ball
-          global SHOW_BALL
           SHOW_BALL = not SHOW_BALL
       elif event.type == pygame.MOUSEMOTION:
         mouse_pos = pygame.mouse.get_pos()
