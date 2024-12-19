@@ -1,3 +1,4 @@
+#!/user/bin/env python3
 
 from flask import Flask, Response, render_template_string, request
 from flask_socketio import SocketIO, emit
@@ -177,4 +178,4 @@ def update_board():
 if __name__ == '__main__':
     os.environ['SDL_VIDEODRIVER'] = 'dummy'
     pygame.init()
-    socketio.run(app, host='0.0.0.0', port=80, server='eventlet', allow_unsafe_werkzeug=True)
+    socketio.run(app, host='0.0.0.0', port=80, allow_unsafe_werkzeug=True)
