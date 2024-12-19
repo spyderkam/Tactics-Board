@@ -184,7 +184,7 @@ def reset_board():
     update_board()
 
 def update_board():
-    global show_numbers, show_ball
+    global show_numbers, show_ball, show_triangle
     SCREEN.fill((34, 139, 34))
     pygame.draw.rect(SCREEN, WHITE, (80, 60, WIDTH-160, HEIGHT-120), 2)
     pygame.draw.line(SCREEN, WHITE, (WIDTH//2, 60), (WIDTH//2, HEIGHT-60), 2)
