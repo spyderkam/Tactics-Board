@@ -29,13 +29,13 @@ ORIGINAL_RED = formation("442")["red"]
 BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]
 RED_TEAM = [pos[:] for pos in ORIGINAL_RED]
 
-def draw_player(screen, pos, color, number):
+def draw_player(screen, pos, color, number=None, show_numbers=False):
     pygame.draw.circle(screen, color, pos, 10)
-    # Add number text
-    font = pygame.font.Font(None, 20)
-    text = font.render(str(number), True, WHITE)
-    text_rect = text.get_rect(center=pos)
-    screen.blit(text, text_rect)
+    if show_numbers and number is not None:
+        font = pygame.font.Font(None, 20)
+        text = font.render(str(number), True, WHITE)
+        text_rect = text.get_rect(center=pos)
+        screen.blit(text, text_rect)
 
 def get_clicked_player(pos, team):
   for i, player_pos in enumerate(team):
@@ -50,6 +50,7 @@ def main():
   dragging = False
   selected_team = None
   selected_player = None
+  show_numbers = True  # Toggle with 'N' key
     
   while running:
     for event in pygame.event.get():
@@ -77,6 +78,8 @@ def main():
         if event.key == pygame.K_r:  # Press 'R' to reset
           BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
           RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
+        elif event.key == pygame.K_n:  # Press 'N' to toggle numbers
+          show_numbers = not show_numbers
       elif event.type == pygame.MOUSEMOTION and dragging:
         mouse_pos = pygame.mouse.get_pos()
         selected_team[selected_player][0] = mouse_pos[0]
@@ -106,9 +109,9 @@ def main():
 
     # Draw players
     for i, pos in enumerate(BLUE_TEAM, 1):
-      draw_player(SCREEN, pos, BLUE, i)
+      draw_player(SCREEN, pos, BLUE, i, show_numbers)
     for i, pos in enumerate(RED_TEAM, 1):
-      draw_player(SCREEN, pos, RED, i)
+      draw_player(SCREEN, pos, RED, i, show_numbers)
 
     # Update display
     pygame.display.flip()
