@@ -30,11 +30,6 @@ HTML_TEMPLATE = '''
         <button onclick="toggleBall()">Toggle Ball (B)</button>
         <button onclick="toggleNumbers()">Toggle Numbers (N)</button>
         <button onclick="toggleTriangle()">Toggle Triangle (T)</button>
-        <script>
-        function toggleTriangle() {
-            socket.emit('toggle_triangle');
-        }
-        </script>
         <button onclick="resetTriangle()">Reset Triangle (Y)</button>
         <button onclick="resetBoard()">Reset (R)</button>
     </div>
@@ -57,7 +52,7 @@ HTML_TEMPLATE = '''
         });
 
         function toggleTriangle() {
-            socket.emit('show_triangle');
+            socket.emit('toggle_triangle');
         }
 
         function handleMouseDown(e) {
