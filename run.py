@@ -29,6 +29,8 @@ HTML_TEMPLATE = '''
     <div class="controls">
         <button onclick="toggleBall()">Toggle Ball (B)</button>
         <button onclick="toggleNumbers()">Toggle Numbers (N)</button>
+        <button onclick="toggleNumbers()">Toggle Triangle (T)</button>
+        <button onclick="toggleNumbers()">Reset Triangle (Y)</button>
         <button onclick="resetBoard()">Reset (R)</button>
     </div>
     <canvas id="board" width="1920" height="1080" style="max-width: 100%; height: auto;"></canvas>
@@ -156,10 +158,10 @@ def update_board():
     pygame.draw.line(SCREEN, WHITE, (WIDTH//2, 60), (WIDTH//2, HEIGHT-60), 2)
     pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 85, 2)
     pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 6)
-    pygame.draw.rect(SCREEN, WHITE, (80, 210, 180, 300), 2)
-    pygame.draw.rect(SCREEN, WHITE, (WIDTH-260, 210, 180, 300), 2)
-    pygame.draw.rect(SCREEN, WHITE, (80, 270, 72, 180), 2)
-    pygame.draw.rect(SCREEN, WHITE, (WIDTH-152, 270, 72, 180), 2)
+    pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-150, 180, 300), 2)          # Left penalty area
+    pygame.draw.rect(SCREEN, WHITE, (WIDTH-260, HEIGHT//2-150, 180, 300), 2)   # Right penalty area
+    pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-90, 72, 180), 2)            # Left goal area
+    pygame.draw.rect(SCREEN, WHITE, (WIDTH-152, HEIGHT//2-90, 72, 180), 2)     # Right goal area
 
     for i, pos in enumerate(BLUE_TEAM, 1):
         draw_player(SCREEN, pos, (0, 0, 255), i, show_numbers)
