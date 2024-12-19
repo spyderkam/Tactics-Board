@@ -152,7 +152,7 @@ def toggle_numbers():
     show_numbers = not show_numbers
     update_board()
 
-@socketio.on('show_triangle')
+@socketio.on('toggle_triangle')
 def toggle_triangle_handler():
     global show_triangle, triangle_points
     if len(triangle_points) == 3:
