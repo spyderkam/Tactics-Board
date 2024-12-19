@@ -28,8 +28,8 @@ BALL_POS = [WIDTH//2, HEIGHT//2]
 SHOW_BALL = False
 
 # Triangle settings
-triangle_points = []
-show_triangle = False
+triangles = []  # List of triangle points
+active_triangle = []  # Current triangle being drawn
 
 def draw_player(screen, pos, color, number=None, show_numbers=False):
   pygame.draw.circle(screen, color, pos, 10)
@@ -75,14 +75,20 @@ def main():
           if blue_player is not None:
             selected_team = BLUE_TEAM
             selected_player = blue_player
-            if len(triangle_points) < 3:
-              triangle_points.append(BLUE_TEAM[blue_player])
+            point = BLUE_TEAM[blue_player][:]
+            active_triangle.append(point)
+            if len(active_triangle) == 3:
+              triangles.append(active_triangle[:])
+              active_triangle = []
             dragging = True
           elif red_player is not None:
             selected_team = RED_TEAM
             selected_player = red_player
-            if len(triangle_points) < 3:
-              triangle_points.append(RED_TEAM[red_player])
+            point = RED_TEAM[red_player][:]
+            active_triangle.append(point)
+            if len(active_triangle) == 3:
+              triangles.append(active_triangle[:])
+              active_triangle = []
             dragging = True
       elif event.type == pygame.MOUSEBUTTONUP:
         dragging = False
@@ -90,24 +96,21 @@ def main():
         selected_team = None
         selected_player = None
       elif event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_r:    # Press 'R' to reset formations
+        if event.key == pygame.K_r:    # Press 'R' to reset formations and triangle.
           BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
           RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
           BALL_POS[0] = WIDTH//2
           BALL_POS[1] = HEIGHT//2
-          triangle_points.clear()  # Reset triangle points
-          show_triangle = False    # Hide triangle
-        elif event.key == pygame.K_t:  # Press 'T' to toggle triangle
-          if len(triangle_points) == 3:
-            show_triangle = not show_triangle
-          else:
-            triangle_points.clear()
-            show_triangle = False
-        elif event.key == pygame.K_n:  # Press 'N' to toggle jersey numbers
+          triangle_points.clear()      # Reset triangle points.r
+          show_triangle = False        # Hide triangle.
+        elif event.key == pygame.K_t:  # Press 'T' to clear all triangles.
+          triangles.clear()
+          active_triangle.clear()
+        elif event.key == pygame.K_n:  # Press 'N' to toggle jersey numbers.
           show_numbers = not show_numbers
-        elif event.key == pygame.K_b:  # Press 'B' to toggle ball
+        elif event.key == pygame.K_b:  # Press 'B' to toggle ball.
           SHOW_BALL = not SHOW_BALL
-        elif event.key == pygame.K_y:  # Press 'Y' to reset triangle
+        elif event.key == pygame.K_y:  # Press 'Y' to reset triangle.
           triangle_points.clear()
           show_triangle = False
       elif event.type == pygame.MOUSEMOTION:
@@ -151,9 +154,12 @@ def main():
     if SHOW_BALL:
       pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 8)
 
-    # Draw triangle
-    if show_triangle and len(triangle_points) == 3:
-      draw_triangle(SCREEN, triangle_points, selected_team)
+    # Draw all completed triangles
+    for triangle in triangles:
+      draw_triangle(SCREEN, triangle, selected_team)
+    # Draw active triangle points
+    for point in active_triangle:
+      pygame.draw.circle(SCREEN, (255, 165, 0), point, 5)
 
     # Update display
     pygame.display.flip()
