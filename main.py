@@ -29,6 +29,10 @@ ORIGINAL_RED = formation("442")["red"]
 BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]
 RED_TEAM = [pos[:] for pos in ORIGINAL_RED]
 
+# Ball settings
+BALL_POS = [WIDTH//2, HEIGHT//2]
+SHOW_BALL = True
+
 def draw_player(screen, pos, color, number=None, show_numbers=False):
     pygame.draw.circle(screen, color, pos, 10)
     if show_numbers and number is not None:
@@ -80,6 +84,9 @@ def main():
           RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
         elif event.key == pygame.K_n:  # Press 'N' to toggle numbers
           show_numbers = not show_numbers
+        elif event.key == pygame.K_b:  # Press 'B' to toggle ball
+          global SHOW_BALL
+          SHOW_BALL = not SHOW_BALL
       elif event.type == pygame.MOUSEMOTION and dragging:
         mouse_pos = pygame.mouse.get_pos()
         selected_team[selected_player][0] = mouse_pos[0]
@@ -112,6 +119,10 @@ def main():
       draw_player(SCREEN, pos, BLUE, i, show_numbers)
     for i, pos in enumerate(RED_TEAM, 1):
       draw_player(SCREEN, pos, RED, i, show_numbers)
+
+    # Draw ball
+    if SHOW_BALL:
+      pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 8)
 
     # Update display
     pygame.display.flip()
