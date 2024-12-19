@@ -29,8 +29,8 @@ HTML_TEMPLATE = '''
     <div class="controls">
         <button onclick="toggleBall()">Toggle Ball (B)</button>
         <button onclick="toggleNumbers()">Toggle Numbers (N)</button>
-        <button onclick="toggleNumbers()">Toggle Triangle (T)</button>
-        <button onclick="toggleNumbers()">Reset Triangle (Y)</button>
+        <button onclick="showTriangle()">Toggle Triangle (T)</button>
+        <button onclick="resetTriangle()">Reset Triangle (Y)</button>
         <button onclick="resetBoard()">Reset (R)</button>
     </div>
     <canvas id="board" width="1920" height="1080" style="max-width: 100%; height: auto;"></canvas>
@@ -75,6 +75,14 @@ HTML_TEMPLATE = '''
 
         function resetBoard() {
             socket.emit('reset_board');
+        }
+
+        function showTriangle() {
+            socket.emit('show_triangle');
+        }
+
+        function resetTriangle() {
+            socket.emit('reset_triangle');
         }
 
         socket.on('board_update', function(data) {
@@ -140,6 +148,18 @@ def toggle_ball():
 def toggle_numbers():
     global show_numbers
     show_numbers = not show_numbers
+    update_board()
+
+@socketio.on('show_triangle')
+def show_triangle():
+    global show_triangle
+    show_triangle = not show_triangle
+    update_board()
+
+@socketio.on('reset_triangle')
+def reset_triangle():
+    global reset_triangle
+    reset_triangle = not reset_triangle
     update_board()
 
 @socketio.on('reset_board')
