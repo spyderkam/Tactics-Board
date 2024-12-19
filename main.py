@@ -102,8 +102,8 @@ def main():
           RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
           BALL_POS[0] = WIDTH//2
           BALL_POS[1] = HEIGHT//2
-          triangle_points.clear()      # Reset triangle points.r
-          show_triangle = False        # Hide triangle.
+          triangles.clear()
+          active_triangle.clear()
         elif event.key == pygame.K_t:  # Press 'T' to clear all triangles.
           triangles.clear()
           active_triangle.clear()
