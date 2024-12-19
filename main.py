@@ -30,7 +30,7 @@ SHOW_BALL = False
 # Triangle settings
 triangles = []  # List of triangle points
 active_triangle = []  # Current triangle being drawn
-show_triangle = False
+triangle_mode = False  # Controls when triangles can be formed
 
 def draw_player(screen, pos, color, number=None, show_numbers=False):
   pygame.draw.circle(screen, color, pos, 10)
@@ -76,20 +76,22 @@ def main():
           if blue_player is not None:
             selected_team = BLUE_TEAM
             selected_player = blue_player
-            point = BLUE_TEAM[blue_player][:]
-            active_triangle.append(point)
-            if len(active_triangle) == 3:
-              triangles.append(active_triangle[:])
-              active_triangle = []
+            if triangle_mode:
+              point = BLUE_TEAM[blue_player][:]
+              active_triangle.append(point)
+              if len(active_triangle) == 3:
+                triangles.append(active_triangle[:])
+                active_triangle = []
             dragging = True
           elif red_player is not None:
             selected_team = RED_TEAM
             selected_player = red_player
-            point = RED_TEAM[red_player][:]
-            active_triangle.append(point)
-            if len(active_triangle) == 3:
-              triangles.append(active_triangle[:])
-              active_triangle = []
+            if triangle_mode:
+              point = RED_TEAM[red_player][:]
+              active_triangle.append(point)
+              if len(active_triangle) == 3:
+                triangles.append(active_triangle[:])
+                active_triangle = []
             dragging = True
       elif event.type == pygame.MOUSEBUTTONUP:
         dragging = False
@@ -104,9 +106,10 @@ def main():
           BALL_POS[1] = HEIGHT//2
           triangles.clear()
           active_triangle.clear()
-        elif event.key == pygame.K_t:  # Press 'T' to clear all triangles.
-          triangles.clear()
-          active_triangle.clear()
+        elif event.key == pygame.K_t:  # Press 'T' to toggle triangle mode
+          triangle_mode = not triangle_mode
+          if not triangle_mode:
+            active_triangle.clear()
         elif event.key == pygame.K_n:  # Press 'N' to toggle jersey numbers.
           show_numbers = not show_numbers
         elif event.key == pygame.K_b:  # Press 'B' to toggle ball.
@@ -158,9 +161,6 @@ def main():
     # Draw all completed triangles
     for triangle in triangles:
       draw_triangle(SCREEN, triangle, selected_team)
-    # Draw active triangle points
-    for point in active_triangle:
-      pygame.draw.circle(SCREEN, (255, 165, 0), point, 5)
 
     # Update display
     pygame.display.flip()
