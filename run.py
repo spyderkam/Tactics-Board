@@ -2,7 +2,7 @@
 
 from flask import Flask, Response, render_template_string, request
 from flask_socketio import SocketIO, emit
-from main import SCREEN, main, BLUE_TEAM, RED_TEAM, BALL_POS, WIDTH, HEIGHT, draw_player, WHITE
+from main import SCREEN, main, BLUE_TEAM, RED_TEAM, BALL_POS, WIDTH, HEIGHT, draw_player, WHITE, triangle_points, draw_triangle
 import base64
 import io
 import os
@@ -156,9 +156,13 @@ def toggle_numbers():
     update_board()
 
 @socketio.on('show_triangle')
-def show_triangle():
-    global show_triangle
-    show_triangle = not show_triangle
+def toggle_triangle_handler():
+    global show_triangle, triangle_points
+    if len(triangle_points) == 3:
+        show_triangle = not show_triangle
+    else:
+        triangle_points.clear()
+        show_triangle = False
     update_board()
 
 @socketio.on('reset_triangle')
@@ -195,6 +199,9 @@ def update_board():
 
     if show_ball:
         pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 12)
+        
+    if show_triangle and len(triangle_points) == 3:
+        draw_triangle(SCREEN, triangle_points, None)
 
     buffer = io.BytesIO()
     pygame.image.save(SCREEN, buffer, 'PNG')
