@@ -139,10 +139,19 @@ def move_player(data):
     team = data['team']
     index = data['index']
     
+    global triangle_points
+    new_pos = [x, y]
+    
     if team == 'blue':
-        BLUE_TEAM[index] = [x, y]
+        old_pos = BLUE_TEAM[index]
+        BLUE_TEAM[index] = new_pos
+        if old_pos in triangle_points:
+            triangle_points[triangle_points.index(old_pos)] = new_pos
     else:
-        RED_TEAM[index] = [x, y]
+        old_pos = RED_TEAM[index]
+        RED_TEAM[index] = new_pos
+        if old_pos in triangle_points:
+            triangle_points[triangle_points.index(old_pos)] = new_pos
     
     update_board()
 
@@ -170,8 +179,9 @@ def toggle_triangle_handler():
 
 @socketio.on('reset_triangle')
 def reset_triangle():
-    global reset_triangle
-    reset_triangle = not reset_triangle
+    global triangle_points, show_triangle
+    triangle_points.clear()
+    show_triangle = False
     update_board()
 
 @socketio.on('reset_board')
