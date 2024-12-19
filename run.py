@@ -29,7 +29,7 @@ HTML_TEMPLATE = '''
     <div class="controls">
         <button onclick="toggleBall()">Toggle Ball (B)</button>
         <button onclick="toggleNumbers()">Toggle Numbers (N)</button>
-        <button onclick="showTriangle()">Toggle Triangle (T)</button>
+        <button onclick="toggleTriangle()">Toggle Triangle (T)</button>
         <button onclick="resetTriangle()">Reset Triangle (Y)</button>
         <button onclick="resetBoard()">Reset (R)</button>
     </div>
@@ -49,6 +49,11 @@ HTML_TEMPLATE = '''
             dragging = false;
             selectedPlayer = null;
         });
+
+        function toggleTriangle() {
+            socket.emit('show_triangle');
+        }
+
 
         function handleMouseDown(e) {
             const rect = canvas.getBoundingClientRect();
