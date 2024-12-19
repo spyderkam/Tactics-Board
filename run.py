@@ -55,7 +55,6 @@ HTML_TEMPLATE = '''
             socket.emit('show_triangle');
         }
 
-
         function handleMouseDown(e) {
             const rect = canvas.getBoundingClientRect();
             const x = (e.clientX - rect.left) * (canvas.width / rect.width);
@@ -81,10 +80,6 @@ HTML_TEMPLATE = '''
 
         function resetBoard() {
             socket.emit('reset_board');
-        }
-
-        function showTriangle() {
-            socket.emit('show_triangle');
         }
 
         function resetTriangle() {
