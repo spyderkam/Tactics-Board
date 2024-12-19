@@ -52,7 +52,7 @@ def is_ball_clicked(pos):
 
 # Main game loop
 def main():
-  global SHOW_BALL, show_triangle, active_triangle
+  global SHOW_BALL, active_triangle
   running = True
   dragging = False
   dragging_ball = False
@@ -111,8 +111,8 @@ def main():
         elif event.key == pygame.K_b:  # Press 'B' to toggle ball.
           SHOW_BALL = not SHOW_BALL
         elif event.key == pygame.K_y:  # Press 'Y' to reset triangle.
-          triangle_points.clear()
-          show_triangle = False
+          triangles.clear()
+          active_triangle.clear()
       elif event.type == pygame.MOUSEMOTION:
         mouse_pos = pygame.mouse.get_pos()
         if dragging:
