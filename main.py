@@ -1,8 +1,10 @@
+
 #!/user/bin/env python3
 
 __author__ = "spyderkam"
 
 from database import *
+from tools import draw_triangle
 import os
 import pygame
 import sys
@@ -14,17 +16,21 @@ pygame.init()
 WIDTH = 800
 HEIGHT = 600
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Football Field")
+pygame.display.set_caption("Tactics Board")
 
 # Teams and team formations
-ORIGINAL_BLUE = formation("433")["blue"]
-ORIGINAL_RED = formation("442")["red"]
+ORIGINAL_BLUE = formation("442")["blue"]
+ORIGINAL_RED = formation("4231")["red"]
 BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]
 RED_TEAM = [pos[:] for pos in ORIGINAL_RED]
 
 # Ball settings
 BALL_POS = [WIDTH//2, HEIGHT//2]
-SHOW_BALL = True
+SHOW_BALL = False
+
+# Triangle settings
+triangle_points = []
+show_triangle = False
 
 def draw_player(screen, pos, color, number=None, show_numbers=False):
   pygame.draw.circle(screen, color, pos, 10)
@@ -70,11 +76,18 @@ def main():
           if blue_player is not None:
             selected_team = BLUE_TEAM
             selected_player = blue_player
+            if len(triangle_points) < 3:
+              triangle_points.append(BLUE_TEAM[blue_player])
             dragging = True
           elif red_player is not None:
             selected_team = RED_TEAM
             selected_player = red_player
+            if len(triangle_points) < 3:
+              triangle_points.append(RED_TEAM[red_player])
             dragging = True
+          
+          if len(triangle_points) == 3:
+            show_triangle = True
       elif event.type == pygame.MOUSEBUTTONUP:
         dragging = False
         dragging_ball = False
@@ -129,13 +142,11 @@ def main():
 
     # Draw ball
     if SHOW_BALL:
-      # White base
-      pygame.draw.circle(SCREEN, WHITE, BALL_POS, 8)
-      # Black pentagons
-      pygame.draw.circle(SCREEN, BLACK, (BALL_POS[0]-2, BALL_POS[1]-2), 3)
-      pygame.draw.circle(SCREEN, BLACK, (BALL_POS[0]+2, BALL_POS[1]+2), 3)
-      pygame.draw.circle(SCREEN, BLACK, (BALL_POS[0]-2, BALL_POS[1]+2), 3)
-      pygame.draw.circle(SCREEN, BLACK, (BALL_POS[0]+2, BALL_POS[1]-2), 3)
+      pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 8)
+
+    # Draw triangle
+    if show_triangle and len(triangle_points) == 3:
+      draw_triangle(SCREEN, triangle_points, selected_team)
 
     # Update display
     pygame.display.flip()
