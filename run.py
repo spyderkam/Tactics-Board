@@ -177,4 +177,4 @@ def update_board():
 if __name__ == '__main__':
     os.environ['SDL_VIDEODRIVER'] = 'dummy'
     pygame.init()
-    socketio.run(app, host='0.0.0.0', port=80)
+    socketio.run(app, host='0.0.0.0', port=80, server='eventlet')
