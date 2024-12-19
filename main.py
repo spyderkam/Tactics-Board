@@ -23,93 +23,98 @@ GREEN = (50, 168, 82)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 
-# Team formations
-ORIGINAL_BLUE = formation("433")[0]
-ORIGINAL_RED = formation("442")[1]
+# Teams and team formations
+ORIGINAL_BLUE = formation("433")["blue"]
+ORIGINAL_RED = formation("442")["red"]
 BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]
 RED_TEAM = [pos[:] for pos in ORIGINAL_RED]
 
-def draw_player(screen, pos, color):
+def draw_player(screen, pos, color, number):
     pygame.draw.circle(screen, color, pos, 10)
+    # Add number text
+    font = pygame.font.Font(None, 20)
+    text = font.render(str(number), True, WHITE)
+    text_rect = text.get_rect(center=pos)
+    screen.blit(text, text_rect)
 
 def get_clicked_player(pos, team):
-    for i, player_pos in enumerate(team):
-        distance = ((pos[0] - player_pos[0])**2 + (pos[1] - player_pos[1])**2)**0.5
-        if distance < 10:
-            return i
-    return None
+  for i, player_pos in enumerate(team):
+    distance = ((pos[0] - player_pos[0])**2 + (pos[1] - player_pos[1])**2)**0.5
+    if distance < 10:
+      return i
+  return None
 
 # Main game loop
 def main():
-    running = True
-    dragging = False
-    selected_team = None
-    selected_player = None
+  running = True
+  dragging = False
+  selected_team = None
+  selected_player = None
     
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                blue_player = get_clicked_player(mouse_pos, BLUE_TEAM)
-                red_player = get_clicked_player(mouse_pos, RED_TEAM)
+  while running:
+    for event in pygame.event.get():
+      if event.type == pygame.QUIT:
+        running = False
+      elif event.type == pygame.MOUSEBUTTONDOWN:
+        mouse_pos = pygame.mouse.get_pos()
+        blue_player = get_clicked_player(mouse_pos, BLUE_TEAM)
+        red_player = get_clicked_player(mouse_pos, RED_TEAM)
                 
-                if blue_player is not None:
-                    selected_team = BLUE_TEAM
-                    selected_player = blue_player
-                    dragging = True
-                elif red_player is not None:
-                    selected_team = RED_TEAM
-                    selected_player = red_player
-                    dragging = True
-                    
-            elif event.type == pygame.MOUSEBUTTONUP:
-                dragging = False
-                selected_team = None
-                selected_player = None
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_r:  # Press 'R' to reset
-                    BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
-                    RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
-            elif event.type == pygame.MOUSEMOTION and dragging:
-                mouse_pos = pygame.mouse.get_pos()
-                selected_team[selected_player][0] = mouse_pos[0]
-                selected_team[selected_player][1] = mouse_pos[1]
+        if blue_player is not None:
+          selected_team = BLUE_TEAM
+          selected_player = blue_player
+          dragging = True
+        elif red_player is not None:
+          selected_team = RED_TEAM
+          selected_player = red_player
+          dragging = True
 
-        # Fill background with green
-        SCREEN.fill(GREEN)
+      elif event.type == pygame.MOUSEBUTTONUP:
+        dragging = False
+        selected_team = None
+        selected_player = None
+      elif event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_r:  # Press 'R' to reset
+          BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
+          RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
+      elif event.type == pygame.MOUSEMOTION and dragging:
+        mouse_pos = pygame.mouse.get_pos()
+        selected_team[selected_player][0] = mouse_pos[0]
+        selected_team[selected_player][1] = mouse_pos[1]
 
-        # Draw field lines
-        # Outer boundary
-        pygame.draw.rect(SCREEN, WHITE, (50, 50, WIDTH-100, HEIGHT-100), 2)
-        
-        # Center line
-        pygame.draw.line(SCREEN, WHITE, (WIDTH//2, 50), (WIDTH//2, HEIGHT-50), 2)
-        
-        # Center circle
-        pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 70, 2)
-        pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 5)
+    # Fill background with green
+    SCREEN.fill(GREEN)
 
-        # Penalty areas
-        pygame.draw.rect(SCREEN, WHITE, (50, 175, 150, 250), 2)         # Left
-        pygame.draw.rect(SCREEN, WHITE, (WIDTH-200, 175, 150, 250), 2)  # Right
+    # Draw field lines
+    # Outer boundary
+    pygame.draw.rect(SCREEN, WHITE, (50, 50, WIDTH-100, HEIGHT-100), 2)
 
-        # Goal areas
-        pygame.draw.rect(SCREEN, WHITE, (50, 225, 60, 150), 2)          # Left
-        pygame.draw.rect(SCREEN, WHITE, (WIDTH-110, 225, 60, 150), 2)   # Right
+    # Center line
+    pygame.draw.line(SCREEN, WHITE, (WIDTH//2, 50), (WIDTH//2, HEIGHT-50), 2)
 
-        # Draw players
-        for pos in BLUE_TEAM:
-            draw_player(SCREEN, pos, BLUE)
-        for pos in RED_TEAM:
-            draw_player(SCREEN, pos, RED)
+    # Center circle
+    pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 70, 2)
+    pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 5)
 
-        # Update display
-        pygame.display.flip()
+    # Penalty areas
+    pygame.draw.rect(SCREEN, WHITE, (50, 175, 150, 250), 2)         # Left
+    pygame.draw.rect(SCREEN, WHITE, (WIDTH-200, 175, 150, 250), 2)  # Right
 
-    pygame.quit()
-    sys.exit()
+    # Goal areas
+    pygame.draw.rect(SCREEN, WHITE, (50, 225, 60, 150), 2)          # Left
+    pygame.draw.rect(SCREEN, WHITE, (WIDTH-110, 225, 60, 150), 2)   # Right
+
+    # Draw players
+    for i, pos in enumerate(BLUE_TEAM, 1):
+      draw_player(SCREEN, pos, BLUE, i)
+    for i, pos in enumerate(RED_TEAM, 1):
+      draw_player(SCREEN, pos, RED, i)
+
+    # Update display
+    pygame.display.flip()
+
+  pygame.quit()
+  sys.exit()
 
 if __name__ == "__main__":
-    main()
+  main()
