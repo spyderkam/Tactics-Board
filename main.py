@@ -136,7 +136,11 @@ def main():
 
     # Draw ball
     if SHOW_BALL:
-      pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 8)
+      # White base
+      pygame.draw.circle(SCREEN, WHITE, BALL_POS, 8)
+      # Black pentagons
+      pygame.draw.circle(SCREEN, (0, 0, 0), (BALL_POS[0]-2, BALL_POS[1]-2), 3)
+      pygame.draw.circle(SCREEN, (0, 0, 0), (BALL_POS[0]+2, BALL_POS[1]+2), 3)
 
     # Update display
     pygame.display.flip()
