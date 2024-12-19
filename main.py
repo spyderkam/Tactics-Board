@@ -91,6 +91,8 @@ def main():
         if event.key == pygame.K_r:    # Press 'R' to reset formations
           BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
           RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
+          BALL_POS[0] = WIDTH//2
+          BALL_POS[1] = HEIGHT//2
         elif event.key == pygame.K_n:  # Press 'N' to toggle jersey numbers
           show_numbers = not show_numbers
         elif event.key == pygame.K_b:  # Press 'B' to toggle ball
