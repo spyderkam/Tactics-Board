@@ -193,11 +193,13 @@ def reset_triangle():
 
 @socketio.on('reset_board')
 def reset_board():
-  global BLUE_TEAM, RED_TEAM, BALL_POS
+  global BLUE_TEAM, RED_TEAM, BALL_POS, triangle_points, show_triangle
   from main import ORIGINAL_BLUE, ORIGINAL_RED
   BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
   RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
   BALL_POS[:] = [WIDTH//2, HEIGHT//2]
+  triangle_points.clear()
+  show_triangle = False
   update_board()
 
 def update_board():
