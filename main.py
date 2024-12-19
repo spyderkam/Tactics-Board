@@ -30,6 +30,7 @@ SHOW_BALL = False
 # Triangle settings
 triangles = []  # List of triangle points
 active_triangle = []  # Current triangle being drawn
+show_triangle = False
 
 def draw_player(screen, pos, color, number=None, show_numbers=False):
   pygame.draw.circle(screen, color, pos, 10)
