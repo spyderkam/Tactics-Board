@@ -99,6 +99,8 @@ def main():
           RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
           BALL_POS[0] = WIDTH//2
           BALL_POS[1] = HEIGHT//2
+          triangle_points.clear()  # Reset triangle points
+          show_triangle = False    # Hide triangle
         elif event.key == pygame.K_n:  # Press 'N' to toggle jersey numbers
           show_numbers = not show_numbers
         elif event.key == pygame.K_b:  # Press 'B' to toggle ball
