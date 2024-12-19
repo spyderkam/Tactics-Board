@@ -1,6 +1,6 @@
-entrypoint = "main.py"
+entrypoint = "run.py"
 
-modules = ["python-3.10"]
+modules = ["python-3.10", "flask"]
 
 audio = true
 
@@ -12,3 +12,6 @@ channel = "stable-23_05"
 [[ports]]
 localPort = 5900
 externalPort = 80
+
+[deployment]
+deploymentTarget = "cloudrun"
