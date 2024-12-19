@@ -42,6 +42,7 @@ HTML_TEMPLATE = '''
         let selectedPlayer = null;
         let showBall = false;
         let showNumbers = false;
+        let show_triangle = false;
 
         canvas.addEventListener('mousedown', handleMouseDown);
         canvas.addEventListener('mousemove', handleMouseMove);
@@ -109,6 +110,7 @@ HTML_TEMPLATE = '''
 
 show_numbers = False
 show_ball = False
+show_triangle = False
 
 @app.route('/')
 def home():
@@ -116,7 +118,7 @@ def home():
 
 @socketio.on('check_click')
 def check_click(data):
-    global BLUE_TEAM, RED_TEAM
+    global BLUE_TEAM, RED_TEAM, triangle_points
     x, y = data['x'], data['y']
     
     for i, pos in enumerate(BLUE_TEAM):
