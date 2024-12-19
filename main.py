@@ -1,9 +1,8 @@
-
 #!/user/bin/env python3
 
 __author__ = "spyderkam"
 
-from formations import formation
+from database import *
 import os
 import pygame
 import sys
@@ -17,12 +16,6 @@ HEIGHT = 600
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Football Field")
 
-# Colors
-BLUE = (0, 0, 255)
-GREEN = (50, 168, 82)
-RED = (255, 0, 0)
-WHITE = (255, 255, 255)
-
 # Teams and team formations
 ORIGINAL_BLUE = formation("433")["blue"]
 ORIGINAL_RED = formation("442")["red"]
@@ -31,7 +24,7 @@ RED_TEAM = [pos[:] for pos in ORIGINAL_RED]
 
 # Ball settings
 BALL_POS = [WIDTH//2, HEIGHT//2]
-SHOW_BALL = False
+SHOW_BALL = True
 
 def draw_player(screen, pos, color, number=None, show_numbers=False):
   pygame.draw.circle(screen, color, pos, 10)
@@ -139,8 +132,10 @@ def main():
       # White base
       pygame.draw.circle(SCREEN, WHITE, BALL_POS, 8)
       # Black pentagons
-      pygame.draw.circle(SCREEN, (0, 0, 0), (BALL_POS[0]-2, BALL_POS[1]-2), 3)
-      pygame.draw.circle(SCREEN, (0, 0, 0), (BALL_POS[0]+2, BALL_POS[1]+2), 3)
+      pygame.draw.circle(SCREEN, BLACK, (BALL_POS[0]-2, BALL_POS[1]-2), 3)
+      pygame.draw.circle(SCREEN, BLACK, (BALL_POS[0]+2, BALL_POS[1]+2), 3)
+      pygame.draw.circle(SCREEN, BLACK, (BALL_POS[0]-2, BALL_POS[1]+2), 3)
+      pygame.draw.circle(SCREEN, BLACK, (BALL_POS[0]+2, BALL_POS[1]-2), 3)
 
     # Update display
     pygame.display.flip()
