@@ -283,6 +283,6 @@ if __name__ == '__main__':
   pygame.init()
   pygame.display.init()
   pygame.display.set_mode((WIDTH, HEIGHT))
-  with app.app_context():
+  with app.test_request_context():
     update_board()  # Draw initial board
-  socketio.run(app, host='0.0.0.0', port=80, allow_unsafe_werkzeug=True)
+  socketio.run(app, host='0.0.0.0', port=3000)
