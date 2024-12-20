@@ -18,8 +18,8 @@ SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Tactics Board")
 
 # Teams and team formations
-ORIGINAL_BLUE = formation("442")["blue"]
-ORIGINAL_RED = formation("4231")["red"]
+ORIGINAL_BLUE = formation("352")["blue"]
+ORIGINAL_RED = formation("433")["red"]
 BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]
 RED_TEAM = [pos[:] for pos in ORIGINAL_RED]
 
@@ -34,7 +34,10 @@ show_triangle = False
 def draw_player(screen, pos, color, number=None, show_numbers=False):
   pygame.draw.circle(screen, color, pos, 15)  # Increased from 12 to 15
   if show_numbers and number is not None:
-    font = pygame.font.Font(None, 28)  # Increased from 24 to 28 for better readability
+    try:
+      font = pygame.font.SysFont('Arial', 24, bold=True)
+    except:
+      font = pygame.font.Font(None, 28)  # Fallback to default font
     text = font.render(str(number), True, WHITE)
     text_rect = text.get_rect(center=pos)
     screen.blit(text, text_rect)
@@ -134,8 +137,8 @@ def main():
     pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 6)
 
     # Penalty areas
-    pygame.draw.rect(SCREEN, WHITE, (80, 180, 240, 360), 2)          # Left
-    pygame.draw.rect(SCREEN, WHITE, (WIDTH-320, 180, 240, 360), 2)   # Right
+    pygame.draw.rect(SCREEN, WHITE, (80, 120, 240, 480), 2)          # Left
+    pygame.draw.rect(SCREEN, WHITE, (WIDTH-320, 120, 240, 480), 2)   # Right
 
     # Goal areas
     pygame.draw.rect(SCREEN, WHITE, (80, 270, 72, 180), 2)           # Left
