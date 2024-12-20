@@ -134,8 +134,8 @@ def main():
     pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 6)
 
     # Penalty areas
-    pygame.draw.rect(SCREEN, WHITE, (80, 210, 180, 300), 2)          # Left
-    pygame.draw.rect(SCREEN, WHITE, (WIDTH-260, 210, 180, 300), 2)   # Right
+    pygame.draw.rect(SCREEN, WHITE, (80, 180, 240, 360), 2)          # Left
+    pygame.draw.rect(SCREEN, WHITE, (WIDTH-320, 180, 240, 360), 2)   # Right
 
     # Goal areas
     pygame.draw.rect(SCREEN, WHITE, (80, 270, 72, 180), 2)           # Left

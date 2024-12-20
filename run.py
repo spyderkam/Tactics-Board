@@ -209,8 +209,8 @@ def update_board():
   pygame.draw.line(SCREEN, WHITE, (WIDTH//2, 60), (WIDTH//2, HEIGHT-60), 2)
   pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 85, 2)
   pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 6)
-  pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-150, 180, 300), 2)          # Left penalty area
-  pygame.draw.rect(SCREEN, WHITE, (WIDTH-260, HEIGHT//2-150, 180, 300), 2)   # Right penalty area
+  pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-180, 240, 360), 2)          # Left penalty area
+  pygame.draw.rect(SCREEN, WHITE, (WIDTH-320, HEIGHT//2-180, 240, 360), 2)   # Right penalty area
   pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-90, 72, 180), 2)            # Left goal area
   pygame.draw.rect(SCREEN, WHITE, (WIDTH-152, HEIGHT//2-90, 72, 180), 2)     # Right goal area
 
@@ -235,3 +235,4 @@ if __name__ == '__main__':
   os.environ['SDL_VIDEODRIVER'] = 'dummy'
   pygame.init()
   socketio.run(app, host='0.0.0.0', port=80, allow_unsafe_werkzeug=True)
+  
