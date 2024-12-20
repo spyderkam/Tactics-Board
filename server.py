@@ -141,6 +141,10 @@ show_triangle = False
 def home():
   return render_template_string(HTML_TEMPLATE)
 
+@socketio.on('connect')
+def handle_connect():
+  update_board()
+
 @socketio.on('check_click')
 def check_click(data):
   global BLUE_TEAM, RED_TEAM, triangle_points, BALL_POS, show_ball
