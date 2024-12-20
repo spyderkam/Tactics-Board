@@ -1,4 +1,5 @@
-entrypoint = "run.py"
+
+entrypoint = "server.py"
 
 modules = ["python-3.10", "flask"]
 
@@ -15,4 +16,4 @@ externalPort = 3000
 
 [deployment]
 deploymentTarget = "cloudrun"
-run = ["python3", "run.py"]
+run = ["python3", "server.py"]
