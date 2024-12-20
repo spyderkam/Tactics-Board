@@ -48,7 +48,7 @@ HTML_TEMPLATE = '''
       handleMouseDown(e);
       dragging = true;
     });
-    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mousemove', throttle(handleMouseMove, 30)); // Throttle mousemove updates
     canvas.addEventListener('mouseup', () => {
       dragging = false;
       selectedPlayer = null;
@@ -57,6 +57,17 @@ HTML_TEMPLATE = '''
       dragging = false;
       selectedPlayer = null;
     });
+
+    function throttle(func, limit) {
+      let inThrottle;
+      return function(...args) {
+        if (!inThrottle) {
+          func.apply(this, args);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
+        }
+      }
+    }
 
     function toggleTriangle() {
       socket.emit('toggle_triangle');
@@ -235,4 +246,3 @@ if __name__ == '__main__':
   os.environ['SDL_VIDEODRIVER'] = 'dummy'
   pygame.init()
   socketio.run(app, host='0.0.0.0', port=80, allow_unsafe_werkzeug=True)
-  
