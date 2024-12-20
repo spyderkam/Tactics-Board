@@ -32,12 +32,12 @@ triangle_points = []
 show_triangle = False
 
 def draw_player(screen, pos, color, number=None, show_numbers=False):
-  pygame.draw.circle(screen, color, pos, 15)  # Increased from 12 to 15
+  pygame.draw.circle(screen, color, pos, 20)  # Increased from 15 to 20
   if show_numbers and number is not None:
     try:
-      font = pygame.font.SysFont('Arial', 24, bold=True)
+      font = pygame.font.SysFont('Arial', 28, bold=True)
     except:
-      font = pygame.font.Font(None, 28)  # Fallback to default font
+      font = pygame.font.Font(None, 32)  # Fallback to default font
     text = font.render(str(number), True, WHITE)
     text_rect = text.get_rect(center=pos)
     screen.blit(text, text_rect)
