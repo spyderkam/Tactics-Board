@@ -46,12 +46,15 @@ HTML_TEMPLATE = '''
     let showBall = false;
     let showNumbers = false;
     let show_triangle = false;
+    let lastMousePos = { x: 0, y: 0 };
+    const throttleDelay = 16; // ~60fps
+    let lastUpdate = 0;
 
     canvas.addEventListener('mousedown', (e) => {
       handleMouseDown(e);
       dragging = true;
     });
-    canvas.addEventListener('mousemove', throttle(handleMouseMove, 16)); // Throttle mousemove updates
+    canvas.addEventListener('mousemove', throttle(handleMouseMove, 30)); // Throttle mousemove updates
     canvas.addEventListener('mouseup', () => {
       dragging = false;
       selectedPlayer = null;
@@ -84,11 +87,20 @@ HTML_TEMPLATE = '''
     }
 
     function handleMouseMove(e) {
-      if (!dragging) return;
+      if (!dragging || !selectedPlayer) return;
+      
+      const now = Date.now();
+      if (now - lastUpdate < throttleDelay) return;
+      
       const rect = canvas.getBoundingClientRect();
-      const x = (e.clientX - rect.left) * (canvas.width / rect.width);
-      const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-      socket.emit('move_player', {x: x, y: y, team: selectedPlayer.team, index: selectedPlayer.index});
+      const x = Math.max(0, Math.min(canvas.width, (e.clientX - rect.left) * (canvas.width / rect.width)));
+      const y = Math.max(0, Math.min(canvas.height, (e.clientY - rect.top) * (canvas.height / rect.height)));
+      
+      if (Math.abs(x - lastMousePos.x) > 1 || Math.abs(y - lastMousePos.y) > 1) {
+        socket.emit('move_player', {x: x, y: y, team: selectedPlayer.team, index: selectedPlayer.index});
+        lastMousePos = { x, y };
+        lastUpdate = now;
+      }
     }
 
     function toggleBall() {
@@ -107,21 +119,12 @@ HTML_TEMPLATE = '''
       socket.emit('reset_triangle');
     }
 
-    let lastFrameTime = 0;
-    const frameDelay = 1000 / 60; // 60 FPS target
-    
     socket.on('board_update', function(data) {
-      const currentTime = performance.now();
-      if (currentTime - lastFrameTime < frameDelay) return;
-      
       const img = new Image();
       img.onload = function() {
-        requestAnimationFrame(() => {
-          ctx.drawImage(img, 0, 0);
-        });
+        ctx.drawImage(img, 0, 0);
       };
-      img.src = 'data:image/jpeg;base64,' + data.image;
-      lastFrameTime = currentTime;
+      img.src = 'data:image/png;base64,' + data.image;
     });
 
     socket.on('player_selected', function(data) {
@@ -139,7 +142,6 @@ show_triangle = False
 
 @app.route('/')
 def home():
-  update_board()  # Initialize the board on page load
   return render_template_string(HTML_TEMPLATE)
 
 @socketio.on('check_click')
@@ -258,7 +260,7 @@ def update_board():
     draw_triangle(SCREEN, triangle_points, None)
 
   buffer = io.BytesIO()
-  pygame.image.save(SCREEN, buffer, 'JPEG')
+  pygame.image.save(SCREEN, buffer, 'PNG')
   buffer.seek(0)
   base64_image = base64.b64encode(buffer.getvalue()).decode()
   emit('board_update', {'image': base64_image}, broadcast=True)
