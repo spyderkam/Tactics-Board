@@ -1,4 +1,4 @@
-# Main Components:
+## Main Components:
 
 ### `server.py`:
 - Flask server handling WebSocket connections and rendering the tactics board
@@ -24,7 +24,7 @@
   - Contains `draw_triangle` function with semi-transparent orange color
   - Uses `SRCALPHA` for transparency
 
-# Current Features:
+## Current Features:
 - Drag and drop player movement
 - Toggle player numbers (single/double digits supported)
 - Toggle ball visibility
@@ -33,7 +33,7 @@
 - Smooth movement handling with throttling
 - WebSocket-based real-time updates
 
-# Dependencies:
+## Dependencies:
 - Python 3.10+
 - Flask
 - Flask-SocketIO
@@ -41,7 +41,7 @@
 - DearPyGui
 - Supertools
 
-# Current Issues:
+## Current Issues:
 - Pitch not visible until button click (noted in `todolist.md`)
 - Formation selection menu not implemented yet
 

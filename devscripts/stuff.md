@@ -8,6 +8,12 @@
 - **T:** Toggle triangle (first 3 players after reset)
 - **Y:** Reset triangle
 
+
+***
+To run the desktop app, use the 720p version. To run the 1080p version, use the [webb app](https://tacticsproject-spyderkam.replit.app/).
+***
+
+
 ## Questions Answered
 
 ### How would changing `BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]` in the `# Teams and team formations` section of `main.py` to `BLUE_TEAM = ORIGINAL_BLUE` affect this program?
