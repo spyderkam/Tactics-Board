@@ -11,7 +11,7 @@ hidden = [".pythonlibs"]
 channel = "stable-23_05"
 
 [[ports]]
-localPort = 80
+localPort = 3000
 externalPort = 3000
 
 [deployment]
