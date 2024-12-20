@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 
 def convert_indentation(file_path, to_two_spaces=True):

@@ -35,7 +35,10 @@ def draw_player(screen, pos, color, number=None, show_numbers=False):
   pygame.draw.circle(screen, color, pos, 20)  # Increased from 15 to 20
   if show_numbers and number is not None:
     try:
-      font = pygame.font.SysFont('Arial', 28, bold=True)
+      if len(str(number)) == 1:
+        font = pygame.font.SysFont('Arial', 28, bold=True)
+      elif len(str(number)) == 2:  # Accomidating double digit numbers
+        font = pygame.font.SysFont('Arial', 22, bold=True)
     except:
       font = pygame.font.Font(None, 32)  # Fallback to default font
     text = font.render(str(number), True, WHITE)

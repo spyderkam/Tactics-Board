@@ -11,6 +11,10 @@ hidden = [".pythonlibs"]
 channel = "stable-23_05"
 
 [[ports]]
+localPort = 80
+externalPort = 80
+
+[[ports]]
 localPort = 3000
 externalPort = 3000
 

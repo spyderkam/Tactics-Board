@@ -1,5 +1,6 @@
 { pkgs }: {
   deps = [
+    pkgs.vim-full
     pkgs.portmidi
     pkgs.pkg-config
     pkgs.libpng
