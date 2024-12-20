@@ -245,10 +245,22 @@ def update_board():
   pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-90, 72, 180), 2)            # Left goal area
   pygame.draw.rect(SCREEN, WHITE, (WIDTH-152, HEIGHT//2-90, 72, 180), 2)     # Right goal area
 
+  # Pre-render font for better performance when showing numbers
+  font = pygame.font.Font(None, 28) if show_numbers else None
+  
   for i, pos in enumerate(BLUE_TEAM, 1):
-    draw_player(SCREEN, pos, (0, 0, 255), i, show_numbers)
+    pygame.draw.circle(SCREEN, (0, 0, 255), pos, 15)
+    if font:
+      text = font.render(str(i), True, WHITE)
+      text_rect = text.get_rect(center=pos)
+      SCREEN.blit(text, text_rect)
+      
   for i, pos in enumerate(RED_TEAM, 1):
-    draw_player(SCREEN, pos, (255, 0, 0), i, show_numbers)
+    pygame.draw.circle(SCREEN, (255, 0, 0), pos, 15)
+    if font:
+      text = font.render(str(i), True, WHITE)
+      text_rect = text.get_rect(center=pos)
+      SCREEN.blit(text, text_rect)
 
   if show_ball:
     pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 12)
@@ -257,7 +269,7 @@ def update_board():
     draw_triangle(SCREEN, triangle_points, None)
 
   buffer = io.BytesIO()
-  pygame.image.save(SCREEN, buffer, 'JPEG', quality=85)
+  pygame.image.save(SCREEN, buffer, 'JPEG', quality=75)
   buffer.seek(0)
   base64_image = base64.b64encode(buffer.getvalue()).decode()
   emit('board_update', {'image': base64_image}, broadcast=True)
