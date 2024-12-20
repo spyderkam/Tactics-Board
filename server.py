@@ -273,7 +273,7 @@ def update_board():
     draw_triangle(SCREEN, triangle_points, None)
 
   buffer = io.BytesIO()
-  pygame.image.save(SCREEN, buffer, 'JPEG', quality=75)
+  pygame.image.save(SCREEN, buffer, 'JPEG')
   buffer.seek(0)
   base64_image = base64.b64encode(buffer.getvalue()).decode()
   emit('board_update', {'image': base64_image}, broadcast=True)
