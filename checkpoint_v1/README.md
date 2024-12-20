@@ -1,22 +1,49 @@
+## Main Components:
 
-# Tactics Board Project Checkpoint v1
+### `server.py`:
+- Flask server handling WebSocket connections and rendering the tactics board
+  - Implements socket events for player movement, ball toggling, and triangle drawing
+  - Renders HTML template with canvas and control buttons
+  - Runs on port 80
 
-Files included in this checkpoint:
-- database.py: Formation configurations and colors
-- main.py: Core game logic and Pygame setup
-- server.py: Flask server and WebSocket handling
-- tools.py: Helper functions for drawing
-- version1.0.md: Project documentation
-- pyproject.toml: Project dependencies
-- .replit: Replit configuration
-- devscripts/: Development utilities and notes
+### `main.py`:
+- Core game logic
+  - Sets up 1920x1080 Pygame display
+  - Manages player formations, ball position, and triangle drawing
+  - Handles keyboard controls (B, N, R, T, Y)
+  - Player circles are size 20 with varying font sizes for numbers
 
-Current Features:
-- Interactive tactics board with draggable players
-- Multiple formation support (433, 4231, 442, 352)
-- Toggle-able ball and player numbers
+### `database.py`:
+- Formation configurations
+  - Contains formations: 433, 4231, 442, 352
+  - Defines colors (BLUE, GREEN, RED, WHITE, BLACK)
+  - Stores coordinates for each player position
+
+### `tools.py`:
+- Helper functions
+  - Contains `draw_triangle` function with semi-transparent orange color
+  - Uses `SRCALPHA` for transparency
+
+## Current Features:
+- Drag and drop player movement
+- Toggle player numbers (single/double digits supported)
+- Toggle ball visibility
 - Triangle drawing tool
+- Formation reset functionality
+- Smooth movement handling with throttling
 - WebSocket-based real-time updates
-- Smooth movement handling
 
-Date checkpointed: [Current Date]
+## Dependencies:
+- Python 3.10+
+- Flask
+- Flask-SocketIO
+- Pygame
+- DearPyGui
+- Supertools
+
+## Current Issues:
+- Pitch not visible until button click (noted in `todolist.md`)
+- Formation selection menu not implemented yet
+
+This represents Version 1.0 of the Tactics Board project, with core functionality implemented and room for planned improvements.
+

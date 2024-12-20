@@ -1,3 +1,6 @@
+# Tactics Board Project
+***version 1.0***
+
 ## Main Components:
 
 ### `server.py`:
@@ -46,4 +49,3 @@
 - Formation selection menu not implemented yet
 
 This represents Version 1.0 of the Tactics Board project, with core functionality implemented and room for planned improvements.
-
