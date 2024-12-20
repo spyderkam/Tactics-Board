@@ -139,6 +139,7 @@ show_triangle = False
 
 @app.route('/')
 def home():
+  update_board()  # Initialize the board on page load
   return render_template_string(HTML_TEMPLATE)
 
 @socketio.on('check_click')
@@ -265,5 +266,5 @@ def update_board():
 if __name__ == '__main__':
   os.environ['SDL_VIDEODRIVER'] = 'dummy'
   pygame.init()
-  socketio.run(app, host='0.0.0.0', port=3000, allow_unsafe_werkzeug=True)
+  socketio.run(app, host='0.0.0.0', port=80, allow_unsafe_werkzeug=True)
   
