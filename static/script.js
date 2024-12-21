@@ -18,11 +18,12 @@ canvas.addEventListener('mousedown', (e) => {
   
   if (doubleClickTime < 300) { // Double click detected
     handleMouseDown(e, true);
+    dragging = false; // Prevent dragging on double-click
   } else {
     handleMouseDown(e, false);
+    dragging = true;
   }
   lastClickTime = currentTime;
-  dragging = true;
 });
 canvas.addEventListener('mousemove', throttle(handleMouseMove, 30));
 canvas.addEventListener('mouseup', () => {
