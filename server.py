@@ -30,7 +30,7 @@ def home():
 
 @socketio.on('check_click')
 def check_click(data):
-  global BLUE_TEAM, RED_TEAM, triangle_points, triangle_points2, BALL_POS, show_ball
+  global BLUE_TEAM, RED_TEAM, triangle_points, triangle_points2, BALL_POS, show_ball, show_lines, line_points
   x, y = data['x'], data['y']
     
   # Check if ball is clicked first when visible
@@ -41,7 +41,10 @@ def check_click(data):
   for i, pos in enumerate(BLUE_TEAM):
     if ((x - pos[0])**2 + (y - pos[1])**2)**0.5 < 15:
       emit('player_selected', {'team': 'blue', 'index': i})
-      if show_triangle2:
+      if show_lines:
+        line_points.append(BLUE_TEAM[i])
+        update_board()
+      elif show_triangle2:
         if len(triangle_points2) < 3:
           triangle_points2.append(BLUE_TEAM[i])
           update_board()
@@ -54,7 +57,10 @@ def check_click(data):
   for i, pos in enumerate(RED_TEAM):
     if ((x - pos[0])**2 + (y - pos[1])**2)**0.5 < 15:
       emit('player_selected', {'team': 'red', 'index': i})
-      if show_triangle2:
+      if show_lines:
+        line_points.append(RED_TEAM[i])
+        update_board()
+      elif show_triangle2:
         if len(triangle_points2) < 3:
           triangle_points2.append(RED_TEAM[i])
           update_board()
@@ -193,8 +199,8 @@ def update_board():
     Shape().draw_triangle1(SCREEN, triangle_points)
   if show_triangle2 and len(triangle_points2) == 3:
     Shape().draw_triangle2(SCREEN, triangle_points2)
-    if show_lines and len(line_points) > 1:
-      Shape().draw_lines(SCREEN, line_points)
+  if show_lines and len(line_points) > 1:
+    Shape().draw_lines(SCREEN, line_points)
 
   buffer = io.BytesIO()
   pygame.image.save(SCREEN, buffer, 'PNG')
