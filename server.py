@@ -30,10 +30,10 @@ HTML_TEMPLATE = '''
   <h1>TACTICS BOARD</h1>
   <h2>by @spyderkam</h2>
   <div style="margin: 10px 0;">
-    <a href="https://twitter.com/spyderkam" target="_blank" style="margin: 0 10px;">
+    <a href="https://twitter.com/spyderkam" target="_blank" style="margin: 0 10px; text-decoration: none;">
       <img src="https://img.icons8.com/ios-glyphs/30/000000/twitter.png" alt="Twitter" style="width: 24px; height: 24px;">
     </a>
-    <a href="https://github.com/spyderkam" target="_blank" style="margin: 0 10px;">
+    <a href="https://github.com/spyderkam" target="_blank" style="margin: 0 10px; text-decoration: none;">
       <img src="https://img.icons8.com/ios-glyphs/30/000000/github.png" alt="GitHub" style="width: 24px; height: 24px;">
     </a>
   </div>
