@@ -155,7 +155,12 @@ function changeFormation(team) {
   }
 }
 
+let lineToolLocked = false;
+
 function stopTool() {
+  if (show_lines) {
+    lineToolLocked = true;
+  }
   activeTool = null;
   socket.emit('stop_tool');
 }
@@ -167,6 +172,38 @@ socket.on('tool_stopped', function(data) {
   show_lines = false;
   activeTool = null;
 });
+
+function resetBoard() {
+  lineToolLocked = false;
+  socket.emit('reset_board');
+}
+
+function resetTools() {
+  lineToolLocked = false;
+  show_lines = false;
+  show_triangle = false;
+  show_triangle2 = false;
+  showBall = false;
+  line_points = [];
+  activeTool = null;
+  socket.emit('reset_triangle');
+}
+
+function toggleLines() {
+  if (!lineToolLocked) {
+    show_lines = !show_lines;
+    if (show_lines) {
+      activeTool = 'lines';
+      show_triangle = false;
+      show_triangle2 = false;
+      showBall = false;
+      triangle_points = [];
+    } else {
+      activeTool = null;
+    }
+    socket.emit('toggle_lines');
+  }
+}
 
 document.addEventListener('keydown', (e) => {
   if (e.key.toLowerCase() === 'l') {
