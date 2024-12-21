@@ -43,6 +43,9 @@ def check_click(data):
       if len(triangle_points) < 3:
         triangle_points.append(BLUE_TEAM[i])
         update_board()
+      elif len(triangle_points2) < 3:
+        triangle_points2.append(BLUE_TEAM[i])
+        update_board()
       return
             
   for i, pos in enumerate(RED_TEAM):
@@ -50,6 +53,9 @@ def check_click(data):
       emit('player_selected', {'team': 'red', 'index': i})
       if len(triangle_points) < 3:
         triangle_points.append(RED_TEAM[i])
+        update_board()
+      elif len(triangle_points2) < 3:
+        triangle_points2.append(RED_TEAM[i])
         update_board()
       return
 
@@ -120,13 +126,15 @@ def reset_triangle():
 
 @socketio.on('reset_board')
 def reset_board():
-  global BLUE_TEAM, RED_TEAM, BALL_POS, triangle_points, show_triangle1
+  global BLUE_TEAM, RED_TEAM, BALL_POS, triangle_points, triangle_points2, show_triangle1, show_triangle2
   from main import ORIGINAL_BLUE, ORIGINAL_RED
   BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
   RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
   BALL_POS[:] = [WIDTH//2, HEIGHT//2]
   triangle_points.clear()
+  triangle_points2.clear()
   show_triangle1 = False
+  show_triangle2 = False
   update_board()
 
 def update_board():
