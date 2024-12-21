@@ -11,14 +11,13 @@ let lastMousePos = { x: 0, y: 0 };
 const throttleDelay = 16; // ~60fps
 let lastUpdate = 0;
 
+let show_lines = false;
 canvas.addEventListener('mousedown', (e) => {
   const toolActive = showBall || show_triangle || show_lines;
   if (toolActive) {
     handleMouseDown(e, true);
-    dragging = false; // Prevent dragging when tool is active
   } else {
     handleMouseDown(e, false);
-    dragging = true;
   }
 });
 canvas.addEventListener('mousemove', throttle(handleMouseMove, 30));
@@ -99,8 +98,14 @@ socket.on('board_update', function(data) {
 });
 
 socket.on('player_selected', function(data) {
-  dragging = true;
-  selectedPlayer = data;
+  const toolActive = showBall || show_triangle || show_lines;
+  if (!toolActive) {
+    dragging = true;
+    selectedPlayer = data;
+  } else {
+    selectedPlayer = null;
+    dragging = false;
+  }
 });
 
 function changeFormation(team) {
