@@ -21,6 +21,13 @@
     </a>
   </div>
   <div class="controls">
+    <select id="formationSelect" onchange="changeFormation()" style="padding: 8px; margin-right: 10px;">
+      <option value="433">4-3-3</option>
+      <option value="442">4-4-2</option>
+      <option value="442d">4-4-2 Diamond</option>
+      <option value="4231">4-2-3-1</option>
+      <option value="352">3-5-2</option>
+    </select>
     <button onclick="toggleBall()">Toggle Ball (B)</button>
     <button onclick="toggleNumbers()">Toggle Numbers (N)</button>
     <button onclick="toggleTriangle()">Toggle Triangle (T)</button>
@@ -131,6 +138,11 @@
       dragging = true;
       selectedPlayer = data;
     });
+
+    function changeFormation() {
+      const formation = document.getElementById('formationSelect').value;
+      socket.emit('change_formation', { formation: formation });
+    }
   </script>
 </body>
 </html>

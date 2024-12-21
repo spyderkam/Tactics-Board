@@ -137,6 +137,15 @@ def reset_triangle():
   update_board()
 
 @socketio.on('reset_board')
+@socketio.on('change_formation')
+def handle_formation_change(data):
+  global BLUE_TEAM, RED_TEAM
+  from database import formation
+  formation_data = formation(data['formation'])
+  BLUE_TEAM[:] = [pos[:] for pos in formation_data["blue"]]
+  RED_TEAM[:] = [pos[:] for pos in formation_data["red"]]
+  update_board()
+
 def reset_board():
   global BLUE_TEAM, RED_TEAM, BALL_POS, triangle_points, triangle_points2, show_triangle1, show_triangle2
   from main import ORIGINAL_BLUE, ORIGINAL_RED
