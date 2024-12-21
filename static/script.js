@@ -125,6 +125,8 @@ function resetTools() {
   show_triangle = false;
   show_triangle2 = false;
   showBall = false;
+  line_points = [];
+  activeTool = null;
   socket.emit('reset_triangle');
 }
 
@@ -154,14 +156,8 @@ function changeFormation(team) {
 }
 
 function stopTool() {
-  showBall = false;
-  show_triangle = false;
-  show_triangle2 = false;
-  show_lines = false;
-  line_points = [];
   activeTool = null;
   socket.emit('stop_tool');
-  socket.emit('reset_triangle');
 }
 
 socket.on('tool_stopped', function(data) {
