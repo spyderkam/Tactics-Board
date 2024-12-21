@@ -23,6 +23,7 @@ class Shape:
   def draw_triangle2(self, screen, points):
     "Semi-transparent orange triangle"
     triangle_color = (128, 0, 128, 1)    # Purple with alpha 
+    #triangle_color = (255, 165, 0, 128)  # Orange with alpha
     
     # Create a surface for the semi-transparent triangle
     surface = pygame.Surface((1920, 1080), pygame.SRCALPHA)
