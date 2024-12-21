@@ -98,8 +98,7 @@ socket.on('board_update', function(data) {
 });
 
 socket.on('player_selected', function(data) {
-  const toolActive = showBall || show_triangle || show_triangle2 || show_lines;
-  if (!toolActive) {
+  if (!showBall && !show_triangle && !show_triangle2 && !show_lines) {
     dragging = true;
     selectedPlayer = data;
   } else {
@@ -140,6 +139,8 @@ function stopTool() {
   show_triangle2 = false;
   show_lines = false;
   socket.emit('stop_tool');
+  dragging = false;
+  selectedPlayer = null;
 }
 
 document.addEventListener('keydown', (e) => {
