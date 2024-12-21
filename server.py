@@ -44,7 +44,11 @@ HTML_TEMPLATE = '''
     <button onclick="resetTriangle()">Reset Triangle (Y)</button>
     <button onclick="resetBoard()">Reset (R)</button>
   </div>
-  <canvas id="board" width="1920" height="1080" style="max-width: 100%; height: auto;"></canvas>
+  <div style="max-width: 100%; padding: 10px;">
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+      <canvas id="board" width="1920" height="1080" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;"></canvas>
+    </div>
+  </div>
   <script>
     const socket = io();
     const canvas = document.getElementById('board');
