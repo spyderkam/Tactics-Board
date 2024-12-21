@@ -42,7 +42,7 @@ def check_click(data):
   for i, pos in enumerate(BLUE_TEAM):
     if ((x - pos[0])**2 + (y - pos[1])**2)**0.5 < 15:
       emit('player_selected', {'team': 'blue', 'index': i})
-      if show_lines and isToolClick and result.get('allow_dragging', True):
+      if show_lines and isToolClick:
         line_points.append([x for x in BLUE_TEAM[i]])
         update_board()
       elif show_triangle2 and isToolClick:
