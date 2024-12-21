@@ -31,10 +31,6 @@ class Shape:
     # Blit the surface onto the screen
     screen.blit(surface, (0, 0))
 
-  #def draw_circle(self, screen, pos, radius, color)
-
-  #def draw_rectangle(self, screen, pos, radius, color)
-
   def draw_lines(self, screen, points):
     """Draw thin black lines connecting consecutive points"""
     if len(points) > 1:
