@@ -83,13 +83,17 @@ def main():
           if blue_player is not None:
             selected_team = BLUE_TEAM
             selected_player = blue_player
-            if len(triangle_points) < 3:
+            if show_triangle2 and len(triangle_points2) < 3:
+              triangle_points2.append(BLUE_TEAM[blue_player])
+            elif not show_triangle2 and len(triangle_points) < 3:
               triangle_points.append(BLUE_TEAM[blue_player])
             dragging = True
           elif red_player is not None:
             selected_team = RED_TEAM
             selected_player = red_player
-            if len(triangle_points) < 3:
+            if show_triangle2 and len(triangle_points2) < 3:
+              triangle_points2.append(RED_TEAM[red_player])
+            elif not show_triangle2 and len(triangle_points) < 3:
               triangle_points.append(RED_TEAM[red_player])
             dragging = True
       elif event.type == pygame.MOUSEBUTTONUP:
