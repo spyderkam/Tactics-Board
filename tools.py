@@ -45,5 +45,9 @@ class StopTool:
     
   def execute(self):
     return {
-      'allow_dragging': True
+      'allow_dragging': True,
+      'show_ball': False,
+      'show_triangle1': False,
+      'show_triangle2': False,
+      'show_lines': False
     }
