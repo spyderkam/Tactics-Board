@@ -147,5 +147,7 @@ socket.on('tool_stopped', function(data) {
 document.addEventListener('keydown', (e) => {
   if (e.key.toLowerCase() === 'l') {
     toggleLines();
+  } else if (e.key.toLowerCase() === 's') {
+    stopTool();
   }
 });
