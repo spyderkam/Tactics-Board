@@ -119,7 +119,9 @@ def main():
           triangle_points.clear()
           show_triangle1 = False
         elif event.key == pygame.K_g:  # Press 'G' to toggle second triangle
-          if len(triangle_points2) == 3:
+          if len(triangle_points2) < 3:
+            show_triangle2 = True  # Enable second triangle mode
+          elif len(triangle_points2) == 3:
             show_triangle2 = not show_triangle2
           else:
             triangle_points2.clear()
