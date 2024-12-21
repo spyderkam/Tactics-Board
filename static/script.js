@@ -85,7 +85,7 @@ function resetBoard() {
   socket.emit('reset_board');
 }
 
-function resetTriangle() {
+function reseTools() {
   socket.emit('reset_triangle');
 }
 
