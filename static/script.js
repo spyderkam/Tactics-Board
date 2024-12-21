@@ -43,15 +43,15 @@ function throttle(func, limit) {
 }
 
 function toggleTriangle() {
-  if (activeTool === 'triangle') {
-    show_triangle = false;
-    activeTool = null;
-  } else {
-    show_triangle = true;
+  show_triangle = !show_triangle;
+  if (show_triangle) {
     activeTool = 'triangle';
     show_triangle2 = false;
     show_lines = false;
     showBall = false;
+    line_points = [];
+  } else {
+    activeTool = null;
   }
   socket.emit('toggle_triangle');
 }
@@ -98,6 +98,9 @@ function toggleLines() {
     show_triangle = false;
     show_triangle2 = false;
     showBall = false;
+    triangle_points = [];
+  } else {
+    activeTool = null;
   }
   socket.emit('toggle_lines');
 }
