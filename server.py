@@ -188,12 +188,12 @@ def toggle_lines():
 
 @socketio.on('stop_tool')
 def stop_tool():
-    global show_ball, show_triangle1, show_triangle2, show_lines, line_points
-    from tools import StopTool
-    tool = StopTool()
-    result = tool.execute()
-    result['show_lines'] = len(line_points) > 1  # Keep lines visible if they exist
-    emit('tool_stopped', result)
+    global show_ball, show_triangle1, show_triangle2, show_lines
+    show_ball = False
+    show_triangle1 = False
+    show_triangle2 = False
+    show_lines = False
+    emit('tool_stopped', {})
     update_board()
 
 def update_board():
