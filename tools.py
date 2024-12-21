@@ -4,7 +4,7 @@ __author__ = "spyderkam"
 
 import pygame
 
-def draw_triangle(screen, points, team_color):
+def draw_triangle1(screen, points, team_color):
   # Create a semi-transparent orange surface
   triangle_color = (255, 165, 0, 128)  # Orange with alpha
   

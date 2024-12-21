@@ -3,7 +3,7 @@
 __author__ = "spyderkam"
 
 from database import *
-from tools import draw_triangle
+from tools import draw_triangle1
 import os
 import pygame
 import sys
@@ -155,11 +155,11 @@ def main():
 
     # Draw ball
     if SHOW_BALL:
-      pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 12)  # Increased from 10 to 12
+      pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 30)  # Increased from 12 to 30
 
     # Draw triangle
     if show_triangle and len(triangle_points) == 3:
-      draw_triangle(SCREEN, triangle_points, selected_team)
+      draw_triangle1(SCREEN, triangle_points, selected_team)
 
     # Update display
     pygame.display.flip()
