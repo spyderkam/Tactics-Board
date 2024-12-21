@@ -6,10 +6,16 @@ A real-time interactive football tactics board built with Python, Flask, and Pyg
 ## Features
 
 - Interactive drag-and-drop player movement
-- Two formations: 3-5-2 (Blue Team) and 4-3-3 (Red Team)
+- Multiple formations for both teams:
+  - 4-3-3
+  - 4-4-2
+  - 4-4-2 Diamond
+  - 4-2-3-1
+  - 3-5-2
+- Separate formation controls for each team
 - Toggle player numbers (supports single and double digits)
 - Toggle ball visibility
-- Dual triangle drawing tools (Orange and Purple)
+- Triangle drawing tools
 - Real-time WebSocket updates
 - Formation reset functionality
 
@@ -17,11 +23,9 @@ A real-time interactive football tactics board built with Python, Flask, and Pyg
 
 - **B**: Toggle ball visibility
 - **N**: Toggle player numbers
-- **T**: Toggle first triangle (Orange)
-  - Click on the players before **T**.
-- **G**: Toggle second triangle (Purple)
-  - Click on the players after **G**.
-- **Y**: Reset both triangles
+- **T**: Toggle triangle
+  - Click on three players to create a triangle
+- **Y**: Reset triangle
 - **R**: Reset entire board
 
 ## Requirements
@@ -34,7 +38,7 @@ A real-time interactive football tactics board built with Python, Flask, and Pyg
 ## Running the Application
 
 1. Click the "Run" button in your Replit workspace
-2. The server will start on port 80
+2. The server will start automatically
 3. Use the interface buttons or keyboard shortcuts to control the board
 
 ## Implementation Details
@@ -43,12 +47,12 @@ The project consists of four main components:
 
 - `server.py`: Flask server handling WebSocket connections
 - `main.py`: Core game logic and Pygame display
-- `database.py`: Formation configurations and colors
+- `database.py`: Formation configurations
 - `tools.py`: Triangle drawing utilities
 
 ## Current Status
 
-Version 1.0 - Core functionality implemented with room for future improvements.
+Version 1.1 - Enhanced formation system with team-specific controls
 
 ## Author
 
