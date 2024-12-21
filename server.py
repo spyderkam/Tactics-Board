@@ -43,15 +43,15 @@ def check_click(data):
     if ((x - pos[0])**2 + (y - pos[1])**2)**0.5 < 15:
       emit('player_selected', {'team': 'blue', 'index': i})
       if show_lines and isDoubleClick:
-        line_points.append([x for x in BLUE_TEAM[i]])  # Create a copy of the position
+        line_points.append([x for x in BLUE_TEAM[i]])
         update_board()
-      elif show_triangle2:
+      elif show_triangle2 and isDoubleClick:
         if len(triangle_points2) < 3:
           triangle_points2.append(BLUE_TEAM[i])
           update_board()
-      else:
+      elif isDoubleClick:
         if len(triangle_points) < 3:
-          triangle_points.append(BLUE_TEAM[i])
+          triangle_points.append([x for x in BLUE_TEAM[i]])
           update_board()
       return
             
@@ -59,15 +59,15 @@ def check_click(data):
     if ((x - pos[0])**2 + (y - pos[1])**2)**0.5 < 15:
       emit('player_selected', {'team': 'red', 'index': i})
       if show_lines and isDoubleClick:
-        line_points.append([x for x in RED_TEAM[i]])  # Create a copy of the position
+        line_points.append([x for x in RED_TEAM[i]])
         update_board()
-      elif show_triangle2:
+      elif show_triangle2 and isDoubleClick:
         if len(triangle_points2) < 3:
           triangle_points2.append(RED_TEAM[i])
           update_board()
-      else:
+      elif isDoubleClick:
         if len(triangle_points) < 3:
-          triangle_points.append(RED_TEAM[i])
+          triangle_points.append([x for x in RED_TEAM[i]])
           update_board()
       return
 
