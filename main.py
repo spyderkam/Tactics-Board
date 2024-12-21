@@ -155,7 +155,7 @@ def main():
 
     # Draw ball
     if SHOW_BALL:
-      pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 16)  # Increased from 12 to 16
+      pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 15)  # Increased from 12 to 15
 
     # Draw triangle
     if show_triangle and len(triangle_points) == 3:
