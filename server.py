@@ -4,7 +4,7 @@ __author__ = "Claude 3.5 Sonnet V2"
 
 from flask import Flask, Response, render_template_string, request
 from flask_socketio import SocketIO, emit
-from main import SCREEN, main, BLUE_TEAM, RED_TEAM, BALL_POS, WIDTH, HEIGHT, draw_player, WHITE, triangle_points, Shape
+from main import SCREEN, main, BLUE_TEAM, RED_TEAM, BALL_POS, WIDTH, HEIGHT, draw_player, WHITE, triangle_points, triangle_points2, Shape
 import base64
 import io
 import os
@@ -29,7 +29,7 @@ def home():
 
 @socketio.on('check_click')
 def check_click(data):
-  global BLUE_TEAM, RED_TEAM, triangle_points, BALL_POS, show_ball
+  global BLUE_TEAM, RED_TEAM, triangle_points, triangle_points2, BALL_POS, show_ball
   x, y = data['x'], data['y']
     
   # Check if ball is clicked first when visible
