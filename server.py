@@ -40,23 +40,27 @@ def check_click(data):
   for i, pos in enumerate(BLUE_TEAM):
     if ((x - pos[0])**2 + (y - pos[1])**2)**0.5 < 15:
       emit('player_selected', {'team': 'blue', 'index': i})
-      if len(triangle_points) < 3 and not show_triangle2:
-        triangle_points.append(BLUE_TEAM[i])
-        update_board()
-      elif len(triangle_points2) < 3 and show_triangle2:
-        triangle_points2.append(BLUE_TEAM[i])
-        update_board()
+      if show_triangle2:
+        if len(triangle_points2) < 3:
+          triangle_points2.append(BLUE_TEAM[i])
+          update_board()
+      else:
+        if len(triangle_points) < 3:
+          triangle_points.append(BLUE_TEAM[i])
+          update_board()
       return
             
   for i, pos in enumerate(RED_TEAM):
     if ((x - pos[0])**2 + (y - pos[1])**2)**0.5 < 15:
       emit('player_selected', {'team': 'red', 'index': i})
-      if len(triangle_points) < 3 and not show_triangle2:
-        triangle_points.append(RED_TEAM[i])
-        update_board()
-      elif len(triangle_points2) < 3 and show_triangle2:
-        triangle_points2.append(RED_TEAM[i])
-        update_board()
+      if show_triangle2:
+        if len(triangle_points2) < 3:
+          triangle_points2.append(RED_TEAM[i])
+          update_board()
+      else:
+        if len(triangle_points) < 3:
+          triangle_points.append(RED_TEAM[i])
+          update_board()
       return
 
 @socketio.on('move_player')
