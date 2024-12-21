@@ -254,7 +254,7 @@ def update_board():
     draw_player(SCREEN, pos, (255, 0, 0), i, show_numbers)
 
   if show_ball:
-    pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 30)
+    pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 16)
         
   if show_triangle and len(triangle_points) == 3:
     draw_triangle1(SCREEN, triangle_points, None)
