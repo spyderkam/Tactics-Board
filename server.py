@@ -184,6 +184,15 @@ def toggle_lines():
     show_lines = not show_lines
     update_board()
 
+@socketio.on('stop_tool')
+def stop_tool():
+    global show_ball, show_triangle1, show_triangle2, show_lines
+    show_ball = False
+    show_triangle1 = False
+    show_triangle2 = False
+    show_lines = False
+    update_board()
+
 def update_board():
   global show_numbers, show_ball, show_triangle1, show_triangle2, show_lines, line_points
   SCREEN.fill((34, 139, 34))

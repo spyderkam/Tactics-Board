@@ -134,6 +134,14 @@ function toggleTriangle2() {
   socket.emit('toggle_triangle2');
 }
 
+function stopTool() {
+  showBall = false;
+  show_triangle = false;
+  show_triangle2 = false;
+  show_lines = false;
+  socket.emit('stop_tool');
+}
+
 document.addEventListener('keydown', (e) => {
   if (e.key.toLowerCase() === 'l') {
     toggleLines();
