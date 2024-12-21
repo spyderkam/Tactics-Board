@@ -54,7 +54,7 @@ def get_clicked_player(pos, team):
 
 def is_ball_clicked(pos):
   distance = ((pos[0] - BALL_POS[0])**2 + (pos[1] - BALL_POS[1])**2)**0.5
-  return distance < 12  # Increased from 10 to 12 for better clickability
+  return distance < 15  # Matches player click detection radius
 
 # Main game loop
 def main():

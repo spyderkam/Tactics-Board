@@ -150,7 +150,7 @@ def check_click(data):
   x, y = data['x'], data['y']
     
   # Check if ball is clicked first when visible
-  if show_ball and ((x - BALL_POS[0])**2 + (y - BALL_POS[1])**2)**0.5 < 15:
+  if show_ball and ((x - BALL_POS[0])**2 + (y - BALL_POS[1])**2)**0.5 < 15:  # Matches player click detection radius
     emit('player_selected', {'team': 'ball', 'index': 0})
     return
             
