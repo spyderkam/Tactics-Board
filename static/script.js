@@ -7,13 +7,13 @@ let selectedPlayer = null;
 let showBall = false;
 let showNumbers = false;
 let show_triangle = false;
+let show_lines = false;
+let show_triangle2 = false;
 let lastMousePos = { x: 0, y: 0 };
 const throttleDelay = 16; // ~60fps
 let lastUpdate = 0;
-
-let show_lines = false;
 canvas.addEventListener('mousedown', (e) => {
-  const toolActive = showBall || show_triangle || show_lines;
+  const toolActive = showBall || show_triangle || show_triangle2 || show_lines;
   if (toolActive) {
     handleMouseDown(e, true);
   } else {
@@ -98,7 +98,7 @@ socket.on('board_update', function(data) {
 });
 
 socket.on('player_selected', function(data) {
-  const toolActive = showBall || show_triangle || show_lines;
+  const toolActive = showBall || show_triangle || show_triangle2 || show_lines;
   if (!toolActive) {
     dragging = true;
     selectedPlayer = data;
@@ -115,7 +115,23 @@ function changeFormation(team) {
   }
 }
 function toggleLines() {
+  show_lines = !show_lines;
   socket.emit('toggle_lines');
+}
+
+function toggleBall() {
+  showBall = !showBall;
+  socket.emit('toggle_ball');
+}
+
+function toggleTriangle() {
+  show_triangle = !show_triangle;
+  socket.emit('toggle_triangle');
+}
+
+function toggleTriangle2() {
+  show_triangle2 = !show_triangle2;
+  socket.emit('toggle_triangle2');
 }
 
 document.addEventListener('keydown', (e) => {
