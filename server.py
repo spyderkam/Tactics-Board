@@ -66,7 +66,7 @@ def move_player(data):
   team = data['team']
   index = data['index']
     
-  global triangle_points
+  global triangle_points, triangle_points2
   new_pos = [x, y]
     
   if team == 'ball':
@@ -77,11 +77,15 @@ def move_player(data):
     BLUE_TEAM[index] = new_pos
     if old_pos in triangle_points:
       triangle_points[triangle_points.index(old_pos)] = new_pos
+    if old_pos in triangle_points2:
+      triangle_points2[triangle_points2.index(old_pos)] = new_pos
   else:
     old_pos = RED_TEAM[index]
     RED_TEAM[index] = new_pos
     if old_pos in triangle_points:
       triangle_points[triangle_points.index(old_pos)] = new_pos
+    if old_pos in triangle_points2:
+      triangle_points2[triangle_points2.index(old_pos)] = new_pos
     
   update_board()
 
