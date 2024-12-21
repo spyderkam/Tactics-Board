@@ -103,3 +103,12 @@ function changeFormation(team) {
     socket.emit('change_formation', { formation: formation, team: team });
   }
 }
+function toggleLines() {
+  socket.emit('toggle_lines');
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key.toLowerCase() === 'l') {
+    toggleLines();
+  }
+});

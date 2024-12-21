@@ -33,6 +33,10 @@ triangle_points2 = []
 show_triangle1 = False
 show_triangle2 = False
 
+# Line settings
+line_points = []
+show_lines = False
+
 def draw_player(screen, pos, color, number=None, show_numbers=False):
   pygame.draw.circle(screen, color, pos, 20)  # Increased from 15 to 20
   if show_numbers and number is not None:

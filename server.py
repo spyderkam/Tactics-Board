@@ -22,6 +22,7 @@ show_numbers = False
 show_ball = False
 show_triangle1 = False
 show_triangle2 = False
+show_lines = False # Added to track line visibility
 
 @app.route('/')
 def home():
@@ -149,7 +150,7 @@ def handle_formation_change(data):
 
 @socketio.on('reset_board')
 def handle_reset_board():
-  global BLUE_TEAM, RED_TEAM, BALL_POS, triangle_points, triangle_points2, show_triangle1, show_triangle2
+  global BLUE_TEAM, RED_TEAM, BALL_POS, triangle_points, triangle_points2, show_triangle1, show_triangle2, show_lines, line_points
   from main import ORIGINAL_BLUE, ORIGINAL_RED
   BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
   RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
@@ -158,10 +159,18 @@ def handle_reset_board():
   triangle_points2.clear()
   show_triangle1 = False
   show_triangle2 = False
+  show_lines = False #Added
+  line_points = [] #Added
   update_board()
 
+@socketio.on('toggle_lines') #Added
+def toggle_lines():
+    global show_lines
+    show_lines = not show_lines
+    update_board()
+
 def update_board():
-  global show_numbers, show_ball, show_triangle1, show_triangle2
+  global show_numbers, show_ball, show_triangle1, show_triangle2, show_lines, line_points
   SCREEN.fill((34, 139, 34))
   pygame.draw.rect(SCREEN, WHITE, (80, 60, WIDTH-160, HEIGHT-120), 2)
   pygame.draw.line(SCREEN, WHITE, (WIDTH//2, 60), (WIDTH//2, HEIGHT-60), 2)
@@ -184,6 +193,8 @@ def update_board():
     Shape().draw_triangle1(SCREEN, triangle_points)
   if show_triangle2 and len(triangle_points2) == 3:
     Shape().draw_triangle2(SCREEN, triangle_points2)
+    if show_lines and len(line_points) > 1:
+      Shape().draw_lines(SCREEN, line_points)
 
   buffer = io.BytesIO()
   pygame.image.save(SCREEN, buffer, 'PNG')
@@ -195,4 +206,3 @@ if __name__ == '__main__':
   os.environ['SDL_VIDEODRIVER'] = 'dummy'
   pygame.init()
   socketio.run(app, host='0.0.0.0', port=80, allow_unsafe_werkzeug=True)
-  

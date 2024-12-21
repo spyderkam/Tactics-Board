@@ -35,4 +35,9 @@ class Shape:
 
   #def draw_rectangle(self, screen, pos, radius, color)
 
-  def draw_lines(self, screen, )
+  def draw_lines(self, screen, points):
+    """Draw thin black lines connecting consecutive points"""
+    if len(points) > 1:
+      surface = pygame.Surface((1920, 1080), pygame.SRCALPHA)
+      pygame.draw.lines(surface, (0, 0, 0, 200), False, points, 2)
+      screen.blit(surface, (0, 0))
