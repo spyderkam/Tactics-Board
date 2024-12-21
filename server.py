@@ -27,8 +27,8 @@ HTML_TEMPLATE = '''
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
 </head>
 <body style="text-align: center;">
-  <h1>Tactics Board</h1>
-  <h2>@spyderkam</h2>
+  <h1>TACTICS BOARD</h1>
+  <h2>by @spyderkam</h2>
   <div class="controls">
     <button onclick="toggleBall()">Toggle Ball (B)</button>
     <button onclick="toggleNumbers()">Toggle Numbers (N)</button>
@@ -269,3 +269,4 @@ if __name__ == '__main__':
   os.environ['SDL_VIDEODRIVER'] = 'dummy'
   pygame.init()
   socketio.run(app, host='0.0.0.0', port=80, allow_unsafe_werkzeug=True)
+  
