@@ -8,6 +8,7 @@ let showNumbers = false;
 let show_triangle = false;
 let show_lines = false;
 let show_triangle2 = false;
+let line_points = [];
 let lastMousePos = { x: 0, y: 0 };
 const throttleDelay = 16; // ~60fps
 let lastUpdate = 0;
@@ -154,8 +155,10 @@ function stopTool() {
   show_triangle = false;
   show_triangle2 = false;
   show_lines = false;
+  line_points = [];
   activeTool = null;
   socket.emit('stop_tool');
+  socket.emit('reset_triangle');
 }
 
 socket.on('tool_stopped', function(data) {
