@@ -60,7 +60,7 @@ def is_ball_clicked(pos):
 
 # Main game loop
 def main():
-  global SHOW_BALL, show_triangle1
+  global SHOW_BALL, show_triangle1, show_triangle2
   running = True
   dragging = False
   dragging_ball = False
