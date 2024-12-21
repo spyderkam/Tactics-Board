@@ -1,0 +1,1 @@
+Now the line drawing should work. Press 'L' to toggle line mode, then click on players to create lines between them. The lines will move with the players. Press 'L' again to toggle the lines off, or 'R' to reset everything.
