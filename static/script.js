@@ -156,6 +156,9 @@ function changeFormation(team) {
 }
 
 function stopTool() {
+  if (show_lines) {
+    show_lines = false;  // Disable functionality but keep lines visible
+  }
   activeTool = null;
   socket.emit('stop_tool');
 }
