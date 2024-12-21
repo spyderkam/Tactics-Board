@@ -18,7 +18,9 @@ A real-time interactive football tactics board built with Python, Flask, and Pyg
 - **B**: Toggle ball visibility
 - **N**: Toggle player numbers
 - **T**: Toggle first triangle (Orange)
+  - Click on the players before **T**.
 - **G**: Toggle second triangle (Purple)
+  - Click on the players after **G**.
 - **Y**: Reset both triangles
 - **R**: Reset entire board
 
