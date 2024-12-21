@@ -192,10 +192,6 @@ def stop_tool():
     from tools import StopTool
     tool = StopTool()
     result = tool.execute()
-    show_ball = result['show_ball']
-    show_triangle1 = result['show_triangle1']
-    show_triangle2 = result['show_triangle2']
-    show_lines = result['show_lines']
     emit('tool_stopped', result)
     update_board()
 
