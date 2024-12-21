@@ -11,8 +11,17 @@ let lastMousePos = { x: 0, y: 0 };
 const throttleDelay = 16; // ~60fps
 let lastUpdate = 0;
 
+let lastClickTime = 0;
 canvas.addEventListener('mousedown', (e) => {
-  handleMouseDown(e);
+  const currentTime = new Date().getTime();
+  const doubleClickTime = currentTime - lastClickTime;
+  
+  if (doubleClickTime < 300) { // Double click detected
+    handleMouseDown(e, true);
+  } else {
+    handleMouseDown(e, false);
+  }
+  lastClickTime = currentTime;
   dragging = true;
 });
 canvas.addEventListener('mousemove', throttle(handleMouseMove, 30));
@@ -44,11 +53,11 @@ function toggleTriangle2() {
   socket.emit('toggle_triangle2');
 }
 
-function handleMouseDown(e) {
+function handleMouseDown(e, isDoubleClick) {
   const rect = canvas.getBoundingClientRect();
   const x = (e.clientX - rect.left) * (canvas.width / rect.width);
   const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-  socket.emit('check_click', {x: x, y: y});
+  socket.emit('check_click', {x: x, y: y, isDoubleClick: isDoubleClick});
 }
 
 function handleMouseMove(e) {

@@ -32,6 +32,7 @@ def home():
 def check_click(data):
   global BLUE_TEAM, RED_TEAM, triangle_points, triangle_points2, BALL_POS, show_ball, show_lines, line_points
   x, y = data['x'], data['y']
+  isDoubleClick = data.get('isDoubleClick', False)
     
   # Check if ball is clicked first when visible
   if show_ball and ((x - BALL_POS[0])**2 + (y - BALL_POS[1])**2)**0.5 < 15:  # Matches player click detection radius
@@ -41,8 +42,8 @@ def check_click(data):
   for i, pos in enumerate(BLUE_TEAM):
     if ((x - pos[0])**2 + (y - pos[1])**2)**0.5 < 15:
       emit('player_selected', {'team': 'blue', 'index': i})
-      if show_lines:
-        line_points.append(BLUE_TEAM[i])
+      if show_lines and isDoubleClick:
+        line_points.append([x for x in BLUE_TEAM[i]])  # Create a copy of the position
         update_board()
       elif show_triangle2:
         if len(triangle_points2) < 3:
@@ -57,8 +58,8 @@ def check_click(data):
   for i, pos in enumerate(RED_TEAM):
     if ((x - pos[0])**2 + (y - pos[1])**2)**0.5 < 15:
       emit('player_selected', {'team': 'red', 'index': i})
-      if show_lines:
-        line_points.append(RED_TEAM[i])
+      if show_lines and isDoubleClick:
+        line_points.append([x for x in RED_TEAM[i]])  # Create a copy of the position
         update_board()
       elif show_triangle2:
         if len(triangle_points2) < 3:
@@ -72,7 +73,7 @@ def check_click(data):
 
 @socketio.on('move_player')
 def move_player(data):
-  global BLUE_TEAM, RED_TEAM, BALL_POS
+  global BLUE_TEAM, RED_TEAM, BALL_POS, line_points
   x, y = data['x'], data['y']
   team = data['team']
   index = data['index']
@@ -90,6 +91,9 @@ def move_player(data):
       triangle_points[triangle_points.index(old_pos)] = new_pos
     if old_pos in triangle_points2:
       triangle_points2[triangle_points2.index(old_pos)] = new_pos
+    for i, point in enumerate(line_points):
+      if point[0] == old_pos[0] and point[1] == old_pos[1]:
+        line_points[i] = [x for x in new_pos]
   else:
     old_pos = RED_TEAM[index]
     RED_TEAM[index] = new_pos
@@ -97,6 +101,9 @@ def move_player(data):
       triangle_points[triangle_points.index(old_pos)] = new_pos
     if old_pos in triangle_points2:
       triangle_points2[triangle_points2.index(old_pos)] = new_pos
+    for i, point in enumerate(line_points):
+      if point[0] == old_pos[0] and point[1] == old_pos[1]:
+        line_points[i] = [x for x in new_pos]
     
   update_board()
 
