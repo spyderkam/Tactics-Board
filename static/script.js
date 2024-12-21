@@ -133,11 +133,11 @@ socket.on('board_update', function(data) {
 });
 
 socket.on('player_selected', function(data) {
-  if (!showBall && !show_triangle && !show_triangle2 && !show_lines) {
+  if (activeTool === null) {
     dragging = true;
     selectedPlayer = data;
   } else {
-    selectedPlayer = null;
+    selectedPlayer = data;
     dragging = false;
   }
 });
@@ -150,14 +150,19 @@ function changeFormation(team) {
 }
 
 function stopTool() {
-  socket.emit('stop_tool');
-}
-
-socket.on('tool_stopped', function(data) {
   showBall = false;
   show_triangle = false;
   show_triangle2 = false;
   show_lines = false;
+  activeTool = null;
+  socket.emit('stop_tool');
+}
+
+socket.on('tool_stopped', function(data) {
+  showBall = data.show_ball;
+  show_triangle = data.show_triangle1;
+  show_triangle2 = data.show_triangle2;
+  show_lines = data.show_lines;
   activeTool = null;
 });
 
