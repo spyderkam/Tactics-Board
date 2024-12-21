@@ -134,13 +134,7 @@ function toggleTriangle2() {
 }
 
 function stopTool() {
-  showBall = false;
-  show_triangle = false;
-  show_triangle2 = false;
-  show_lines = false;
   socket.emit('stop_tool');
-  dragging = false;
-  selectedPlayer = null;
 }
 
 document.addEventListener('keydown', (e) => {
