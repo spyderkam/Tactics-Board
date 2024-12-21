@@ -157,6 +157,10 @@ function changeFormation(team) {
 
 function stopTool() {
   activeTool = null;
+  if (show_lines) {
+    show_lines = false;
+    line_points = [];
+  }
   socket.emit('stop_tool');
 }
 
