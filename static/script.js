@@ -1,4 +1,3 @@
-
 const socket = io();
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -12,6 +11,7 @@ let show_triangle2 = false;
 let lastMousePos = { x: 0, y: 0 };
 const throttleDelay = 16; // ~60fps
 let lastUpdate = 0;
+let activeTool = null; // Added to track the active tool
 canvas.addEventListener('mousedown', (e) => {
   const toolActive = showBall || show_triangle || show_triangle2 || show_lines;
   if (toolActive) {
@@ -42,10 +42,24 @@ function throttle(func, limit) {
 }
 
 function toggleTriangle() {
+  show_triangle = !show_triangle;
+  if (show_triangle) {
+    activeTool = 'triangle';
+    show_triangle2 = false;
+    show_lines = false;
+    showBall = false;
+  }
   socket.emit('toggle_triangle');
 }
 
 function toggleTriangle2() {
+  show_triangle2 = !show_triangle2;
+  if (show_triangle2) {
+    activeTool = 'triangle2';
+    show_triangle = false;
+    show_lines = false;
+    showBall = false;
+  }
   socket.emit('toggle_triangle2');
 }
 
@@ -73,12 +87,26 @@ function handleMouseMove(e) {
   }
 }
 
-function toggleBall() {
-  socket.emit('toggle_ball');
+function toggleLines() {
+  show_lines = !show_lines;
+  if (show_lines) {
+    activeTool = 'lines';
+    show_triangle = false;
+    show_triangle2 = false;
+    showBall = false;
+  }
+  socket.emit('toggle_lines');
 }
 
-function toggleNumbers() {
-  socket.emit('toggle_numbers');
+function toggleBall() {
+  showBall = !showBall;
+  if (showBall) {
+    activeTool = 'ball';
+    show_triangle = false;
+    show_triangle2 = false;
+    show_lines = false;
+  }
+  socket.emit('toggle_ball');
 }
 
 function resetBoard() {
@@ -116,25 +144,6 @@ function changeFormation(team) {
   if (formation !== team) {
     socket.emit('change_formation', { formation: formation, team: team });
   }
-}
-function toggleLines() {
-  show_lines = !show_lines;
-  socket.emit('toggle_lines');
-}
-
-function toggleBall() {
-  showBall = !showBall;
-  socket.emit('toggle_ball');
-}
-
-function toggleTriangle() {
-  show_triangle = !show_triangle;
-  socket.emit('toggle_triangle');
-}
-
-function toggleTriangle2() {
-  show_triangle2 = !show_triangle2;
-  socket.emit('toggle_triangle2');
 }
 
 function stopTool() {
