@@ -42,8 +42,11 @@ function throttle(func, limit) {
 }
 
 function toggleTriangle() {
-  show_triangle = !show_triangle;
-  if (show_triangle) {
+  if (activeTool === 'triangle') {
+    show_triangle = false;
+    activeTool = null;
+  } else {
+    show_triangle = true;
     activeTool = 'triangle';
     show_triangle2 = false;
     show_lines = false;
@@ -155,6 +158,7 @@ socket.on('tool_stopped', function(data) {
   show_triangle = false;
   show_triangle2 = false;
   show_lines = false;
+  activeTool = null;
 });
 
 document.addEventListener('keydown', (e) => {
