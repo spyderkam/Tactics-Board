@@ -118,7 +118,9 @@ def toggle_triangle_handler():
 @socketio.on('toggle_triangle2')
 def toggle_triangle2_handler():
   global show_triangle2, triangle_points2
-  if len(triangle_points2) == 3:
+  if len(triangle_points2) < 3:
+    show_triangle2 = True
+  elif len(triangle_points2) == 3:
     show_triangle2 = not show_triangle2
   else:
     triangle_points2.clear()
