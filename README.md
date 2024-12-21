@@ -52,7 +52,7 @@ The project consists of four main components:
 
 ## Current Status
 
-Version 1.1 - Enhanced formation system with team-specific controls
+Version 1.0 - Base version
 
 ## Author
 
