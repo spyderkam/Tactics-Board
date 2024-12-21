@@ -187,13 +187,15 @@ def toggle_lines():
     update_board()
 
 @socketio.on('stop_tool')
-def stop_tool():
+def stop_tool(data):
     global show_ball, show_triangle1, show_triangle2, show_lines
+    preserve_lines = data.get('preserveLines', False)
     show_ball = False
     show_triangle1 = False
     show_triangle2 = False
-    show_lines = False
-    emit('tool_stopped', {})
+    if not preserve_lines:
+        show_lines = False
+    emit('tool_stopped', {'preserveLines': preserve_lines})
     update_board()
 
 def update_board():

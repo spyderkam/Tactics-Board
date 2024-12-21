@@ -162,11 +162,9 @@ function changeFormation(team) {
 let lineToolLocked = false;
 
 function stopTool() {
-  if (show_lines) {
-    lineToolLocked = true;
-  }
+  const wasShowingLines = show_lines;
   activeTool = null;
-  socket.emit('stop_tool');
+  socket.emit('stop_tool', { preserveLines: wasShowingLines });
 }
 
 socket.on('tool_stopped', function(data) {
