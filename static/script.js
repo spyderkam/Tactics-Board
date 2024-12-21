@@ -86,6 +86,10 @@ function resetBoard() {
 }
 
 function resetTools() {
+  show_lines = false;
+  show_triangle = false;
+  show_triangle2 = false;
+  showBall = false;
   socket.emit('reset_triangle');
 }
 
