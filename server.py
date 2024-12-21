@@ -254,7 +254,7 @@ def update_board():
     draw_player(SCREEN, pos, (255, 0, 0), i, show_numbers)
 
   if show_ball:
-    pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 12)
+    pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 30)
         
   if show_triangle and len(triangle_points) == 3:
     draw_triangle1(SCREEN, triangle_points, None)
@@ -269,4 +269,3 @@ if __name__ == '__main__':
   os.environ['SDL_VIDEODRIVER'] = 'dummy'
   pygame.init()
   socketio.run(app, host='0.0.0.0', port=80, allow_unsafe_werkzeug=True)
-  
