@@ -188,12 +188,10 @@ def toggle_lines():
 
 @socketio.on('stop_tool')
 def stop_tool():
-    global show_ball, show_triangle1, show_triangle2, show_lines, line_points
+    global show_ball, show_triangle1, show_triangle2, show_lines
     from tools import StopTool
     tool = StopTool()
     result = tool.execute()
-    show_lines = False
-    line_points = []
     emit('tool_stopped', result)
     update_board()
 
