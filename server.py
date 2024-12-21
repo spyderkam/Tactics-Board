@@ -196,6 +196,7 @@ def stop_tool():
     show_triangle1 = result['show_triangle1']
     show_triangle2 = result['show_triangle2']
     show_lines = result['show_lines']
+    emit('tool_stopped', result)
     update_board()
 
 def update_board():

@@ -48,4 +48,10 @@ class StopTool:
     self.name = "Stop Tool"
     
   def execute(self):
-    return {}
+    return {
+      'show_ball': False,
+      'show_triangle1': False,
+      'show_triangle2': False,
+      'show_lines': False,
+      'allow_dragging': True
+    }

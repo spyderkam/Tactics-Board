@@ -134,8 +134,19 @@ function toggleTriangle2() {
 }
 
 function stopTool() {
+  showBall = false;
+  show_triangle = false;
+  show_triangle2 = false;
+  show_lines = false;
   socket.emit('stop_tool');
 }
+
+socket.on('tool_stopped', function(data) {
+  showBall = data.show_ball;
+  show_triangle = data.show_triangle1;
+  show_triangle2 = data.show_triangle2;
+  show_lines = data.show_lines;
+});
 
 document.addEventListener('keydown', (e) => {
   if (e.key.toLowerCase() === 'l') {
