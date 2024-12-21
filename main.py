@@ -29,7 +29,7 @@ SHOW_BALL = False
 
 # Triangle settings
 triangle_points = []
-show_triangle = False
+show_triangle1 = False
 
 def draw_player(screen, pos, color, number=None, show_numbers=False):
   pygame.draw.circle(screen, color, pos, 20)  # Increased from 15 to 20
@@ -58,7 +58,7 @@ def is_ball_clicked(pos):
 
 # Main game loop
 def main():
-  global SHOW_BALL, show_triangle
+  global SHOW_BALL, show_triangle1
   running = True
   dragging = False
   dragging_ball = False
@@ -102,20 +102,20 @@ def main():
           BALL_POS[0] = WIDTH//2
           BALL_POS[1] = HEIGHT//2
           triangle_points.clear()
-          show_triangle = False
+          show_triangle1 = False
         elif event.key == pygame.K_t:  # Press 'T' to toggle triangle
           if len(triangle_points) == 3:
-            show_triangle = not show_triangle
+            show_triangle1 = not show_triangle1
           else:
             triangle_points.clear()
-            show_triangle = False
+            show_triangle1 = False
         elif event.key == pygame.K_n:  # Press 'N' to toggle jersey numbers
           show_numbers = not show_numbers
         elif event.key == pygame.K_b:  # Press 'B' to toggle ball
           SHOW_BALL = not SHOW_BALL
         elif event.key == pygame.K_y:  # Press 'Y' to reset triangle
           triangle_points.clear()
-          show_triangle = False
+          show_triangle1 = False
       elif event.type == pygame.MOUSEMOTION:
         mouse_pos = pygame.mouse.get_pos()
         if dragging:
@@ -158,7 +158,7 @@ def main():
       pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 15)  # Increased from 12 to 15
 
     # Draw triangle
-    if show_triangle and len(triangle_points) == 3:
+    if show_triangle1 and len(triangle_points) == 3:
       Shape().draw_triangle1(SCREEN, triangle_points)
 
     # Update display

@@ -19,3 +19,14 @@ class Shape:
     
     # Blit the surface onto the screen
     screen.blit(surface, (0, 0))
+
+  def draw_triangle2(self, screen, points):
+    "Semi-transparent orange triangle"
+    triangle_color = (128, 0, 128, 1)    # Purple with alpha 
+    
+    # Create a surface for the semi-transparent triangle
+    surface = pygame.Surface((1920, 1080), pygame.SRCALPHA)
+    pygame.draw.polygon(surface, triangle_color, points)
+    
+    # Blit the surface onto the screen
+    screen.blit(surface, (0, 0))

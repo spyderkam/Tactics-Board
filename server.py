@@ -20,7 +20,7 @@ with open('tactics_board.html', 'r', encoding='utf-8') as file:
 
 show_numbers = False
 show_ball = False
-show_triangle = False
+show_triangle1 = False
 
 @app.route('/')
 def home():
@@ -92,34 +92,34 @@ def toggle_numbers():
 
 @socketio.on('toggle_triangle')
 def toggle_triangle_handler():
-  global show_triangle, triangle_points
+  global show_triangle1, triangle_points
   if len(triangle_points) == 3:
-    show_triangle = not show_triangle
+    show_triangle1 = not show_triangle1
   else:
     triangle_points.clear()
-    show_triangle = False
+    show_triangle1 = False
   update_board()
 
 @socketio.on('reset_triangle')
 def reset_triangle():
-  global triangle_points, show_triangle
+  global triangle_points, show_triangle1
   triangle_points.clear()
-  show_triangle = False
+  show_triangle1 = False
   update_board()
 
 @socketio.on('reset_board')
 def reset_board():
-  global BLUE_TEAM, RED_TEAM, BALL_POS, triangle_points, show_triangle
+  global BLUE_TEAM, RED_TEAM, BALL_POS, triangle_points, show_triangle1
   from main import ORIGINAL_BLUE, ORIGINAL_RED
   BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
   RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
   BALL_POS[:] = [WIDTH//2, HEIGHT//2]
   triangle_points.clear()
-  show_triangle = False
+  show_triangle1 = False
   update_board()
 
 def update_board():
-  global show_numbers, show_ball, show_triangle
+  global show_numbers, show_ball, show_triangle1
   SCREEN.fill((34, 139, 34))
   pygame.draw.rect(SCREEN, WHITE, (80, 60, WIDTH-160, HEIGHT-120), 2)
   pygame.draw.line(SCREEN, WHITE, (WIDTH//2, 60), (WIDTH//2, HEIGHT-60), 2)
@@ -138,7 +138,7 @@ def update_board():
   if show_ball:
     pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 15)
         
-  if show_triangle and len(triangle_points) == 3:
+  if show_triangle1 and len(triangle_points) == 3:
     Shape().draw_triangle1(SCREEN, triangle_points)
 
   buffer = io.BytesIO()
