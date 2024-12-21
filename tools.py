@@ -41,3 +41,16 @@ class Shape:
       surface = pygame.Surface((1920, 1080), pygame.SRCALPHA)
       pygame.draw.lines(surface, (0, 0, 0, 200), False, points, 2)
       screen.blit(surface, (0, 0))
+
+class StopTool:
+  """Tool to stop all active tools"""
+  def __init__(self):
+    self.name = "Stop Tool"
+    
+  def execute(self):
+    return {
+      'show_ball': False,
+      'show_triangle1': False,
+      'show_triangle2': False,
+      'show_lines': False
+    }
