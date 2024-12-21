@@ -11,19 +11,15 @@ let lastMousePos = { x: 0, y: 0 };
 const throttleDelay = 16; // ~60fps
 let lastUpdate = 0;
 
-let lastClickTime = 0;
 canvas.addEventListener('mousedown', (e) => {
-  const currentTime = new Date().getTime();
-  const doubleClickTime = currentTime - lastClickTime;
-  
-  if (doubleClickTime < 300) { // Double click detected
+  const toolActive = showBall || show_triangle || show_lines;
+  if (toolActive) {
     handleMouseDown(e, true);
-    dragging = false; // Prevent dragging on double-click
+    dragging = false; // Prevent dragging when tool is active
   } else {
     handleMouseDown(e, false);
     dragging = true;
   }
-  lastClickTime = currentTime;
 });
 canvas.addEventListener('mousemove', throttle(handleMouseMove, 30));
 canvas.addEventListener('mouseup', () => {
