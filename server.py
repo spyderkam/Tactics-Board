@@ -21,6 +21,7 @@ with open('tactics_board.html', 'r', encoding='utf-8') as file:
 show_numbers = False
 show_ball = False
 show_triangle1 = False
+show_triangle2 = False
 
 @app.route('/')
 def home():
@@ -100,6 +101,16 @@ def toggle_triangle_handler():
     show_triangle1 = False
   update_board()
 
+@socketio.on('toggle_triangle2')
+def toggle_triangle2_handler():
+  global show_triangle2, triangle_points2
+  if len(triangle_points2) == 3:
+    show_triangle2 = not show_triangle2
+  else:
+    triangle_points2.clear()
+    show_triangle2 = False
+  update_board()
+
 @socketio.on('reset_triangle')
 def reset_triangle():
   global triangle_points, show_triangle1
@@ -140,6 +151,8 @@ def update_board():
         
   if show_triangle1 and len(triangle_points) == 3:
     Shape().draw_triangle1(SCREEN, triangle_points)
+  if show_triangle2 and len(triangle_points2) == 3:
+    Shape().draw_triangle2(SCREEN, triangle_points2)
 
   buffer = io.BytesIO()
   pygame.image.save(SCREEN, buffer, 'PNG')

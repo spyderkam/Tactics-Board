@@ -25,6 +25,7 @@
     <button onclick="toggleNumbers()">Toggle Numbers (N)</button>
     <button onclick="toggleTriangle()">Toggle Triangle (T)</button>
     <button onclick="resetTriangle()">Reset Triangle (Y)</button>
+    <button onclick="toggleTriangle2()">Toggle Triangle 2 (G)</button>
     <button onclick="resetBoard()">Reset (R)</button>
   </div>
   <div style="max-width: 100%; padding: 10px;">
@@ -72,6 +73,10 @@
 
     function toggleTriangle() {
       socket.emit('toggle_triangle');
+    }
+    
+    function toggleTriangle2() {
+      socket.emit('toggle_triangle2');
     }
 
     function handleMouseDown(e) {

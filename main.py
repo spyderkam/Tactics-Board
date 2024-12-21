@@ -29,7 +29,9 @@ SHOW_BALL = False
 
 # Triangle settings
 triangle_points = []
+triangle_points2 = []
 show_triangle1 = False
+show_triangle2 = False
 
 def draw_player(screen, pos, color, number=None, show_numbers=False):
   pygame.draw.circle(screen, color, pos, 20)  # Increased from 15 to 20
@@ -116,6 +118,12 @@ def main():
         elif event.key == pygame.K_y:  # Press 'Y' to reset triangle
           triangle_points.clear()
           show_triangle1 = False
+        elif event.key == pygame.K_g:  # Press 'G' to toggle second triangle
+          if len(triangle_points2) == 3:
+            show_triangle2 = not show_triangle2
+          else:
+            triangle_points2.clear()
+            show_triangle2 = False
       elif event.type == pygame.MOUSEMOTION:
         mouse_pos = pygame.mouse.get_pos()
         if dragging:
