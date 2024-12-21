@@ -143,11 +143,13 @@ def toggle_triangle2_handler():
 
 @socketio.on('reset_triangle')
 def reset_triangle():
-  global triangle_points, triangle_points2, show_triangle1, show_triangle2
+  global triangle_points, triangle_points2, show_triangle1, show_triangle2, show_lines, line_points
   triangle_points.clear()
   triangle_points2.clear()
   show_triangle1 = False
   show_triangle2 = False
+  show_lines = False
+  line_points.clear()
   update_board()
 
 @socketio.on('change_formation')
