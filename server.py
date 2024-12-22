@@ -208,7 +208,37 @@ def stop_tool(data):
     update_board()
 
 def update_board():
-    global show_numbers, show_ball, show_triangle1, show_triangle2, show_lines, line_points
+    global show_numbers, show_ball, show_triangle1, show_triangle2, show_lines, line_points, BLUE_TEAM, RED_TEAM
+    SCREEN.fill((34, 139, 34))
+    pygame.draw.rect(SCREEN, WHITE, (80, 60, WIDTH-160, HEIGHT-120), 2)
+    pygame.draw.line(SCREEN, WHITE, (WIDTH//2, 60), (WIDTH//2, HEIGHT-60), 2)
+    pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 85, 2)
+    pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 6)
+    pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-240, 240, 480), 2)
+    pygame.draw.rect(SCREEN, WHITE, (WIDTH-320, HEIGHT//2-240, 240, 480), 2)
+    pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-90, 72, 180), 2)
+    pygame.draw.rect(SCREEN, WHITE, (WIDTH-152, HEIGHT//2-90, 72, 180), 2)
+
+    for i, pos in enumerate(BLUE_TEAM, 1):
+        draw_player(SCREEN, pos, (0, 0, 255), i, show_numbers)
+    for i, pos in enumerate(RED_TEAM, 1):
+        draw_player(SCREEN, pos, (255, 0, 0), i, show_numbers)
+
+    if show_ball:
+        pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 15)
+
+    if show_triangle1 and len(triangle_points) == 3:
+        Shape().draw_triangle1(SCREEN, triangle_points)
+    if show_triangle2 and len(triangle_points2) == 3:
+        Shape().draw_triangle2(SCREEN, triangle_points2)
+    if show_lines and len(line_points) > 1:
+        Shape().draw_lines(SCREEN, line_points)
+
+    buffer = io.BytesIO()
+    pygame.image.save(SCREEN, buffer, 'PNG')
+    buffer.seek(0)
+    base64_image = base64.b64encode(buffer.getvalue()).decode()
+    emit('board_update', {'image': base64_image}, broadcast=True)
 
 @socketio.on('toggle_shapes')
 def toggle_shapes():

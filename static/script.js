@@ -159,6 +159,11 @@ function changeFormation(team) {
   const formation = select.options[select.selectedIndex].text;
   if (formation !== team + ' Team:') {
     socket.emit('change_formation', { formation: formation, team: team });
+    if (team === 'blue') {
+      lastBlueFormation = formation;
+    } else {
+      lastRedFormation = formation;
+    }
   }
 }
 
