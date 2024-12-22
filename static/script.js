@@ -134,6 +134,24 @@ function resetTools() {
   socket.emit('reset_triangle');
 }
 
+// Request formations when page loads
+socket.emit('get_formations');
+
+socket.on('formations_list', function(formations) {
+  const blueSelect = document.getElementById('blueFormationSelect');
+  const redSelect = document.getElementById('redFormationSelect');
+  
+  // Clear existing options except the first one
+  blueSelect.innerHTML = '<option value="blue">Blue Team:</option>';
+  redSelect.innerHTML = '<option value="red">Red Team:</option>';
+  
+  // Add formations
+  formations.forEach(formation => {
+    blueSelect.innerHTML += `<option value="${formation}">${formation}</option>`;
+    redSelect.innerHTML += `<option value="${formation}">${formation}</option>`;
+  });
+});
+
 socket.on('board_update', function(data) {
   const img = new Image();
   img.onload = function() {

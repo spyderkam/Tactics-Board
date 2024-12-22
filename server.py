@@ -28,6 +28,15 @@ show_lines = False # Added to track line visibility
 def home():
   return render_template_string(HTML_TEMPLATE)
 
+@socketio.on('get_formations')
+def get_formations():
+  from database import formation
+  # Get all case statements from the formation function
+  import inspect
+  source = inspect.getsource(formation)
+  formations = [line.split('"')[1] for line in source.split('\n') if 'case "' in line]
+  emit('formations_list', formations)
+
 @socketio.on('check_click')
 def check_click(data):
   global BLUE_TEAM, RED_TEAM, triangle_points, triangle_points2, BALL_POS, show_ball, show_lines, line_points
