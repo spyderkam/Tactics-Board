@@ -11,7 +11,7 @@ let show_triangle2 = false;
 let line_points = [];
 let triangle_points = [];
 let lastMousePos = { x: 0, y: 0 };
-const throttleDelay = 16;
+const throttleDelay = 8;  // Reduced from 16 to 8ms for smoother updates
 let lastUpdate = 0;
 let activeTool = null;
 let lineToolLocked = false;
@@ -147,7 +147,7 @@ function resetBoard() {
 }
 
 canvas.addEventListener('mousedown', handleMouseDown);
-canvas.addEventListener('mousemove', throttle(handleMouseMove, 30));
+canvas.addEventListener('mousemove', throttle(handleMouseMove, 16));  // Reduced from 30 to 16ms
 canvas.addEventListener('mouseup', () => {
   dragging = false;
   selectedPlayer = null;
