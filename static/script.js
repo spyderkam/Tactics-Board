@@ -1,3 +1,4 @@
+
 const socket = io();
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -9,10 +10,13 @@ let show_triangle = false;
 let show_lines = false;
 let show_triangle2 = false;
 let line_points = [];
+let triangle_points = [];
 let lastMousePos = { x: 0, y: 0 };
-const throttleDelay = 16; // ~60fps
+const throttleDelay = 16;
 let lastUpdate = 0;
-let activeTool = null; // Added to track the active tool
+let activeTool = null;
+let lineToolLocked = false;
+
 canvas.addEventListener('mousedown', (e) => {
   const toolActive = showBall || show_triangle || show_triangle2 || show_lines;
   if (toolActive) {
@@ -21,11 +25,13 @@ canvas.addEventListener('mousedown', (e) => {
     handleMouseDown(e, false);
   }
 });
+
 canvas.addEventListener('mousemove', throttle(handleMouseMove, 30));
 canvas.addEventListener('mouseup', () => {
   dragging = false;
   selectedPlayer = null;
 });
+
 canvas.addEventListener('mouseleave', () => {
   dragging = false;
   selectedPlayer = null;
@@ -40,31 +46,6 @@ function throttle(func, limit) {
       setTimeout(() => inThrottle = false, limit);
     }
   }
-}
-
-function toggleTriangle() {
-  show_triangle = !show_triangle;
-  if (show_triangle) {
-    activeTool = 'triangle';
-    show_triangle2 = false;
-    show_lines = false;
-    showBall = false;
-    line_points = [];
-  } else {
-    activeTool = null;
-  }
-  socket.emit('toggle_triangle');
-}
-
-function toggleTriangle2() {
-  show_triangle2 = !show_triangle2;
-  if (show_triangle2) {
-    activeTool = 'triangle2';
-    show_triangle = false;
-    show_lines = false;
-    showBall = false;
-  }
-  socket.emit('toggle_triangle2');
 }
 
 function handleMouseDown(e, isDoubleClick) {
@@ -99,7 +80,6 @@ function toggleLines() {
       show_triangle = false;
       show_triangle2 = false;
       showBall = false;
-      triangle_points = [];
     } else {
       activeTool = null;
     }
@@ -122,6 +102,32 @@ function toggleNumbers() {
   socket.emit('toggle_numbers');
 }
 
+function toggleTriangle() {
+  show_triangle = !show_triangle;
+  if (show_triangle) {
+    activeTool = 'triangle';
+    show_triangle2 = false;
+    show_lines = false;
+    showBall = false;
+  } else {
+    activeTool = null;
+  }
+  socket.emit('toggle_triangle');
+}
+
+function toggleTriangle2() {
+  show_triangle2 = !show_triangle2;
+  if (show_triangle2) {
+    activeTool = 'triangle2';
+    show_triangle = false;
+    show_lines = false;
+    showBall = false;
+  } else {
+    activeTool = null;
+  }
+  socket.emit('toggle_triangle2');
+}
+
 function resetBoard() {
   lineToolLocked = false;
   socket.emit('reset_board');
@@ -138,18 +144,31 @@ function resetTools() {
   socket.emit('reset_triangle');
 }
 
-// Request formations when page loads
-socket.emit('get_formations');
+function stopTool() {
+  const wasShowingLines = show_lines;
+  activeTool = null;
+  socket.emit('stop_tool', { preserveLines: wasShowingLines });
+}
+
+function toggleShapes() {
+  socket.emit('toggle_shapes');
+}
+
+function changeFormation(team) {
+  const select = document.getElementById(team + 'FormationSelect');
+  const formation = select.options[select.selectedIndex].text;
+  if (formation !== team + ' Team:') {
+    socket.emit('change_formation', { formation: formation, team: team });
+  }
+}
 
 socket.on('formations_list', function(formations) {
   const blueSelect = document.getElementById('blueFormationSelect');
   const redSelect = document.getElementById('redFormationSelect');
   
-  // Clear existing options except the first one
   blueSelect.innerHTML = '<option value="blue">Blue Team:</option>';
   redSelect.innerHTML = '<option value="red">Red Team:</option>';
   
-  // Add formations
   formations.forEach(formation => {
     blueSelect.innerHTML += `<option value="${formation}">${formation}</option>`;
     redSelect.innerHTML += `<option value="${formation}">${formation}</option>`;
@@ -174,26 +193,6 @@ socket.on('player_selected', function(data) {
   }
 });
 
-function changeFormation(team) {
-  const select = document.getElementById(team + 'FormationSelect');
-  const formation = select.options[select.selectedIndex].text;
-  if (formation !== team + ' Team:') {
-    socket.emit('change_formation', { formation: formation, team: team });
-  }
-}
-
-let lineToolLocked = false;
-
-function stopTool() {
-  const wasShowingLines = show_lines;
-  activeTool = null;
-  socket.emit('stop_tool', { preserveLines: wasShowingLines });
-}
-
-function toggleShapes() {
-  socket.emit('toggle_shapes');
-}
-
 socket.on('tool_stopped', function(data) {
   showBall = false;
   show_triangle = false;
@@ -201,7 +200,6 @@ socket.on('tool_stopped', function(data) {
   show_lines = false;
   activeTool = null;
 });
-
 
 document.addEventListener('keydown', (e) => {
   if (e.key.toLowerCase() === 'l') {
@@ -212,3 +210,6 @@ document.addEventListener('keydown', (e) => {
     toggleShapes();
   }
 });
+
+// Request formations when page loads
+socket.emit('get_formations');
