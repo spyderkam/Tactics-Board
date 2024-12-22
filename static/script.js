@@ -53,7 +53,7 @@ function handleMouseDown(e, isDoubleClick) {
   const rect = canvas.getBoundingClientRect();
   const x = (e.clientX - rect.left) * (canvas.width / rect.width);
   const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-  socket.emit('check_click', {x: x, y: y, isDoubleClick: isDoubleClick});
+  socket.emit('check_click', {x: x, y: y, isDoubleClick: show_triangle || show_triangle2 || show_lines});
 }
 
 function handleMouseMove(e) {
@@ -174,7 +174,7 @@ socket.on('player_selected', function(data) {
   selectedPlayer = data;
   if (showNumbers) {
     handleNumberEdit(null, data);
-  } else {
+  } else if (!show_triangle && !show_triangle2 && !show_lines) {
     dragging = true;
     lastMousePos = { x: 0, y: 0 };
   }
