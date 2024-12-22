@@ -271,18 +271,18 @@ def update_board():
   watermark_surface.blit(watermark_kam, (watermark_spyder.get_width(), 0))
   
   # Blit the combined watermark on the main screen
-  SCREEN.blit(watermark_surface, (100, HEIGHT - 150))  # Position in bottom left, higher up
+  SCREEN.blit(watermark_surface, (100, HEIGHT - 150))     # Position in bottom left, higher up
   
   # Add watermark with white background
   watermark_width = watermark_spyder.get_width() + watermark_kam.get_width()
   watermark_height = watermark_font.get_height()
   watermark_bg_surface = pygame.Surface((watermark_width, watermark_height), pygame.SRCALPHA)
-  watermark_bg_surface.fill((255, 255, 255))  # Fill the background with white
-  
+  watermark_bg_surface.fill((255, 255, 255))              # Fill the background with white
+
   # Blit the background and watermark text
-  SCREEN.blit(watermark_bg_surface, (100, HEIGHT - 150))                          # Position in bottom left, higher up
-  SCREEN.blit(watermark_spyder, (100, HEIGHT - 150))                              # Blit "spyder" on top
-  SCREEN.blit(watermark_kam, (100 + watermark_spyder.get_width(), HEIGHT - 150))  # Blit "kam" on top
+  SCREEN.blit(watermark_bg_surface, (100, HEIGHT - 150))                              # Position in bottom left, higher up
+  SCREEN.blit(watermark_spyder, (100, HEIGHT - 150))                                  # Blit "spyder" on top
+  SCREEN.blit(watermark_kam, (100 + watermark_spyder.get_width() - 5, HEIGHT - 150))  # Blit "kam" directly next to "spyder", Manually added the -5 to properly attatch it.
   
   # Save the screen with watermark
   buffer = io.BytesIO()
