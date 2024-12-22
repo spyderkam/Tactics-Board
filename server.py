@@ -261,10 +261,17 @@ def update_board():
     Shape().draw_lines(SCREEN, line_points)
 
   # Add watermark
-  watermark_font = pygame.font.SysFont('Arial', 36, bold=True)
-  watermark = watermark_font.render('spyderkam', True, (255, 255, 255))
-  watermark.set_alpha(128)  # Make it semi-transparent
-  SCREEN.blit(watermark, (100, HEIGHT - 150))  # Position in bottom left, higher up
+  watermark_font = pygame.font.SysFont('Arial Black', 50, italic=True)  # Use Arial Black in italics
+  watermark_spyder = watermark_font.render('spyder', True, (0, 0, 0))  # Black color for "spyder"
+  watermark_kam = watermark_font.render('kam', True, (255, 0, 0))  # Red color for "kam"
+  
+  # Create a surface to hold both parts
+  watermark_surface = pygame.Surface((watermark_spyder.get_width() + watermark_kam.get_width(), watermark_font.get_height()), pygame.SRCALPHA)
+  watermark_surface.blit(watermark_spyder, (0, 0))
+  watermark_surface.blit(watermark_kam, (watermark_spyder.get_width(), 0))
+  
+  # Blit the combined watermark on the main screen
+  SCREEN.blit(watermark_surface, (100, HEIGHT - 150))  # Position in bottom left, higher up
 
   # Save the screen with watermark
   buffer = io.BytesIO()
