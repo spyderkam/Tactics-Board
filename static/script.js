@@ -120,7 +120,7 @@ function toggleLines() {
       activeTool = 'lines';
       show_triangle = false;
       show_triangle2 = false;
-      showBall = false;
+      show_ball = false;
     } else {
       activeTool = null;
     }
@@ -201,7 +201,7 @@ function resetTools() {
   show_lines = false;
   show_triangle = false;
   show_triangle2 = false;
-  showBall = false;
+  show_ball = false;
   line_points = [];
   activeTool = null;
   socket.emit('reset_triangle');
