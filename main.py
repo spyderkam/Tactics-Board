@@ -165,6 +165,8 @@ def main():
     pygame.draw.rect(SCREEN, WHITE, (80, 270, 72, 180), 2)           # Left
     pygame.draw.rect(SCREEN, WHITE, (WIDTH-152, 270, 72, 180), 2)    # Right
 
+    pygame.draw.arc(screen, WHITE, arc_rect, 0, 3.14, 5)  # Draw upper arc
+
     # Draw players
     for i, pos in enumerate(BLUE_TEAM, 1):
       draw_player(SCREEN, pos, BLUE, i, show_numbers)
