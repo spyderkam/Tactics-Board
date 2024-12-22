@@ -175,8 +175,9 @@ socket.on('player_selected', function(data) {
 });
 
 function changeFormation(team) {
-  const formation = document.getElementById(team + 'FormationSelect').value;
-  if (formation !== team) {
+  const select = document.getElementById(team + 'FormationSelect');
+  const formation = select.options[select.selectedIndex].text;
+  if (formation !== team + ' Team:') {
     socket.emit('change_formation', { formation: formation, team: team });
   }
 }

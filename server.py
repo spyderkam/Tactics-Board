@@ -178,14 +178,8 @@ def handle_formation_change(data):
 def handle_reset_board():
   global BLUE_TEAM, RED_TEAM, BALL_POS, triangle_points, triangle_points2, show_triangle1, show_triangle2, show_lines, line_points
   from database import formation
-  current_blue = document.getElementById('blueFormationSelect').value
-  current_red = document.getElementById('redFormationSelect').value
-  if current_blue == 'blue':
-    current_blue = "4-3-3"  # Default formation
-  if current_red == 'red':
-    current_red = "4-3-3"  # Default formation
-  BLUE_TEAM[:] = [pos[:] for pos in formation(current_blue)["blue"]]
-  RED_TEAM[:] = [pos[:] for pos in formation(current_red)["red"]]
+  BLUE_TEAM[:] = [pos[:] for pos in formation("4-3-3")["blue"]]
+  RED_TEAM[:] = [pos[:] for pos in formation("3-4-3")["red"]]
   BALL_POS[:] = [WIDTH//2, HEIGHT//2]
   triangle_points.clear()
   triangle_points2.clear()
