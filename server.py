@@ -23,6 +23,7 @@ show_ball = False
 show_triangle1 = False
 show_triangle2 = False
 show_lines = False # Added to track line visibility
+player_numbers = {'blue': [i for i in range(1, 12)], 'red': [i for i in range(1, 12)]}
 
 @app.route('/')
 def home():
@@ -90,6 +91,9 @@ def move_player(data):
   global triangle_points, triangle_points2
   new_pos = [x, y]
     
+  if show_numbers: #Prevent movement if numbers are toggled on
+    return
+
   if team == 'ball':
     BALL_POS[0] = x
     BALL_POS[1] = y
@@ -176,7 +180,7 @@ def handle_formation_change(data):
 
 @socketio.on('reset_board')
 def handle_reset_board(data=None):
-  global BLUE_TEAM, RED_TEAM, BALL_POS, triangle_points, triangle_points2, show_triangle1, show_triangle2, show_lines, line_points
+  global BLUE_TEAM, RED_TEAM, BALL_POS, triangle_points, triangle_points2, show_triangle1, show_triangle2, show_lines, line_points, player_numbers
   from database import formation
   
   blue_formation = data['blueFormation'] if data and 'blueFormation' in data else "4-3-3"
@@ -191,6 +195,7 @@ def handle_reset_board(data=None):
   show_triangle2 = False
   show_lines = False
   line_points = []
+  player_numbers = {'blue': [i for i in range(1, 12)], 'red': [i for i in range(1, 12)]} #reset player numbers
   update_board()
 
 @socketio.on('toggle_lines') #Added
@@ -210,54 +215,19 @@ def stop_tool(data):
     emit('tool_stopped', {'preserveLines': preserve_lines})
     update_board()
 
-def update_board():
-    global show_numbers, show_ball, show_triangle1, show_triangle2, show_lines, line_points, BLUE_TEAM, RED_TEAM
-    SCREEN.fill((34, 139, 34))
-    pygame.draw.rect(SCREEN, WHITE, (80, 60, WIDTH-160, HEIGHT-120), 2)
-    pygame.draw.line(SCREEN, WHITE, (WIDTH//2, 60), (WIDTH//2, HEIGHT-60), 2)
-    pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 85, 2)
-    pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 6)
-    pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-240, 240, 480), 2)
-    pygame.draw.rect(SCREEN, WHITE, (WIDTH-320, HEIGHT//2-240, 240, 480), 2)
-    pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-90, 72, 180), 2)
-    pygame.draw.rect(SCREEN, WHITE, (WIDTH-152, HEIGHT//2-90, 72, 180), 2)
-
-    for i, pos in enumerate(BLUE_TEAM, 1):
-        draw_player(SCREEN, pos, (0, 0, 255), i, show_numbers)
-    for i, pos in enumerate(RED_TEAM, 1):
-        draw_player(SCREEN, pos, (255, 0, 0), i, show_numbers)
-
-    if show_ball:
-        pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 15)
-
-    if show_triangle1 and len(triangle_points) == 3:
-        Shape().draw_triangle1(SCREEN, triangle_points)
-    if show_triangle2 and len(triangle_points2) == 3:
-        Shape().draw_triangle2(SCREEN, triangle_points2)
-    if show_lines and len(line_points) > 1:
-        Shape().draw_lines(SCREEN, line_points)
-
-    buffer = io.BytesIO()
-    pygame.image.save(SCREEN, buffer, 'PNG')
-    buffer.seek(0)
-    base64_image = base64.b64encode(buffer.getvalue()).decode()
-    emit('board_update', {'image': base64_image}, broadcast=True)
-
-@socketio.on('toggle_shapes')
-def toggle_shapes():
-    global show_triangle1, show_triangle2, show_lines
-    if show_triangle1 or show_triangle2 or show_lines:
-        show_triangle1 = False
-        show_triangle2 = False
-        show_lines = False
-    else:
-        show_triangle1 = True
-        show_triangle2 = True
-        show_lines = True
+@socketio.on('update_player_number')
+def update_player_number(data):
+    global player_numbers
+    team = data['team']
+    index = data['index']
+    new_number = data['number']
+    if team in player_numbers and 0 <= index < len(player_numbers[team]):
+        player_numbers[team][index] = new_number
     update_board()
 
+
 def update_board():
-  global show_numbers, show_ball, show_triangle1, show_triangle2, show_lines, line_points, shapes_visible
+  global show_numbers, show_ball, show_triangle1, show_triangle2, show_lines, line_points, player_numbers
   SCREEN.fill((34, 139, 34))
   pygame.draw.rect(SCREEN, WHITE, (80, 60, WIDTH-160, HEIGHT-120), 2)
   pygame.draw.line(SCREEN, WHITE, (WIDTH//2, 60), (WIDTH//2, HEIGHT-60), 2)
@@ -269,9 +239,9 @@ def update_board():
   pygame.draw.rect(SCREEN, WHITE, (WIDTH-152, HEIGHT//2-90, 72, 180), 2)     # Right goal area
 
   for i, pos in enumerate(BLUE_TEAM, 1):
-    draw_player(SCREEN, pos, (0, 0, 255), i, show_numbers)
+    draw_player(SCREEN, pos, (0, 0, 255), player_numbers['blue'][i-1], show_numbers) #Use player_numbers
   for i, pos in enumerate(RED_TEAM, 1):
-    draw_player(SCREEN, pos, (255, 0, 0), i, show_numbers)
+    draw_player(SCREEN, pos, (255, 0, 0), player_numbers['red'][i-1], show_numbers) #Use player_numbers
 
   if show_ball:
     pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 15)
@@ -288,6 +258,19 @@ def update_board():
   buffer.seek(0)
   base64_image = base64.b64encode(buffer.getvalue()).decode()
   emit('board_update', {'image': base64_image}, broadcast=True)
+
+@socketio.on('toggle_shapes')
+def toggle_shapes():
+    global show_triangle1, show_triangle2, show_lines
+    if show_triangle1 or show_triangle2 or show_lines:
+        show_triangle1 = False
+        show_triangle2 = False
+        show_lines = False
+    else:
+        show_triangle1 = True
+        show_triangle2 = True
+        show_lines = True
+    update_board()
 
 if __name__ == '__main__':
   os.environ['SDL_VIDEODRIVER'] = 'dummy'

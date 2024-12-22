@@ -117,7 +117,20 @@ function toggleBall() {
 }
 
 function toggleNumbers() {
+  showNumbers = !showNumbers;
+  dragging = false;  // Prevent dragging when numbers are shown
   socket.emit('toggle_numbers');
+}
+
+function handleNumberEdit(e, playerData) {
+  const newNumber = prompt('Enter new number:', '');
+  if (newNumber !== null && !isNaN(newNumber) && newNumber.trim() !== '') {
+    socket.emit('update_player_number', {
+      team: playerData.team,
+      index: playerData.index,
+      number: parseInt(newNumber)
+    });
+  }
 }
 
 function toggleTriangle() {
@@ -215,7 +228,9 @@ socket.on('board_update', function(data) {
 
 socket.on('player_selected', function(data) {
   selectedPlayer = data;
-  if (activeTool === null) {
+  if (showNumbers) {
+    handleNumberEdit(null, data);
+  } else if (activeTool === null) {
     dragging = true;
     lastMousePos = { x: 0, y: 0 };
   } else {
