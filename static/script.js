@@ -1,9 +1,6 @@
 
 function handleToolSelect(value) {
   switch(value) {
-    case 'ball':
-      toggleBall();
-      break;
     case 'numbers':
       toggleNumbers();
       break;
@@ -227,7 +224,6 @@ socket.on('player_selected', function(data) {
 });
 
 socket.on('tool_stopped', function(data) {
-  showBall = false;
   show_triangle = false;
   show_triangle2 = false;
   show_lines = false;
