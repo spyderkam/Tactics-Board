@@ -55,7 +55,7 @@ class Shape:
         end_y = points[i+1][1] - dy * 20
         
         # Draw line between adjusted points
-        pygame.draw.line(surface, (128, 128, 128, 160), (start_x, start_y), (end_x, end_y), 4)
+        pygame.draw.line(surface, (0, 0, 0, 200), (start_x, start_y), (end_x, end_y), 2)
       
       screen.blit(surface, (0, 0))
 

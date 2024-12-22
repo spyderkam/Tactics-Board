@@ -38,13 +38,13 @@ line_points = []
 show_lines = False
 
 def draw_player(screen, pos, color, number=None, show_numbers=False):
-  pygame.draw.circle(screen, color, pos, 25)  # Increased to 25
+  pygame.draw.circle(screen, color, pos, 20)  # Increased from 15 to 20
   if show_numbers and number is not None:
     try:
       if len(str(number)) == 1:
-        font = pygame.font.SysFont('Arial', 35, bold=True)
-      elif len(str(number)) == 2:  # Accomidating double digit numbers
         font = pygame.font.SysFont('Arial', 28, bold=True)
+      elif len(str(number)) == 2:  # Accomidating double digit numbers
+        font = pygame.font.SysFont('Arial', 22, bold=True)
     except:
       font = pygame.font.Font(None, 32)  # Fallback to default font
     text = font.render(str(number), True, WHITE)
@@ -157,14 +157,10 @@ def main():
     pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 85, 2)
     pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 6)
 
-    # Penalty areas and arcs
+    # Penalty areas
     pygame.draw.rect(SCREEN, WHITE, (80, 120, 240, 480), 2)          # Left
     pygame.draw.rect(SCREEN, WHITE, (WIDTH-320, 120, 240, 480), 2)   # Right
-    
-    # Penalty arcs
-    pygame.draw.arc(SCREEN, WHITE, (240, 240, 160, 240), 0.96, 2.18, 2)  # Left arc
-    pygame.draw.arc(SCREEN, WHITE, (1520, 240, 160, 240), 0.96, 2.18, 2) # Right arc
-    
+
     # Goal areas
     pygame.draw.rect(SCREEN, WHITE, (80, 270, 72, 180), 2)           # Left
     pygame.draw.rect(SCREEN, WHITE, (WIDTH-152, 270, 72, 180), 2)    # Right
@@ -177,7 +173,7 @@ def main():
 
     # Draw ball
     if SHOW_BALL:
-      pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 20)  # Increased to 20
+      pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 15)  # Increased from 12 to 15
 
     # Draw triangles
     if show_triangle1 and len(triangle_points) == 3:
