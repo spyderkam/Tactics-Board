@@ -17,6 +17,20 @@ let lastUpdate = 0;
 let activeTool = null;
 let lineToolLocked = false;
 
+function toggleLines() {
+  show_lines = !show_lines;
+  if (show_lines) {
+    activeTool = 'lines';
+    show_triangle = false;
+    show_triangle2 = false;
+    showBall = false;
+    line_points = [];
+  } else {
+    activeTool = null;
+  }
+  socket.emit('toggle_lines');
+}
+
 function resetTools() {
   lineToolLocked = false;
   show_lines = false;
@@ -32,20 +46,6 @@ function toggleNumbers() {
   showNumbers = !showNumbers;
   dragging = false;
   socket.emit('toggle_numbers');
-}
-
-function toggleLines() {
-  show_lines = !show_lines;
-  if (show_lines) {
-    activeTool = 'lines';
-    show_triangle = false;
-    show_triangle2 = false;
-    showBall = false;
-  } else {
-    activeTool = null;
-    line_points = [];
-  }
-  socket.emit('toggle_lines');
 }
 
 function toggleTriangle() {
