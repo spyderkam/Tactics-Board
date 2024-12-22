@@ -50,12 +50,3 @@ The soccer field lines are drawn in both `main.py` and `server.py` because they 
 2. **In `server.py`**:
    - This file handles the WebSocket server logic and manages network interactions between the frontend and backend. Although it contains the logic for updating formations and other states, it indirectly influences the drawing process by maintaining the game's state and sending necessary updates to clients.
    - It does not directly control the drawing of lines; rather, it sends data to the frontend, which updates the visual representation of the soccer field on the web page hosted by `tactics_board.html`.
-
-
-
-<br><br><br><br>
-# Notes
-
-## Document tool usage
-
-## Issues
