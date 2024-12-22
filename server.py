@@ -175,11 +175,15 @@ def handle_formation_change(data):
   update_board()
 
 @socketio.on('reset_board')
-def handle_reset_board():
+def handle_reset_board(data=None):
   global BLUE_TEAM, RED_TEAM, BALL_POS, triangle_points, triangle_points2, show_triangle1, show_triangle2, show_lines, line_points
   from database import formation
-  BLUE_TEAM[:] = [pos[:] for pos in formation("4-3-3")["blue"]]
-  RED_TEAM[:] = [pos[:] for pos in formation("3-4-3")["red"]]
+  
+  blue_formation = data['blueFormation'] if data and 'blueFormation' in data else "4-3-3"
+  red_formation = data['redFormation'] if data and 'redFormation' in data else "3-4-3"
+  
+  BLUE_TEAM[:] = [pos[:] for pos in formation(blue_formation)["blue"]]
+  RED_TEAM[:] = [pos[:] for pos in formation(red_formation)["red"]]
   BALL_POS[:] = [WIDTH//2, HEIGHT//2]
   triangle_points.clear()
   triangle_points2.clear()

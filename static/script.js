@@ -128,7 +128,14 @@ function toggleTriangle2() {
 
 function resetBoard() {
   lineToolLocked = false;
-  socket.emit('reset_board');
+  const blueSelect = document.getElementById('blueFormationSelect');
+  const redSelect = document.getElementById('redFormationSelect');
+  const blueFormation = blueSelect.options[blueSelect.selectedIndex].text;
+  const redFormation = redSelect.options[redSelect.selectedIndex].text;
+  socket.emit('reset_board', {
+    blueFormation: blueFormation === 'Blue Team:' ? '4-3-3' : blueFormation,
+    redFormation: redFormation === 'Red Team:' ? '3-4-3' : redFormation
+  });
 }
 
 function resetTools() {
