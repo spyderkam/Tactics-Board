@@ -19,21 +19,11 @@ let lineToolLocked = false;
 
 function handleToolSelect(value) {
   switch(value) {
-    case 'numbers':
-      toggleNumbers();
-      break;
-    case 'triangle':
-      toggleTriangle();
-      break;
-    case 'triangle2':
-      toggleTriangle2();
-      break;
-    case 'lines':
-      toggleLines();
-      break;
-    case 'reset':
-      resetTools();
-      break;
+    case 'numbers': toggleNumbers(); break;
+    case 'triangle': toggleTriangle(); break;
+    case 'triangle2': toggleTriangle2(); break;
+    case 'lines': toggleLines(); break;
+    case 'reset': resetTools(); break;
   }
   document.getElementById('toolsSelect').selectedIndex = 0;
 }
@@ -58,14 +48,11 @@ function handleMouseDown(e) {
 
 function handleMouseMove(e) {
   if (!dragging || !selectedPlayer) return;
-
   const now = Date.now();
   if (now - lastUpdate < throttleDelay) return;
-
   const rect = canvas.getBoundingClientRect();
   const x = Math.max(0, Math.min(canvas.width, (e.clientX - rect.left) * (canvas.width / rect.width)));
   const y = Math.max(0, Math.min(canvas.height, (e.clientY - rect.top) * (canvas.height / rect.height)));
-
   socket.emit('move_player', {x: x, y: y, team: selectedPlayer.team, index: selectedPlayer.index});
   lastMousePos = { x, y };
   lastUpdate = now;
@@ -73,26 +60,22 @@ function handleMouseMove(e) {
 
 function toggleLines() {
   show_lines = !show_lines;
+  activeTool = show_lines ? 'lines' : null;
   if (show_lines) {
-    activeTool = 'lines';
     show_triangle = false;
     show_triangle2 = false;
     show_ball = false;
-  } else {
-    activeTool = null;
   }
   socket.emit('toggle_lines');
 }
 
 function toggleBall() {
   show_ball = !show_ball;
+  activeTool = show_ball ? 'ball' : null;
   if (show_ball) {
-    activeTool = 'ball';
     show_triangle = false;
     show_triangle2 = false;
     show_lines = false;
-  } else {
-    activeTool = null;
   }
   socket.emit('toggle_ball');
 }
@@ -105,26 +88,22 @@ function toggleNumbers() {
 
 function toggleTriangle() {
   show_triangle = !show_triangle;
+  activeTool = show_triangle ? 'triangle' : null;
   if (show_triangle) {
-    activeTool = 'triangle';
     show_triangle2 = false;
     show_lines = false;
     show_ball = false;
-  } else {
-    activeTool = null;
   }
   socket.emit('toggle_triangle');
 }
 
 function toggleTriangle2() {
   show_triangle2 = !show_triangle2;
+  activeTool = show_triangle2 ? 'triangle2' : null;
   if (show_triangle2) {
-    activeTool = 'triangle2';
     show_triangle = false;
     show_lines = false;
     show_ball = false;
-  } else {
-    activeTool = null;
   }
   socket.emit('toggle_triangle2');
 }
@@ -162,34 +141,18 @@ function resetBoard() {
   lineToolLocked = false;
   const blueSelect = document.getElementById('blueFormationSelect');
   const redSelect = document.getElementById('redFormationSelect');
-  const blueFormation = blueSelect.options[blueSelect.selectedIndex].text;
-  const redFormation = redSelect.options[redSelect.selectedIndex].text;
   socket.emit('reset_board', {
-    blueFormation: blueFormation === 'Blue Team:' ? '4-3-3' : blueFormation,
-    redFormation: redFormation === 'Red Team:' ? '3-4-3' : redFormation
+    blueFormation: blueSelect.options[blueSelect.selectedIndex].text === 'Blue Team:' ? '4-3-3' : blueSelect.options[blueSelect.selectedIndex].text,
+    redFormation: redSelect.options[redSelect.selectedIndex].text === 'Red Team:' ? '3-4-3' : redSelect.options[redSelect.selectedIndex].text
   });
 }
 
-socket.on('player_selected', function(data) {
-  selectedPlayer = data;
-  if (showNumbers) {
-    handleNumberEdit(null, data);
-  } else if (!show_triangle && !show_triangle2 && !show_lines) {
-    dragging = true;
-    lastMousePos = { x: 0, y: 0 };
-  }
-});
-
-canvas.addEventListener('mousedown', (e) => {
-  handleMouseDown(e, false);
-});
-
+canvas.addEventListener('mousedown', handleMouseDown);
 canvas.addEventListener('mousemove', throttle(handleMouseMove, 30));
 canvas.addEventListener('mouseup', () => {
   dragging = false;
   selectedPlayer = null;
 });
-
 canvas.addEventListener('mouseleave', () => {
   dragging = false;
   selectedPlayer = null;
@@ -226,24 +189,12 @@ socket.on('tool_stopped', function(data) {
 socket.on('formations_list', function(formations) {
   const blueSelect = document.getElementById('blueFormationSelect');
   const redSelect = document.getElementById('redFormationSelect');
-  
   blueSelect.innerHTML = '<option value="blue">Blue Team:</option>';
   redSelect.innerHTML = '<option value="red">Red Team:</option>';
-  
   formations.forEach(formation => {
     blueSelect.innerHTML += `<option value="${formation}">${formation}</option>`;
     redSelect.innerHTML += `<option value="${formation}">${formation}</option>`;
   });
-});
-
-document.addEventListener('keydown', (e) => {
-  if (e.key.toLowerCase() === 'l') {
-    toggleLines();
-  } else if (e.key.toLowerCase() === 's') {
-    stopTool();
-  } else if (e.key.toLowerCase() === 'u') {
-    toggleShapes();
-  }
 });
 
 socket.emit('get_formations');

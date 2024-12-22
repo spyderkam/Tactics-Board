@@ -260,29 +260,19 @@ def update_board():
   if show_lines and len(line_points) > 1:
     Shape().draw_lines(SCREEN, line_points)
 
-  # Add watermark
-  watermark_font = pygame.font.SysFont('Arial Black', 75, italic=True)  # Use Arial Black in italics
-  watermark_spyder = watermark_font.render('spyder', True, (0, 0, 0))   # Black color for "spyder"
-  watermark_kam = watermark_font.render('kam', True, (255, 0, 0))       # Red color for "kam"
-  
-  # Create a surface to hold both parts
-  watermark_surface = pygame.Surface((watermark_spyder.get_width() + watermark_kam.get_width(), watermark_font.get_height()), pygame.SRCALPHA)
-  watermark_surface.blit(watermark_spyder, (0, 0))
-  watermark_surface.blit(watermark_kam, (watermark_spyder.get_width(), 0))
-  
-  # Blit the combined watermark on the main screen
-  SCREEN.blit(watermark_surface, (100, HEIGHT - 150))     # Position in bottom left, higher up
-  
   # Add watermark with white background
+  watermark_font = pygame.font.SysFont('Arial Black', 75, italic=True)
+  watermark_spyder = watermark_font.render('spyder', True, (0, 0, 0))
+  watermark_kam = watermark_font.render('kam', True, (255, 0, 0))
+  
   watermark_width = watermark_spyder.get_width() + watermark_kam.get_width()
   watermark_height = watermark_font.get_height()
   watermark_bg_surface = pygame.Surface((watermark_width, watermark_height), pygame.SRCALPHA)
-  watermark_bg_surface.fill((255, 255, 255))              # Fill the background with white
+  watermark_bg_surface.fill((255, 255, 255))
 
-  # Blit the background and watermark text
-  SCREEN.blit(watermark_bg_surface, (100, HEIGHT - 150))                              # Position in bottom left, higher up
-  SCREEN.blit(watermark_spyder, (100, HEIGHT - 150))                                  # Blit "spyder" on top
-  SCREEN.blit(watermark_kam, (100 + watermark_spyder.get_width() - 7, HEIGHT - 150))  # Blit "kam" directly next to "spyder", Manually added the -7 to properly attatch it.
+  SCREEN.blit(watermark_bg_surface, (100, HEIGHT - 150))
+  SCREEN.blit(watermark_spyder, (100, HEIGHT - 150))
+  SCREEN.blit(watermark_kam, (100 + watermark_spyder.get_width() - 7, HEIGHT - 150))
   
   # Save the screen with watermark
   buffer = io.BytesIO()
