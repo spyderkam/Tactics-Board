@@ -1,4 +1,3 @@
-
 function handleToolSelect(value) {
   switch(value) {
     case 'numbers':
