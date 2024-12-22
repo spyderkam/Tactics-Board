@@ -42,7 +42,6 @@ let selectedPlayer = null;
 let showBall = false;
 let showNumbers = false;
 let show_triangle = false;
-let show_lines = false;
 let show_triangle2 = false;
 let line_points = [];
 let triangle_points = [];
