@@ -54,8 +54,22 @@ class Shape:
         end_x = points[i+1][0] - dx * 20
         end_y = points[i+1][1] - dy * 20
         
-        # Draw line between adjusted points
-        pygame.draw.line(surface, (0, 0, 0, 200), (start_x, start_y), (end_x, end_y), 4)
+        # Draw dashed line between adjusted points
+        dash_length = 20
+        dash_gap = 10
+        total_length = ((end_x - start_x)**2 + (end_y - start_y)**2)**0.5
+        num_dashes = int(total_length / (dash_length + dash_gap))
+        
+        for i in range(num_dashes):
+            start_ratio = i * (dash_length + dash_gap) / total_length
+            end_ratio = min((i * (dash_length + dash_gap) + dash_length) / total_length, 1)
+            
+            dash_start_x = start_x + (end_x - start_x) * start_ratio
+            dash_start_y = start_y + (end_y - start_y) * start_ratio
+            dash_end_x = start_x + (end_x - start_x) * end_ratio
+            dash_end_y = start_y + (end_y - start_y) * end_ratio
+            
+            pygame.draw.line(surface, (0, 0, 0, 200), (dash_start_x, dash_start_y), (dash_end_x, dash_end_y), 6)
       
       screen.blit(surface, (0, 0))
 
