@@ -37,13 +37,16 @@
       <option value="4231">4-2-3-1</option>
       <option value="352">3-5-2</option>
     </select>
-    <button onclick="toggleBall()">Toggle Ball (B)</button>
-    <button onclick="toggleNumbers()">Toggle Numbers (N)</button>
-    <button onclick="toggleTriangle()">Toggle Triangle (T)</button>
-    <button onclick="toggleTriangle2()">Toggle Triangle 2 (G)</button>
-    <button onclick="toggleLines()">Toggle Lines (L)</button>
+    <select id="toolsSelect" onchange="handleToolSelect(this.value)" style="padding: 8px; margin-right: 10px;">
+      <option value="">Tools:</option>
+      <option value="ball">Toggle Ball (B)</option>
+      <option value="numbers">Toggle Numbers (N)</option>
+      <option value="triangle">Toggle Triangle (T)</option>
+      <option value="triangle2">Toggle Triangle 2 (G)</option>
+      <option value="lines">Toggle Lines (L)</option>
+      <option value="reset">Reset Tools (Y)</option>
+    </select>
     <button onclick="stopTool()">Stop Tool (S)</button>
-    <button onclick="resetTools()">Reset Tools (Y)</button>
     <button onclick="toggleShapes()">Toggle Shapes (U)</button>
     <button onclick="resetBoard()">Reset (R)</button>
   </div>

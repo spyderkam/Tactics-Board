@@ -1,4 +1,27 @@
 
+function handleToolSelect(value) {
+  switch(value) {
+    case 'ball':
+      toggleBall();
+      break;
+    case 'numbers':
+      toggleNumbers();
+      break;
+    case 'triangle':
+      toggleTriangle();
+      break;
+    case 'triangle2':
+      toggleTriangle2();
+      break;
+    case 'lines':
+      toggleLines();
+      break;
+    case 'reset':
+      resetTools();
+      break;
+  }
+}
+
 const socket = io();
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
