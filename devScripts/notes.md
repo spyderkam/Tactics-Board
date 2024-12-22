@@ -1,6 +1,6 @@
 # Notes
 
-## What is the significance of `BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]` vs. just `BLUE_TEAM = ORIGINAL_BLUE'?
+## What is the significance of `BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]` vs. just `BLUE_TEAM = ORIGINAL_BLUE`?
 
 The significance of using `BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]` versus `BLUE_TEAM = ORIGINAL_BLUE` lies in how they handle mutable objects like lists.
 
@@ -33,10 +33,10 @@ print(BLUE_TEAM)      # Now [[200, 540], [456, 360], [456, 540]]
 ```
 
 ### In Summary
-#### Creating a shallow copy
+Creating a shallow copy:
 `BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]`
 
-#### Creating a reference
+Creating a reference:
 `BLUE_TEAM = ORIGINAL_BLUE`
 
 
