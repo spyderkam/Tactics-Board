@@ -28,25 +28,24 @@ function resetTools() {
   socket.emit('reset_triangle');
 }
 
-function toggleLines() {
-  if (!lineToolLocked) {
-    show_lines = !show_lines;
-    if (show_lines) {
-      activeTool = 'lines';
-      show_triangle = false;
-      show_triangle2 = false;
-      showBall = false;
-    } else {
-      activeTool = null;
-    }
-    socket.emit('toggle_lines');
-  }
-}
-
 function toggleNumbers() {
   showNumbers = !showNumbers;
   dragging = false;
   socket.emit('toggle_numbers');
+}
+
+function toggleLines() {
+  show_lines = !show_lines;
+  if (show_lines) {
+    activeTool = 'lines';
+    show_triangle = false;
+    show_triangle2 = false;
+    showBall = false;
+  } else {
+    activeTool = null;
+    line_points = [];
+  }
+  socket.emit('toggle_lines');
 }
 
 function toggleTriangle() {
@@ -130,24 +129,6 @@ function resetBoard() {
   });
 }
 
-function stopTool() {
-  const wasShowingLines = show_lines;
-  activeTool = null;
-  socket.emit('stop_tool', { preserveLines: wasShowingLines });
-}
-
-function toggleShapes() {
-  socket.emit('toggle_shapes');
-}
-
-function changeFormation(team) {
-  const select = document.getElementById(team + 'FormationSelect');
-  const formation = select.options[select.selectedIndex].text;
-  if (formation !== team + ' Team:') {
-    socket.emit('change_formation', { formation: formation, team: team });
-  }
-}
-
 function handleMouseDown(e, isDoubleClick) {
   const rect = canvas.getBoundingClientRect();
   const x = (e.clientX - rect.left) * (canvas.width / rect.width);
@@ -168,6 +149,24 @@ function handleMouseMove(e) {
   socket.emit('move_player', {x: x, y: y, team: selectedPlayer.team, index: selectedPlayer.index});
   lastMousePos = { x, y };
   lastUpdate = now;
+}
+
+function stopTool() {
+  const wasShowingLines = show_lines;
+  activeTool = null;
+  socket.emit('stop_tool', { preserveLines: wasShowingLines });
+}
+
+function toggleShapes() {
+  socket.emit('toggle_shapes');
+}
+
+function changeFormation(team) {
+  const select = document.getElementById(team + 'FormationSelect');
+  const formation = select.options[select.selectedIndex].text;
+  if (formation !== team + ' Team:') {
+    socket.emit('change_formation', { formation: formation, team: team });
+  }
 }
 
 function throttle(func, limit) {
