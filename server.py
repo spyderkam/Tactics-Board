@@ -234,16 +234,16 @@ def update_board():
   pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 85, 2)
   pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 6)
   # Draw penalty areas
-  pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-240, 240, 480), 2)          # Left penalty area
-  pygame.draw.rect(SCREEN, WHITE, (WIDTH-320, HEIGHT//2-240, 240, 480), 2)   # Right penalty area
+  pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-180, 160, 360), 2)          # Left penalty area
+  pygame.draw.rect(SCREEN, WHITE, (WIDTH-240, HEIGHT//2-180, 160, 360), 2)   # Right penalty area
   
   # Draw penalty arcs
-  pygame.draw.arc(SCREEN, WHITE, (220, HEIGHT//2-100, 200, 240), 4.71, 1.57, 3)  # Left arc rotated 90 degrees clockwise
-  pygame.draw.arc(SCREEN, WHITE, (WIDTH-420, HEIGHT//2-100, 200, 240), 1.57, 4.71, 3)  # Right arc rotated 90 degrees counter clockwise
+  pygame.draw.arc(SCREEN, WHITE, (160, HEIGHT//2-90, 160, 180), 4.71, 1.57, 2)  # Left arc
+  pygame.draw.arc(SCREEN, WHITE, (WIDTH-320, HEIGHT//2-90, 160, 180), 1.57, 4.71, 2)  # Right arc
   
   # Draw goal areas
-  pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-90, 60, 160), 1)            # Left goal area
-  pygame.draw.rect(SCREEN, WHITE, (WIDTH-152, HEIGHT//2-90, 60, 160), 1)     # Right goal area
+  pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-90, 60, 180), 2)            # Left goal area
+  pygame.draw.rect(SCREEN, WHITE, (WIDTH-140, HEIGHT//2-90, 60, 180), 2)     # Right goal area
 
   for i, pos in enumerate(BLUE_TEAM, 1):
     draw_player(SCREEN, pos, (0, 0, 255), player_numbers['blue'][i-1], show_numbers) #Use player_numbers
