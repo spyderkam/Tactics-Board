@@ -38,13 +38,13 @@ line_points = []
 show_lines = False
 
 def draw_player(screen, pos, color, number=None, show_numbers=False):
-  pygame.draw.circle(screen, color, pos, 20)  # Increased from 15 to 20
+  pygame.draw.circle(screen, color, pos, 25)  # Increased to 25
   if show_numbers and number is not None:
     try:
       if len(str(number)) == 1:
-        font = pygame.font.SysFont('Arial', 28, bold=True)
+        font = pygame.font.SysFont('Arial', 35, bold=True)
       elif len(str(number)) == 2:  # Accomidating double digit numbers
-        font = pygame.font.SysFont('Arial', 22, bold=True)
+        font = pygame.font.SysFont('Arial', 28, bold=True)
     except:
       font = pygame.font.Font(None, 32)  # Fallback to default font
     text = font.render(str(number), True, WHITE)
@@ -173,7 +173,7 @@ def main():
 
     # Draw ball
     if SHOW_BALL:
-      pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 15)  # Increased from 12 to 15
+      pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 20)  # Increased to 20
 
     # Draw triangles
     if show_triangle1 and len(triangle_points) == 3:
