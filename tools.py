@@ -1,4 +1,3 @@
-kita
 #!/user/bin/env python3
 
 __author__ = "spyderkam"
