@@ -51,7 +51,7 @@ def formation(formation_type):
         [1200, 540],   # CAM
         [1200, 810],   # RAM
         [1420, 540],   # ST
-      ], "r-e-d": [
+      ], "red": [
         [1740, 540],   # GK
         [1356, 252],   # LB
         [1464, 450],   # LCB
