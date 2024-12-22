@@ -118,6 +118,10 @@ function toggleBall() {
   socket.emit('toggle_ball');
 }
 
+function toggleNumbers() {
+  socket.emit('toggle_numbers');
+}
+
 function resetBoard() {
   lineToolLocked = false;
   socket.emit('reset_board');
