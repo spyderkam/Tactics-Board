@@ -199,18 +199,19 @@ def stop_tool(data):
     update_board()
 
 def update_board():
-  global show_numbers, show_ball, show_triangle1, show_triangle2, show_lines, line_points, shapes_visible
+    global show_numbers, show_ball, show_triangle1, show_triangle2, show_lines, line_points
 
 @socketio.on('toggle_shapes')
 def toggle_shapes():
-    global show_triangle1, show_triangle2, show_lines, shapes_visible
-    if 'shapes_visible' not in globals():
-        global shapes_visible
-        shapes_visible = True
-    shapes_visible = not shapes_visible
-    show_triangle1 = show_triangle1 and shapes_visible
-    show_triangle2 = show_triangle2 and shapes_visible
-    show_lines = show_lines and shapes_visible
+    global show_triangle1, show_triangle2, show_lines
+    if show_triangle1 or show_triangle2 or show_lines:
+        show_triangle1 = False
+        show_triangle2 = False
+        show_lines = False
+    else:
+        show_triangle1 = True
+        show_triangle2 = True
+        show_lines = True
     update_board()
 
 def update_board():

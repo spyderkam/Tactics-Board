@@ -185,5 +185,7 @@ document.addEventListener('keydown', (e) => {
     toggleLines();
   } else if (e.key.toLowerCase() === 's') {
     stopTool();
+  } else if (e.key.toLowerCase() === 'u') {
+    toggleShapes();
   }
 });
