@@ -33,10 +33,10 @@ print(BLUE_TEAM)      # Now [[200, 540], [456, 360], [456, 540]]
 ```
 
 ### In Summary
-**Creating a shallow copy**
+#### Creating a shallow copy
 `BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]`
 
-#### Creating a reference*
+#### Creating a reference
 `BLUE_TEAM = ORIGINAL_BLUE`
 
 
