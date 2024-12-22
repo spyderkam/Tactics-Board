@@ -234,12 +234,12 @@ def update_board():
   pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 85, 2)
   pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 6)
   # Draw penalty areas
-  pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-180, 160, 360), 2)          # Left penalty area
-  pygame.draw.rect(SCREEN, WHITE, (WIDTH-240, HEIGHT//2-180, 160, 360), 2)   # Right penalty area
+  pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-220, 220, 440), 2)          # Left penalty area
+  pygame.draw.rect(SCREEN, WHITE, (WIDTH-300, HEIGHT//2-220, 220, 440), 2)   # Right penalty area
   
   # Draw penalty arcs
-  pygame.draw.arc(SCREEN, WHITE, (160, HEIGHT//2-90, 160, 180), 4.71, 1.57, 2)  # Left arc
-  pygame.draw.arc(SCREEN, WHITE, (WIDTH-320, HEIGHT//2-90, 160, 180), 1.57, 4.71, 2)  # Right arc
+  pygame.draw.arc(SCREEN, WHITE, (220, HEIGHT//2-85, 170, 170), 4.71, 1.57, 2)  # Left arc
+  pygame.draw.arc(SCREEN, WHITE, (WIDTH-390, HEIGHT//2-85, 170, 170), 1.57, 4.71, 2)  # Right arc
   
   # Draw goal areas
   pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-90, 60, 180), 2)            # Left goal area
