@@ -49,11 +49,11 @@ function resetTools() {
   socket.emit('reset_triangle');
 }
 
-function handleMouseDown(e, isDoubleClick) {
+function handleMouseDown(e) {
   const rect = canvas.getBoundingClientRect();
   const x = (e.clientX - rect.left) * (canvas.width / rect.width);
   const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-  socket.emit('check_click', {x: x, y: y, isDoubleClick: show_triangle || show_triangle2 || show_lines});
+  socket.emit('check_click', {x: x, y: y, isToolActive: show_triangle || show_triangle2 || show_lines});
 }
 
 function handleMouseMove(e) {

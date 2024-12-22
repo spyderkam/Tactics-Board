@@ -42,7 +42,7 @@ def get_formations():
 def check_click(data):
   global BLUE_TEAM, RED_TEAM, triangle_points, triangle_points2, BALL_POS, show_ball, show_lines, line_points
   x, y = data['x'], data['y']
-  isToolClick = data.get('isDoubleClick', False)  # Reusing existing parameter
+  isToolClick = data.get('isToolActive', False)  # Check if a shape tool is active
     
   # Check if ball is clicked first when visible
   if show_ball and ((x - BALL_POS[0])**2 + (y - BALL_POS[1])**2)**0.5 < 15:  # Matches player click detection radius
