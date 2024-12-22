@@ -91,7 +91,7 @@ Created by spyderkam
 
 ## 📝 License
 
-All rights reserved. For educational purposes only.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/spyderkam/Tactics-Board/blob/main/LICENSE) file for details.
 
 ---
 *Last updated: 2024*
