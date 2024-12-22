@@ -1,4 +1,4 @@
-# Notes
+# Questions Asked and Answered
 
 ## What is the significance of `BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]` vs. just `BLUE_TEAM = ORIGINAL_BLUE`?
 
@@ -39,11 +39,23 @@ Creating a shallow copy: <br>
 Creating a reference:: <br>
 `BLUE_TEAM = ORIGINAL_BLUE`
 
+## Why are some of the field lines being drawn in `main.py` and others in `server.py`?
+
+The soccer field lines are drawn in both `main.py` and `server.py` because they serve different purposes in your application:
+
+1. **In `main.py`**:
+   - This file manages the core game logic and Pygame display. The lines representing the soccer field (outer boundaries, center line, penalty areas, and center circle) are drawn during each iteration of the main game loop within the Pygame rendering context. It is responsible for real-time visuals and player interactions.
+   - This allows for dynamic updates based on user input, such as moving players or toggling the visibility of certain shapes.
+
+2. **In `server.py`**:
+   - This file handles the WebSocket server logic and manages network interactions between the frontend and backend. Although it contains the logic for updating formations and other states, it indirectly influences the drawing process by maintaining the game's state and sending necessary updates to clients.
+   - It does not directly control the drawing of lines; rather, it sends data to the frontend, which updates the visual representation of the soccer field on the web page hosted by `tactics_board.html`.
+
 
 
 <br><br><br><br>
-## Why are some of the field lines being drawn in `main.py` and others in `server.py`?
+# Notes
 
 ## Document tool usage
 
-## Issues:
+## Issues
