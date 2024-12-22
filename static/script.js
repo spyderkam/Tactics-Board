@@ -158,12 +158,12 @@ canvas.addEventListener('mouseleave', () => {
 });
 
 function throttle(func, limit) {
-  let inThrottle;
+  let lastRun = 0;
   return function(...args) {
-    if (!inThrottle) {
+    const now = Date.now();
+    if (now - lastRun >= limit) {
       func.apply(this, args);
-      inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+      lastRun = now;
     }
   }
 }

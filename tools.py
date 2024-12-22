@@ -7,17 +7,19 @@ import pygame
 
 class Shape:
   """Shapes to draw on the board."""
-  def draw_triangle1(self, screen, points):
-    "Semi-transparent orange triangle"
+  def _draw_triangle(self, screen, points, color):
+    """Base method for drawing triangles"""
     surface = pygame.Surface((1920, 1080), pygame.SRCALPHA)
-    pygame.draw.polygon(surface, (255, 165, 0, 100), points)
+    pygame.draw.polygon(surface, color, points)
     screen.blit(surface, (0, 0))
 
+  def draw_triangle1(self, screen, points):
+    """Semi-transparent orange triangle"""
+    self._draw_triangle(screen, points, (255, 165, 0, 100))
+
   def draw_triangle2(self, screen, points):
-    "Semi-transparent purple triangle"
-    surface = pygame.Surface((1920, 1080), pygame.SRCALPHA)
-    pygame.draw.polygon(surface, (128, 0, 128, 100), points)
-    screen.blit(surface, (0, 0))
+    """Semi-transparent purple triangle"""
+    self._draw_triangle(screen, points, (128, 0, 128, 100))
 
   def draw_lines(self, screen, points):
     """Draw dashed lines connecting consecutive points"""

@@ -2,9 +2,8 @@
 
 __author__ = "spyderkam"
 
-from database import *
+from database import formation, GREEN, WHITE, BLUE, RED
 from tools import Shape
-import os
 import pygame
 import sys
 
