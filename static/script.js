@@ -40,7 +40,7 @@ let activeTool = null;
 let lineToolLocked = false;
 
 canvas.addEventListener('mousedown', (e) => {
-  const toolActive = show_ball || show_triangle || show_triangle2 || show_lines;
+  const toolActive = showBall || show_triangle || show_triangle2 || show_lines;
   if (toolActive) {
     handleMouseDown(e, true);
   } else {
@@ -108,8 +108,8 @@ function toggleLines() {
 }
 
 function toggleBall() {
-  show_ball = !show_ball;
-  if (show_ball) {
+  showBall = !showBall;
+  if (showBall) {
     activeTool = 'ball';
     show_triangle = false;
     show_triangle2 = false;
