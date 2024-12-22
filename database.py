@@ -149,7 +149,7 @@ def formation(formation_type):
       ]}
 
 
-    case "442d":
+    case "442 Diamond":
       return {"blue": [
         [180, 540],    # GK
         [456, 252],    # LB
