@@ -1,5 +1,21 @@
 
+const socket = io();
+const canvas = document.getElementById('board');
+const ctx = canvas.getContext('2d');
+let dragging = false;
+let selectedPlayer = null;
+let showBall = false;
+let showNumbers = false;
+let show_triangle = false;
+let show_triangle2 = false;
 let show_lines = false;
+let line_points = [];
+let triangle_points = [];
+let lastMousePos = { x: 0, y: 0 };
+const throttleDelay = 16;
+let lastUpdate = 0;
+let activeTool = null;
+let lineToolLocked = false;
 
 function resetTools() {
   lineToolLocked = false;
@@ -33,23 +49,6 @@ function handleToolSelect(value) {
   // Reset dropdown to default option
   document.getElementById('toolsSelect').selectedIndex = 0;
 }
-
-const socket = io();
-const canvas = document.getElementById('board');
-const ctx = canvas.getContext('2d');
-let dragging = false;
-let selectedPlayer = null;
-let showBall = false;
-let showNumbers = false;
-let show_triangle = false;
-let show_triangle2 = false;
-let line_points = [];
-let triangle_points = [];
-let lastMousePos = { x: 0, y: 0 };
-const throttleDelay = 16;
-let lastUpdate = 0;
-let activeTool = null;
-let lineToolLocked = false;
 
 canvas.addEventListener('mousedown', (e) => {
   const toolActive = showBall || show_triangle || show_triangle2 || show_lines;
@@ -185,17 +184,6 @@ function resetBoard() {
   });
 }
 
-function resetTools() {
-  lineToolLocked = false;
-  show_lines = false;
-  show_triangle = false;
-  show_triangle2 = false;
-  showBall = false;
-  line_points = [];
-  activeTool = null;
-  socket.emit('reset_triangle');
-}
-
 function stopTool() {
   const wasShowingLines = show_lines;
   activeTool = null;
@@ -211,11 +199,6 @@ function changeFormation(team) {
   const formation = select.options[select.selectedIndex].text;
   if (formation !== team + ' Team:') {
     socket.emit('change_formation', { formation: formation, team: team });
-    if (team === 'blue') {
-      lastBlueFormation = formation;
-    } else {
-      lastRedFormation = formation;
-    }
   }
 }
 
@@ -256,7 +239,9 @@ socket.on('tool_stopped', function(data) {
   if (activeTool !== 'ball') {
     show_triangle = false;
     show_triangle2 = false;
-    show_lines = false;
+    if (!data.preserveLines) {
+      show_lines = false;
+    }
     activeTool = null;
   }
 });
