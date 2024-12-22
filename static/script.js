@@ -146,9 +146,8 @@ function resetBoard() {
   });
 }
 
-// Mouse Events
 canvas.addEventListener('mousedown', handleMouseDown);
-canvas.addEventListener('mousemove', throttle(handleMouseMove, 8));  // Further reduced from 16 to 8ms
+canvas.addEventListener('mousemove', throttle(handleMouseMove, 16));  // Reduced from 30 to 16ms
 canvas.addEventListener('mouseup', () => {
   dragging = false;
   selectedPlayer = null;
@@ -157,37 +156,6 @@ canvas.addEventListener('mouseleave', () => {
   dragging = false;
   selectedPlayer = null;
 });
-
-// Touch Events
-canvas.addEventListener('touchstart', (e) => {
-  e.preventDefault();
-  const touch = e.touches[0];
-  handleMouseDown({
-    clientX: touch.clientX,
-    clientY: touch.clientY
-  });
-}, { passive: false });
-
-canvas.addEventListener('touchmove', throttle((e) => {
-  e.preventDefault();
-  const touch = e.touches[0];
-  handleMouseMove({
-    clientX: touch.clientX,
-    clientY: touch.clientY
-  });
-}, 8), { passive: false });
-
-canvas.addEventListener('touchend', (e) => {
-  e.preventDefault();
-  dragging = false;
-  selectedPlayer = null;
-}, { passive: false });
-
-canvas.addEventListener('touchcancel', (e) => {
-  e.preventDefault();
-  dragging = false;
-  selectedPlayer = null;
-}, { passive: false });
 
 function throttle(func, limit) {
   let lastRun = 0;
