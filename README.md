@@ -44,11 +44,10 @@ An interactive real-time football tactics board built with Python, Flask, and Py
 - `S` - Stop active tool
 - `U` - Toggle all active shapes
 
-### Mouse/Touch Controls
+### Mouse Controls
 - Click/tap and drag players to move them
 - Double-click/tap players when using shape tools
 - Click/tap and drag the ball when visible
-- Intuitive touch controls for mobile devices
 
 ## 🔧 Technical Requirements
 

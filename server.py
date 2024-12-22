@@ -251,7 +251,7 @@ def update_board():
     draw_player(SCREEN, pos, (255, 0, 0), player_numbers['red'][i-1], show_numbers) #Use player_numbers
 
   if show_ball:
-    pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 15)
+    pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 22)     # Increased ball size from 15 to 22,
         
   if show_triangle1 and len(triangle_points) == 3:
     Shape().draw_triangle1(SCREEN, triangle_points)
