@@ -65,11 +65,9 @@ function handleMouseMove(e) {
   const x = Math.max(0, Math.min(canvas.width, (e.clientX - rect.left) * (canvas.width / rect.width)));
   const y = Math.max(0, Math.min(canvas.height, (e.clientY - rect.top) * (canvas.height / rect.height)));
 
-  if (Math.abs(x - lastMousePos.x) > 1 || Math.abs(y - lastMousePos.y) > 1) {
-    socket.emit('move_player', {x: x, y: y, team: selectedPlayer.team, index: selectedPlayer.index});
-    lastMousePos = { x, y };
-    lastUpdate = now;
-  }
+  socket.emit('move_player', {x: x, y: y, team: selectedPlayer.team, index: selectedPlayer.index});
+  lastMousePos = { x, y };
+  lastUpdate = now;
 }
 
 function toggleLines() {
@@ -189,11 +187,11 @@ socket.on('board_update', function(data) {
 });
 
 socket.on('player_selected', function(data) {
+  selectedPlayer = data;
   if (activeTool === null) {
     dragging = true;
-    selectedPlayer = data;
+    lastMousePos = { x: 0, y: 0 };
   } else {
-    selectedPlayer = data;
     dragging = false;
   }
 });
