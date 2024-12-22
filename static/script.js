@@ -1,4 +1,3 @@
-
 const socket = io();
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -198,3 +197,8 @@ socket.on('formations_list', function(formations) {
 });
 
 socket.emit('get_formations');
+
+socket.on('player_selected', function(data) {
+  dragging = true;
+  selectedPlayer = data;
+});
