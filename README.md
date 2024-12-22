@@ -1,4 +1,3 @@
-
 # ⚽ Football Tactics Board (Beta v0.9.0)
 
 An interactive real-time football tactics board built with Python, Flask, and Pygame. Perfect for coaches, analysts, and football enthusiasts to create and visualize game strategies.
@@ -8,6 +7,7 @@ An interactive real-time football tactics board built with Python, Flask, and Py
 ### Team Management
 - Interactive drag-and-drop player movement with smooth animations
 - Jersey number customization (supports both single and double digits)
+  - Note: When player numbers are enabled, drag functionality may experience reduced optimization
 - Multiple formation presets:
   - 4-3-3 (Default attacking formation)
   - 4-4-2 (Classic formation)
@@ -17,13 +17,23 @@ An interactive real-time football tactics board built with Python, Flask, and Py
   - 3-4-3 (Attacking formation)
 - Independent formation control for each team (blue/red)
 
-### Drawing Tools
+### Shape Tools
 - Ball placement and movement with realistic physics
 - Dual triangle system for tactical analysis
   - Orange triangle for primary movements
   - Purple triangle for secondary patterns
 - Dynamic line tool with dashed visualization
 - Shape persistence: lines and shapes move with players
+
+### Shape Tool Usage Guide
+1. Select the desired shape tool
+2. Click on players to create the shape
+3. Click the "Stop Tool" button when finished
+4. To create additional shapes:
+   - Ensure current shapes are toggled off
+   - Create new shapes
+   - Use the toggle feature to show/hide all shapes as needed
+5. To reset all tools, select "Reset Tools" from the Tool dropdown menu
 
 ### Real-time Features
 - WebSocket-based instantaneous updates
@@ -73,6 +83,11 @@ Currently in beta (v0.9.0). Known areas for improvement:
 - Custom color schemes
 - Formation save/load functionality
 - Animation smoothness optimizations
+- Team visibility toggle functionality
+- Multiple line tools (second and third variants)
+- Improved shape tool interaction without requiring toggle-off of current shapes
+- Player number display optimization
+- Mobile interface refinements
 
 ## ⚠️ Beta Version Notice
 
@@ -80,6 +95,7 @@ This is currently a beta version (0.9.0). While fully functional, you may encoun
 - Minor visual glitches during rapid movements
 - Performance optimizations in progress
 - Additional features being implemented
+- Reduced drag performance when player numbers are enabled
 - Mobile interface refinements
 
 Please report any issues through Replit's comments section.
