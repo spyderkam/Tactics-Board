@@ -161,10 +161,7 @@ def main():
     pygame.draw.rect(SCREEN, WHITE, (80, 120, 240, 480), 2)          # Left
     pygame.draw.rect(SCREEN, WHITE, (WIDTH-320, 120, 240, 480), 2)   # Right
 
-    # Draw penalty box arcs
-    pygame.draw.arc(SCREEN, WHITE, (80, 180, 240, 240), 0, 3.14, width=4)          # Left arc with thicker line
-    pygame.draw.arc(SCREEN, WHITE, (WIDTH-320, 180, 240, 240), 0, 3.14, width=4)   # Right arc with thicker line
-
+    
     # Goal areas
     pygame.draw.rect(SCREEN, WHITE, (80, 270, 72, 180), 2)           # Left
     pygame.draw.rect(SCREEN, WHITE, (WIDTH-152, 270, 72, 180), 2)    # Right
