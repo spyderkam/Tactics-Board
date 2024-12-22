@@ -264,7 +264,7 @@ def update_board():
   watermark_font = pygame.font.SysFont('Arial', 36, bold=True)
   watermark = watermark_font.render('spyderkam', True, (255, 255, 255))
   watermark.set_alpha(128)  # Make it semi-transparent
-  SCREEN.blit(watermark, (100, HEIGHT - 80))  # Position in bottom left
+  SCREEN.blit(watermark, (100, HEIGHT - 150))  # Position in bottom left, higher up
 
   # Save the screen with watermark
   buffer = io.BytesIO()
