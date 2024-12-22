@@ -224,10 +224,12 @@ socket.on('player_selected', function(data) {
 });
 
 socket.on('tool_stopped', function(data) {
-  show_triangle = false;
-  show_triangle2 = false;
-  show_lines = false;
-  activeTool = null;
+  if (activeTool !== 'ball') {
+    show_triangle = false;
+    show_triangle2 = false;
+    show_lines = false;
+    activeTool = null;
+  }
 });
 
 document.addEventListener('keydown', (e) => {

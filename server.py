@@ -201,9 +201,8 @@ def toggle_lines():
 
 @socketio.on('stop_tool')
 def stop_tool(data):
-    global show_ball, show_triangle1, show_triangle2, show_lines
+    global show_triangle1, show_triangle2, show_lines
     preserve_lines = data.get('preserveLines', False)
-    show_ball = False
     show_triangle1 = False
     show_triangle2 = False
     if not preserve_lines:
