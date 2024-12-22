@@ -282,7 +282,7 @@ def update_board():
   # Blit the background and watermark text
   SCREEN.blit(watermark_bg_surface, (100, HEIGHT - 150))                              # Position in bottom left, higher up
   SCREEN.blit(watermark_spyder, (100, HEIGHT - 150))                                  # Blit "spyder" on top
-  SCREEN.blit(watermark_kam, (100 + watermark_spyder.get_width() - 5, HEIGHT - 150))  # Blit "kam" directly next to "spyder", Manually added the -5 to properly attatch it.
+  SCREEN.blit(watermark_kam, (100 + watermark_spyder.get_width() - 7, HEIGHT - 150))  # Blit "kam" directly next to "spyder", Manually added the -7 to properly attatch it.
   
   # Save the screen with watermark
   buffer = io.BytesIO()
