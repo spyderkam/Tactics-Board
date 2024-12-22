@@ -26,7 +26,7 @@ const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
 let dragging = false;
 let selectedPlayer = null;
-let showBall = false;
+let show_ball = false;
 let showNumbers = false;
 let show_triangle = false;
 let show_lines = false;
@@ -40,7 +40,7 @@ let activeTool = null;
 let lineToolLocked = false;
 
 canvas.addEventListener('mousedown', (e) => {
-  const toolActive = showBall || show_triangle || show_triangle2 || show_lines;
+  const toolActive = show_ball || show_triangle || show_triangle2 || show_lines;
   if (toolActive) {
     handleMouseDown(e, true);
   } else {
@@ -108,12 +108,14 @@ function toggleLines() {
 }
 
 function toggleBall() {
-  showBall = !showBall;
-  if (showBall) {
+  show_ball = !show_ball;
+  if (show_ball) {
     activeTool = 'ball';
     show_triangle = false;
     show_triangle2 = false;
     show_lines = false;
+  } else {
+    activeTool = null;
   }
   socket.emit('toggle_ball');
 }
