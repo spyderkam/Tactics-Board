@@ -263,6 +263,12 @@ def update_board():
   buffer = io.BytesIO()
   pygame.image.save(SCREEN, buffer, 'PNG')
   buffer.seek(0)
+  # Add watermark
+  watermark_font = pygame.font.SysFont('Arial', 36, bold=True)
+  watermark = watermark_font.render('spyderkam', True, (255, 255, 255, 128))
+  watermark.set_alpha(128)  # Make it semi-transparent
+  SCREEN.blit(watermark, (100, HEIGHT - 80))  # Position in bottom left
+
   base64_image = base64.b64encode(buffer.getvalue()).decode()
   emit('board_update', {'image': base64_image}, broadcast=True)
 
