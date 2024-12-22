@@ -92,7 +92,7 @@ function handleMouseMove(e) {
 }
 
 function toggleLines() {
-  if (!lineToolLocked && !show_triangle && !show_triangle2) {
+  if (!lineToolLocked) {
     show_lines = !show_lines;
     if (show_lines) {
       activeTool = 'lines';
