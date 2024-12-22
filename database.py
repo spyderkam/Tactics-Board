@@ -50,7 +50,7 @@ def formation(formation_type):
         [1200, 270],   # LAM
         [1200, 540],   # CAM
         [1200, 810],   # RAM
-        [1440, 540],   # ST
+        [1420, 540],   # ST
       ], "r-e-d": [
         [1740, 540],   # GK
         [1356, 252],   # LB
@@ -62,7 +62,7 @@ def formation(formation_type):
         [720, 270],    # LAM
         [720, 540],    # CAM
         [720, 810],    # RAM
-        [480, 540],    # ST
+        [500, 540],    # ST
       ]}
 
     case "4-4-2":
