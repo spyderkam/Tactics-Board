@@ -7,7 +7,6 @@ An interactive real-time football tactics board built with Python, Flask, and Py
 ### Team Management
 - Interactive drag-and-drop player movement with smooth animations
 - Jersey number customization (supports both single and double digits)
-  - Note: When player numbers are enabled, drag functionality may experience reduced optimization
 - Multiple formation presets:
   - 4-3-3 (Default attacking formation)
   - 4-4-2 (Classic formation)
