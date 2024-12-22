@@ -61,12 +61,7 @@ socket.on('player_selected', function(data) {
 });
 
 canvas.addEventListener('mousedown', (e) => {
-  const toolActive = show_ball || show_triangle || show_triangle2 || show_lines;
-  if (toolActive) {
-    handleMouseDown(e, true);
-  } else {
-    handleMouseDown(e, false);
-  }
+  handleMouseDown(e, false);
 });
 
 canvas.addEventListener('mousemove', throttle(handleMouseMove, 30));
@@ -255,11 +250,9 @@ socket.on('player_selected', function(data) {
   selectedPlayer = data;
   if (showNumbers) {
     handleNumberEdit(null, data);
-  } else if (activeTool === null) {
+  } else {
     dragging = true;
     lastMousePos = { x: 0, y: 0 };
-  } else {
-    dragging = false;
   }
 });
 
