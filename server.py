@@ -260,16 +260,15 @@ def update_board():
   if show_lines and len(line_points) > 1:
     Shape().draw_lines(SCREEN, line_points)
 
-  # Add watermark
-  watermark_font = pygame.font.SysFont('Arial', 36, bold=True)
-  watermark = watermark_font.render('spyderkam', True, (255, 255, 255))
-  watermark.set_alpha(128)  # Make it semi-transparent
-  SCREEN.blit(watermark, (100, HEIGHT - 80))  # Position in bottom left
-
-  # Save the screen with watermark
   buffer = io.BytesIO()
   pygame.image.save(SCREEN, buffer, 'PNG')
   buffer.seek(0)
+  # Add watermark
+  watermark_font = pygame.font.SysFont('Arial', 36, bold=True)
+  watermark = watermark_font.render('spyderkam', True, (255, 255, 255, 128))
+  watermark.set_alpha(128)  # Make it semi-transparent
+  SCREEN.blit(watermark, (100, HEIGHT - 80))  # Position in bottom left
+
   base64_image = base64.b64encode(buffer.getvalue()).decode()
   emit('board_update', {'image': base64_image}, broadcast=True)
 

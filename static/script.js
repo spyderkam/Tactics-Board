@@ -9,8 +9,6 @@ let showNumbers = false;
 let show_triangle = false;
 let show_lines = false;
 let show_triangle2 = false;
-let show_ball = false;
-let showNumbers = false;
 let line_points = [];
 let triangle_points = [];
 let lastMousePos = { x: 0, y: 0 };
@@ -18,11 +16,6 @@ const throttleDelay = 16;
 let lastUpdate = 0;
 let activeTool = null;
 let lineToolLocked = false;
-
-function toggleNumbers() {
-  showNumbers = !showNumbers;
-  socket.emit('toggle_numbers');
-}
 
 function handleToolSelect(value) {
   switch(value) {
