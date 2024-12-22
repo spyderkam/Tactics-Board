@@ -17,6 +17,8 @@ function handleToolSelect(value) {
       resetTools();
       break;
   }
+  // Reset dropdown to default option
+  document.getElementById('toolsSelect').selectedIndex = 0;
 }
 
 const socket = io();
