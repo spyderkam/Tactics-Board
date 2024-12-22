@@ -32,10 +32,31 @@ class Shape:
     screen.blit(surface, (0, 0))
 
   def draw_lines(self, screen, points):
-    """Draw thin black lines connecting consecutive points"""
+    """Draw thin black lines connecting consecutive points, avoiding player circles"""
     if len(points) > 1:
       surface = pygame.Surface((1920, 1080), pygame.SRCALPHA)
-      pygame.draw.lines(surface, (0, 0, 0, 200), False, points, 2)
+      
+      for i in range(len(points) - 1):
+        # Calculate direction vector
+        dx = points[i+1][0] - points[i][0]
+        dy = points[i+1][1] - points[i][1]
+        # Calculate distance
+        distance = (dx*dx + dy*dy)**0.5
+        if distance == 0:
+          continue
+        
+        # Normalize direction vector
+        dx, dy = dx/distance, dy/distance
+        
+        # Adjust start and end points to be on circle edges
+        start_x = points[i][0] + dx * 20  # 20 is circle radius
+        start_y = points[i][1] + dy * 20
+        end_x = points[i+1][0] - dx * 20
+        end_y = points[i+1][1] - dy * 20
+        
+        # Draw line between adjusted points
+        pygame.draw.line(surface, (0, 0, 0, 200), (start_x, start_y), (end_x, end_y), 2)
+      
       screen.blit(surface, (0, 0))
 
 class StopTool:
