@@ -167,6 +167,10 @@ function stopTool() {
   socket.emit('stop_tool', { preserveLines: wasShowingLines });
 }
 
+function toggleShapes() {
+  socket.emit('toggle_shapes');
+}
+
 socket.on('tool_stopped', function(data) {
   showBall = false;
   show_triangle = false;

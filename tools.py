@@ -7,7 +7,7 @@ import pygame
 class Shape:
   """Shapes to draw on the board."""
   def __init__(self):
-    pass
+    self.shapes_visible = True
 
   def draw_triangle1(self, screen, points):
     "Semi-transparent orange triangle"
