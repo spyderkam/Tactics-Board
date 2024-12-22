@@ -1,4 +1,17 @@
 
+let show_lines = false;
+
+function resetTools() {
+  lineToolLocked = false;
+  show_lines = false;
+  show_triangle = false;
+  show_triangle2 = false;
+  showBall = false;
+  line_points = [];
+  activeTool = null;
+  socket.emit('reset_triangle');
+}
+
 function handleToolSelect(value) {
   switch(value) {
     case 'numbers':

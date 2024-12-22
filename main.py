@@ -157,10 +157,14 @@ def main():
     pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 85, 2)
     pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 6)
 
-    # Penalty areas
+    # Penalty areas and arcs
     pygame.draw.rect(SCREEN, WHITE, (80, 120, 240, 480), 2)          # Left
     pygame.draw.rect(SCREEN, WHITE, (WIDTH-320, 120, 240, 480), 2)   # Right
-
+    
+    # Penalty arcs
+    pygame.draw.arc(SCREEN, WHITE, (240, 240, 160, 240), 0.96, 2.18, 2)  # Left arc
+    pygame.draw.arc(SCREEN, WHITE, (1520, 240, 160, 240), 0.96, 2.18, 2) # Right arc
+    
     # Goal areas
     pygame.draw.rect(SCREEN, WHITE, (80, 270, 72, 180), 2)           # Left
     pygame.draw.rect(SCREEN, WHITE, (WIDTH-152, 270, 72, 180), 2)    # Right
