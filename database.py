@@ -11,7 +11,7 @@ BLACK = (0, 0, 0)
 
 def formation(formation_type):
   match formation_type:
-    case "433":
+    case "4-3-3":
       return {"blue": [
         [180, 540],    # GK
         [564, 252],    # LB
@@ -38,7 +38,7 @@ def formation(formation_type):
         [720, 810],    # RW
       ]}
         
-    case "4231":
+    case "4-2-3-1":
       return {"blue": [
         [180, 540],    # GK
         [564, 252],    # LB
@@ -51,7 +51,7 @@ def formation(formation_type):
         [1200, 540],   # CAM
         [1200, 810],   # RAM
         [1440, 540],   # ST
-      ], "red": [
+      ], "r-e-d": [
         [1740, 540],   # GK
         [1356, 252],   # LB
         [1464, 450],   # LCB
@@ -65,7 +65,7 @@ def formation(formation_type):
         [480, 540],    # ST
       ]}
 
-    case "442":
+    case "4-4-2":
       return {"blue": [
         [180, 540],    # GK
         [564, 252],    # LB
@@ -92,7 +92,7 @@ def formation(formation_type):
         [720, 630],    # RST
       ]}
 
-    case "352":
+    case "3-5-2":
       return {"blue": [
         [180, 540],    # GK
         [456, 360],    # LCB
@@ -119,7 +119,7 @@ def formation(formation_type):
         [720, 630],    # RST
       ]}
 
-    case "343":
+    case "3-4-3":
       return {"blue": [
         [180, 540],    # GK
         [456, 360],    # LCB
@@ -149,7 +149,7 @@ def formation(formation_type):
       ]}
 
 
-    case "442 Diamond":
+    case "4-4-2 Diamond":
       return {"blue": [
         [180, 540],    # GK
         [456, 252],    # LB
