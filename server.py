@@ -265,14 +265,14 @@ def update_board():
   watermark_spyder = watermark_font.render('spyder', True, (255, 0, 0))
   watermark_kam = watermark_font.render('kam', True, (0, 0, 0))
   
-  watermark_width = watermark_spyder.get_width() + watermark_kam.get_width()
-  watermark_height = watermark_font.get_height()
+  watermark_width = watermark_spyder.get_width() + watermark_kam.get_width() - 10  # - 10 to account for background spacing
+  watermark_height = watermark_font.get_height() + 4                               # + 4 to account for background spacing
   watermark_bg_surface = pygame.Surface((watermark_width, watermark_height), pygame.SRCALPHA)
   watermark_bg_surface.fill((255, 255, 255))
 
-  SCREEN.blit(watermark_bg_surface, (100, HEIGHT - 150))
-  SCREEN.blit(watermark_spyder, (100, HEIGHT - 150))
-  SCREEN.blit(watermark_kam, (100 + watermark_spyder.get_width() - 7, HEIGHT - 150))
+  SCREEN.blit(watermark_bg_surface, (100, HEIGHT - 135))
+  SCREEN.blit(watermark_spyder, (100, HEIGHT - 135))
+  SCREEN.blit(watermark_kam, (100 + watermark_spyder.get_width() - 7, HEIGHT - 135))
   
   # Save the screen with watermark
   buffer = io.BytesIO()
