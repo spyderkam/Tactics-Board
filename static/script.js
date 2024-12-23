@@ -11,8 +11,6 @@ let show_triangle2 = false;
 let line_points = [];
 let triangle_points = [];
 let lastMousePos = { x: 0, y: 0 };
-const throttleDelay = 8;  // Reduced from 16 to 8ms for smoother updates
-let lastUpdate = 0;
 let activeTool = null;
 let lineToolLocked = false;
 
@@ -49,21 +47,28 @@ function handleMouseMove(e) {
   if (!dragging || !selectedPlayer) return;
   
   const rect = canvas.getBoundingClientRect();
-  const scale = canvas.width / rect.width;
-  const x = Math.max(0, Math.min(canvas.width, (e.clientX - rect.left) * scale));
-  const y = Math.max(0, Math.min(canvas.height, (e.clientY - rect.top) * scale));
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
   
-  // Use requestAnimationFrame for smoother updates
-  requestAnimationFrame(() => {
+  let clientX = e.clientX;
+  let clientY = e.clientY;
+  
+  if (e.touches) {
+    clientX = e.touches[0].clientX;
+    clientY = e.touches[0].clientY;
+  }
+  
+  const x = Math.max(0, Math.min(canvas.width, (clientX - rect.left) * scaleX));
+  const y = Math.max(0, Math.min(canvas.height, (clientY - rect.top) * scaleY));
+
+  window.requestAnimationFrame(() => {
     socket.emit('move_player', {
-      x: Math.round(x), 
-      y: Math.round(y), 
-      team: selectedPlayer.team, 
+      x: Math.round(x * 100) / 100,
+      y: Math.round(y * 100) / 100,
+      team: selectedPlayer.team,
       index: selectedPlayer.index
     });
   });
-  
-  lastMousePos = { x, y };
 }
 
 function toggleLines() {
@@ -184,16 +189,6 @@ canvas.addEventListener('mouseleave', () => {
   selectedPlayer = null;
 });
 
-function throttle(func, limit) {
-  let lastRun = 0;
-  return function(...args) {
-    const now = Date.now();
-    if (now - lastRun >= limit) {
-      func.apply(this, args);
-      lastRun = now;
-    }
-  }
-}
 
 socket.on('board_update', function(data) {
   const img = new Image();
