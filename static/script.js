@@ -209,5 +209,11 @@ socket.on('player_selected', (data) => {
   state.selectedPlayer = data;
 });
 
+// Team visibility functions
+function toggleBlueTeam() {
+  resetBoard();
+  socket.emit('toggle_blue_team');
+}
+
 // Initialize formations
 socket.emit('get_formations');
