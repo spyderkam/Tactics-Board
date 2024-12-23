@@ -32,6 +32,3 @@ However, there are a few areas that could use improvement:
   - The mobile responsiveness could be enhanced
   - The UI layout with dropdowns and buttons could be more intuitive
   - The drawing code could be optimized for smoother animations
-
-The UI layout with dropdowns and buttons could be more intuitive
-The drawing code could be optimized for smoother animations
