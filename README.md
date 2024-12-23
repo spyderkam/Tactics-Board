@@ -62,7 +62,8 @@
 
 ## ⚠️ Known Issues
 
-- ⚡ Dragging performance with numbers
+- ⚡ Dragging performance
+- 💢 Drastic dragging performance with numbers
 - 📱 Mobile experience needs work
 - 🎨 Shape tool refinements needed
 
