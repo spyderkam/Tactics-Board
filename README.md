@@ -5,7 +5,7 @@
 [![Status](https://img.shields.io/badge/status-beta-orange.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-green.svg)]()
 
-> 🏃 A real-time interactive soccer tactics board built with Python and JavaScript! ⚽
+> 🏃 A real-time interactive football tactics board! ⚽
 
 ## ✨ Features
 
@@ -55,8 +55,8 @@
 
 ## 🛠️ Technical Details
 
-- 🐍 Backend: Python (Flask, Pygame, SocketIO)
-- 💻 Frontend: JavaScript, HTML5 Canvas
+- 🐍 Backend: Flask with SocketIO
+- 💻 Frontend: HTML5 Canvas
 - 🌐 Real-time WebSocket updates
 - 🖥️ Canvas: 1920x1080
 
