@@ -207,8 +207,8 @@ socket.on('tool_stopped', (data) => {
 socket.on('formations_list', (formations) => {
   const blueSelect = document.getElementById('blueFormationSelect');
   const redSelect = document.getElementById('redFormationSelect');
-  blueSelect.innerHTML = '<option value="blue">Blue Team:</option>';
   redSelect.innerHTML = '<option value="red">Red Team:</option>';
+  blueSelect.innerHTML = '<option value="blue">Blue Team:</option>';
   formations.forEach(formation => {
     const option = `<option value="${formation}">${formation}</option>`;
     blueSelect.innerHTML += option;
