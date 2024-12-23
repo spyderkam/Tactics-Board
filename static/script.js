@@ -16,6 +16,10 @@ const state = {
     triangle2: false,  
     lines: false,
     locked: false
+  },
+  teams: {
+    blue: true,
+    red: true
   }
 };
 
@@ -211,3 +215,11 @@ socket.on('player_selected', (data) => {
 
 // Initialize formations
 socket.emit('get_formations');
+// Team toggle handler
+function handleTeamToggle(value) {
+  if (value === 'blue' || value === 'red') {
+    state.teams[value] = !state.teams[value];
+    socket.emit('toggle_team', { team: value, visible: state.teams[value] });
+  }
+  document.getElementById('teamToggleSelect').selectedIndex = 0;
+}

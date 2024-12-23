@@ -23,6 +23,7 @@ show_ball = False
 show_triangle1 = False
 show_triangle2 = False
 show_lines = False # Added to track line visibility
+team_visibility = {'blue': True, 'red': True}
 player_numbers = {'blue': [i for i in range(1, 12)], 'red': [i for i in range(1, 12)]}
 
 @app.route('/')
@@ -245,10 +246,12 @@ def update_board():
   pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-90, 60, 180), 2)            # Left goal area
   pygame.draw.rect(SCREEN, WHITE, (WIDTH-140, HEIGHT//2-90, 60, 180), 2)     # Right goal area
 
-  for i, pos in enumerate(BLUE_TEAM, 1):
-    draw_player(SCREEN, pos, (0, 0, 255), player_numbers['blue'][i-1], show_numbers) #Use player_numbers
-  for i, pos in enumerate(RED_TEAM, 1):
-    draw_player(SCREEN, pos, (255, 0, 0), player_numbers['red'][i-1], show_numbers) #Use player_numbers
+  if team_visibility['blue']:
+    for i, pos in enumerate(BLUE_TEAM, 1):
+      draw_player(SCREEN, pos, (0, 0, 255), player_numbers['blue'][i-1], show_numbers)
+  if team_visibility['red']:
+    for i, pos in enumerate(RED_TEAM, 1):
+      draw_player(SCREEN, pos, (255, 0, 0), player_numbers['red'][i-1], show_numbers)
 
   if show_ball:
     pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 20)     # Increased ball size from 15 to 20
@@ -298,3 +301,10 @@ if __name__ == '__main__':
   os.environ['SDL_VIDEODRIVER'] = 'dummy'
   pygame.init()
   socketio.run(app, host='0.0.0.0', port=80, allow_unsafe_werkzeug=True)
+@socketio.on('toggle_team')
+def toggle_team(data):
+    global team_visibility
+    team = data['team']
+    visible = data['visible']
+    team_visibility[team] = visible
+    update_board()
