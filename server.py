@@ -195,7 +195,7 @@ def handle_reset_board(data=None):
   show_triangle2 = False
   show_lines = False
   line_points = []
-  player_numbers = {'blue': [i for i in range(1, 12)], 'red': [i for i in range(1, 12)]}  # reset player numbers
+  player_numbers = {'blue': [i for i in range(1, 12)], 'red': [i for i in range(1, 12)]} #reset player numbers
   update_board()
 
 @socketio.on('toggle_lines') #Added
@@ -234,24 +234,24 @@ def update_board():
   pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 85, 2)
   pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 6)
   # Draw penalty areas
-  pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-220, 220, 440), 2)                   # Left penalty area
-  pygame.draw.rect(SCREEN, WHITE, (WIDTH-300, HEIGHT//2-220, 220, 440), 2)            # Right penalty area
+  pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-220, 220, 440), 2)          # Left penalty area
+  pygame.draw.rect(SCREEN, WHITE, (WIDTH-300, HEIGHT//2-220, 220, 440), 2)   # Right penalty area
   
   # Draw penalty arcs
-  pygame.draw.arc(SCREEN, WHITE, (220, HEIGHT//2-85, 170, 170), 4.71, 1.57, 2)        # Left arc
+  pygame.draw.arc(SCREEN, WHITE, (220, HEIGHT//2-85, 170, 170), 4.71, 1.57, 2)  # Left arc
   pygame.draw.arc(SCREEN, WHITE, (WIDTH-390, HEIGHT//2-85, 170, 170), 1.57, 4.71, 2)  # Right arc
   
   # Draw goal areas
-  pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-90, 60, 180), 2)                     # Left goal area
-  pygame.draw.rect(SCREEN, WHITE, (WIDTH-140, HEIGHT//2-90, 60, 180), 2)              # Right goal area
+  pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-90, 60, 180), 2)            # Left goal area
+  pygame.draw.rect(SCREEN, WHITE, (WIDTH-140, HEIGHT//2-90, 60, 180), 2)     # Right goal area
 
   for i, pos in enumerate(BLUE_TEAM, 1):
-    draw_player(SCREEN, pos, (0, 0, 255), player_numbers['blue'][i-1], show_numbers)  # Use player_numbers
+    draw_player(SCREEN, pos, (0, 0, 255), player_numbers['blue'][i-1], show_numbers) #Use player_numbers
   for i, pos in enumerate(RED_TEAM, 1):
-    draw_player(SCREEN, pos, (255, 0, 0), player_numbers['red'][i-1], show_numbers)   # Use player_numbers
+    draw_player(SCREEN, pos, (255, 0, 0), player_numbers['red'][i-1], show_numbers) #Use player_numbers
 
   if show_ball:
-    pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 20)     # Increased ball size from 15 to 20
+    pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 15)
         
   if show_triangle1 and len(triangle_points) == 3:
     Shape().draw_triangle1(SCREEN, triangle_points)
