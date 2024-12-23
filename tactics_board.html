@@ -3,9 +3,47 @@
 <head>
   <title>Tactics Board</title>
   <style>
-    .controls { margin: 20px 0; }
-    button { margin: 0 10px; padding: 8px 16px; }
-    canvas { border: 1px solid #ccc; }
+    .controls { 
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .control-group label {
+      font-weight: bold;
+      color: #333;
+    }
+    .formation-controls {
+      display: flex;
+      gap: 10px;
+    }
+    button { 
+      margin: 0 5px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      background: #2c3e50;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #34495e;
+    }
+    select {
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    canvas { 
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
 </head>
@@ -21,18 +59,13 @@
     </a>
   </div>
   <div class="controls">
-    <select id="redFormationSelect" onchange="changeFormation('red')" style="padding: 8px; margin-right: 10px; background-color: #cc0000; color: white;">
-      <!-- From static/script.js
-        function changeFormation(team) {
-         const select = document.getElementById(team + 'FormationSelect');
-        const formation = select.options[select.selectedIndex].text;
-        if (formation !== team + ' Team:') {
-          socket.emit('change_formation', { formation: formation, team: team });
-        }
-      }
-      -->
-    </select>
-    <select id="blueFormationSelect" onchange="changeFormation('blue')" style="padding: 8px; margin-right: 10px; background-color: #0066cc; color: white;">
+    <div class="control-group">
+      <label>Teams & Formations</label>
+      <div class="formation-controls">
+        <select id="redFormationSelect" onchange="changeFormation('red')" style="padding: 8px; margin-right: 10px; background-color: #cc0000; color: white;">
+          <!-- From static/script.js -->
+        </select>
+        <select id="blueFormationSelect" onchange="changeFormation('blue')" style="padding: 8px; margin-right: 10px; background-color: #0066cc; color: white;">
       <!-- From static/script.js
         function changeFormation(team) {
          const select = document.getElementById(team + 'FormationSelect');
