@@ -23,8 +23,6 @@ show_ball = False
 show_triangle1 = False
 show_triangle2 = False
 show_lines = False # Added to track line visibility
-line_points = []
-team_visibility = {'blue': True, 'red': True}
 player_numbers = {'blue': [i for i in range(1, 12)], 'red': [i for i in range(1, 12)]}
 
 @app.route('/')
@@ -247,12 +245,10 @@ def update_board():
   pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-90, 60, 180), 2)            # Left goal area
   pygame.draw.rect(SCREEN, WHITE, (WIDTH-140, HEIGHT//2-90, 60, 180), 2)     # Right goal area
 
-  if team_visibility['blue']:
-    for i, pos in enumerate(BLUE_TEAM, 1):
-      draw_player(SCREEN, pos, (0, 0, 255), player_numbers['blue'][i-1], show_numbers)
-  if team_visibility['red']:
-    for i, pos in enumerate(RED_TEAM, 1):
-      draw_player(SCREEN, pos, (255, 0, 0), player_numbers['red'][i-1], show_numbers)
+  for i, pos in enumerate(BLUE_TEAM, 1):
+    draw_player(SCREEN, pos, (0, 0, 255), player_numbers['blue'][i-1], show_numbers) #Use player_numbers
+  for i, pos in enumerate(RED_TEAM, 1):
+    draw_player(SCREEN, pos, (255, 0, 0), player_numbers['red'][i-1], show_numbers) #Use player_numbers
 
   if show_ball:
     pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 20)     # Increased ball size from 15 to 20
@@ -266,17 +262,17 @@ def update_board():
 
   # Add watermark with white background
   watermark_font = pygame.font.SysFont('Arial Black', 75, italic=True)
-  watermark_spyder = watermark_font.render('spyder', True, (255, 0, 0))
-  watermark_kam = watermark_font.render('kam', True, (0, 0, 0))
+  watermark_spyder = watermark_font.render('spyder', True, (0, 0, 0))
+  watermark_kam = watermark_font.render('kam', True, (255, 0, 0))
   
-  watermark_width = watermark_spyder.get_width() + watermark_kam.get_width() - 10  # - 10 to account for background spacing
-  watermark_height = watermark_font.get_height() + 4                               # + 4 to account for background spacing
+  watermark_width = watermark_spyder.get_width() + watermark_kam.get_width()
+  watermark_height = watermark_font.get_height()
   watermark_bg_surface = pygame.Surface((watermark_width, watermark_height), pygame.SRCALPHA)
   watermark_bg_surface.fill((255, 255, 255))
 
-  SCREEN.blit(watermark_bg_surface, (100, HEIGHT - 135))
-  SCREEN.blit(watermark_spyder, (100, HEIGHT - 135))
-  SCREEN.blit(watermark_kam, (100 + watermark_spyder.get_width() - 7, HEIGHT - 135))
+  SCREEN.blit(watermark_bg_surface, (100, HEIGHT - 150))
+  SCREEN.blit(watermark_spyder, (100, HEIGHT - 150))
+  SCREEN.blit(watermark_kam, (100 + watermark_spyder.get_width() - 7, HEIGHT - 150))
   
   # Save the screen with watermark
   buffer = io.BytesIO()
@@ -302,10 +298,3 @@ if __name__ == '__main__':
   os.environ['SDL_VIDEODRIVER'] = 'dummy'
   pygame.init()
   socketio.run(app, host='0.0.0.0', port=80, allow_unsafe_werkzeug=True)
-@socketio.on('toggle_team')
-def toggle_team(data):
-    global team_visibility
-    team = data['team']
-    visible = data['visible']
-    team_visibility[team] = visible
-    update_board()
