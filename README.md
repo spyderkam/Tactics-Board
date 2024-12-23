@@ -24,6 +24,13 @@
 - Instant updates across all connected users
 - Perfect for team planning!
 
+## 📋 Requirements
+
+- Python 3.10 or higher
+- Pygame
+- Flask with SocketIO
+- Web browser with HTML5 Canvas support
+
 ## 🚀 Getting Started
 
 1. 🖱️ Click "Run" to start the application
