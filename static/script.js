@@ -47,14 +47,23 @@ function handleMouseDown(e) {
 
 function handleMouseMove(e) {
   if (!dragging || !selectedPlayer) return;
-  const now = Date.now();
-  if (now - lastUpdate < throttleDelay) return;
+  
   const rect = canvas.getBoundingClientRect();
-  const x = Math.max(0, Math.min(canvas.width, (e.clientX - rect.left) * (canvas.width / rect.width)));
-  const y = Math.max(0, Math.min(canvas.height, (e.clientY - rect.top) * (canvas.height / rect.height)));
-  socket.emit('move_player', {x: x, y: y, team: selectedPlayer.team, index: selectedPlayer.index});
+  const scale = canvas.width / rect.width;
+  const x = Math.max(0, Math.min(canvas.width, (e.clientX - rect.left) * scale));
+  const y = Math.max(0, Math.min(canvas.height, (e.clientY - rect.top) * scale));
+  
+  // Use requestAnimationFrame for smoother updates
+  requestAnimationFrame(() => {
+    socket.emit('move_player', {
+      x: Math.round(x), 
+      y: Math.round(y), 
+      team: selectedPlayer.team, 
+      index: selectedPlayer.index
+    });
+  });
+  
   lastMousePos = { x, y };
-  lastUpdate = now;
 }
 
 function toggleLines() {
@@ -147,8 +156,26 @@ function resetBoard() {
 }
 
 canvas.addEventListener('mousedown', handleMouseDown);
-canvas.addEventListener('mousemove', throttle(handleMouseMove, 16));  // Reduced from 30 to 16ms
+canvas.addEventListener('mousemove', handleMouseMove);
 canvas.addEventListener('mouseup', () => {
+  dragging = false;
+  selectedPlayer = null;
+});
+
+// Add touch events for mobile
+canvas.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  const touch = e.touches[0];
+  handleMouseDown({clientX: touch.clientX, clientY: touch.clientY});
+});
+
+canvas.addEventListener('touchmove', (e) => {
+  e.preventDefault();
+  const touch = e.touches[0];
+  handleMouseMove({clientX: touch.clientX, clientY: touch.clientY});
+});
+
+canvas.addEventListener('touchend', () => {
   dragging = false;
   selectedPlayer = null;
 });
