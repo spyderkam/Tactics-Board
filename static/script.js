@@ -217,10 +217,13 @@ socket.on('formations_list', (formations) => {
 });
 
 socket.on('player_selected', (data) => {
-  if (data && data.team) {
+  if (data && typeof data.team !== 'undefined' && data.team !== null) {
     state.dragging = true;
     state.selectedPlayer = data;
     state.lastMousePos = { x: 0, y: 0 }; // Reset last position
+  } else {
+    state.dragging = false;
+    state.selectedPlayer = null;
   }
 });
 
@@ -233,6 +236,10 @@ function toggleBlueTeam() {
 function toggleRedTeam() {
   resetBoard();
   socket.emit('toggle_red_team');
+}
+
+function toggleShapes() {
+  socket.emit('toggle_shapes');
 }
 
 // Initialize formations
