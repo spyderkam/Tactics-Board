@@ -215,5 +215,10 @@ function toggleBlueTeam() {
   socket.emit('toggle_blue_team');
 }
 
+function toggleRedTeam() {
+  resetBoard();
+  socket.emit('toggle_red_team');
+}
+
 // Initialize formations
 socket.emit('get_formations');

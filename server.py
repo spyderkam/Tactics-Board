@@ -232,6 +232,12 @@ def toggle_blue_team():
     team_visibility['blue'] = not team_visibility['blue']
     update_board()
 
+@socketio.on('toggle_red_team')
+def toggle_red_team():
+    global team_visibility
+    team_visibility['red'] = not team_visibility['red']
+    update_board()
+
 
 def update_board():
   global show_numbers, show_ball, show_triangle1, show_triangle2, show_lines, line_points, player_numbers, team_visibility
