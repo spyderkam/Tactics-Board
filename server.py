@@ -262,8 +262,8 @@ def update_board():
 
   # Add watermark with white background
   watermark_font = pygame.font.SysFont('Arial Black', 75, italic=True)
-  watermark_spyder = watermark_font.render('spyder', True, (0, 0, 0))
-  watermark_kam = watermark_font.render('kam', True, (255, 0, 0))
+  watermark_spyder = watermark_font.render('spyder', True, (255, 0, 0))
+  watermark_kam = watermark_font.render('kam', True, (0, 0, 0))
   
   watermark_width = watermark_spyder.get_width() + watermark_kam.get_width()
   watermark_height = watermark_font.get_height()
