@@ -61,7 +61,7 @@ function handleMouseDown(e) {
 }
 
 function handleMouseMove(e) {
-  if (!state.dragging || !state.selectedPlayer) return;
+  if (!state.dragging || !state.selectedPlayer || !state.selectedPlayer.team) return;
   
   const rect = canvas.getBoundingClientRect();
   const scaleX = canvas.width / rect.width;
@@ -70,7 +70,7 @@ function handleMouseMove(e) {
   let clientX = e.clientX;
   let clientY = e.clientY;
   
-  if (e.touches) {
+  if (e.touches && e.touches[0]) {
     clientX = e.touches[0].clientX;
     clientY = e.touches[0].clientY;
   }
@@ -217,8 +217,11 @@ socket.on('formations_list', (formations) => {
 });
 
 socket.on('player_selected', (data) => {
-  state.dragging = true;
-  state.selectedPlayer = data;
+  if (data && data.team) {
+    state.dragging = true;
+    state.selectedPlayer = data;
+    state.lastMousePos = { x: 0, y: 0 }; // Reset last position
+  }
 });
 
 // Team visibility functions
