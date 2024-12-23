@@ -8,9 +8,10 @@ After clicking on the tool, use it by clicking on the players to create the shap
 
   - If player numbers are turned on, dragging is not optimized
 
-## Future Upgrades
+## Future Upgrade
 
- - Ability to toggle off/on teams
- - More formations to be added to the respective dropdown menus
- - A second and third line tool to be added
- - Ability to use other `Shape` tools without having to toggle off the current ones
+  - More formations to be added to the respective dropdown menus
+  - A second and third line tool to be added
+  - Ability to use other `Shape` tools without having to toggle off the current ones
+  - Dragging is still very rough now that I am using it practically
+
