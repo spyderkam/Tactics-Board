@@ -32,6 +32,16 @@ function handleToolSelect(value) {
   document.getElementById('toolsSelect').selectedIndex = 0;
 }
 
+function handleObjectSelect(value) {
+  const actions = {
+    ball: toggleBall,
+    blueTeam: toggleBlueTeam,
+    redTeam: toggleRedTeam
+  };
+  if (actions[value]) actions[value]();
+  document.getElementById('objectsSelect').selectedIndex = 0;
+}
+
 function resetTools() {
   Object.keys(state.tools).forEach(key => state.tools[key] = false);
   state.activeTool = null;

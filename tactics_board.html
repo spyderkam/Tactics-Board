@@ -51,9 +51,12 @@
       <option value="lines">Toggle Lines</option>              <!--(L)-->
       <option value="reset">Reset Tool</option>                <!--(Y)-->
     </select>
-    <button onclick="toggleBall()">Toggle Ball</button>        <!--(B)-->
-    <button onclick="toggleBlueTeam()">Toggle Blue Team</button>
-    <button onclick="toggleRedTeam()">Toggle Red Team</button>
+    <select id="objectsSelect" onchange="handleObjectSelect(this.value)" style="padding: 8px; margin-right: 10px; background-color: black; color: white;">
+      <option value="" style="text-align: center;">Toggle Objects:</option>
+      <option value="ball">Toggle Ball</option>
+      <option value="blueTeam">Toggle Blue Team</option>
+      <option value="redTeam">Toggle Red Team</option>
+    </select>
     <button onclick="stopTool()">Stop Tool</button>            <!--(S)-->
     <button onclick="toggleShapes()">Toggle Shapes</button>    <!--(U)-->
     <button onclick="resetBoard()">Reset</button>              <!--(R)-->
