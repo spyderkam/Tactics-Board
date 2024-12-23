@@ -17,4 +17,5 @@ After clicking on the tool, use it by clicking on the players to create the shap
   - Ability to change both team's colors with various options
     - As a consequences, toggle teams must be automated to left and right as apposed to color
 
-## Assistant's Opinions
+ [//]: # (## Assistant's Opinions) 
+
