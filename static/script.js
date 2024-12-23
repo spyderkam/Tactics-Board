@@ -44,10 +44,13 @@ function resetTools() {
 
 // Mouse/Touch event handlers
 function handleMouseDown(e) {
+  if (!e || (!e.clientX && !e.touches)) return;
+  
   const rect = canvas.getBoundingClientRect();
   const scale = canvas.width / rect.width;
-  const x = (e.clientX - rect.left) * scale;
-  const y = (e.clientY - rect.top) * scale;
+  const x = ((e.touches ? e.touches[0].clientX : e.clientX) - rect.left) * scale;
+  const y = ((e.touches ? e.touches[0].clientY : e.clientY) - rect.top) * scale;
+  
   socket.emit('check_click', {
     x, y, 
     isToolActive: state.tools.triangle || state.tools.triangle2 || state.tools.lines
@@ -55,19 +58,14 @@ function handleMouseDown(e) {
 }
 
 function handleMouseMove(e) {
-  if (!state.dragging || !state.selectedPlayer) return;
+  if (!state.dragging || !state.selectedPlayer || !state.selectedPlayer.team) return;
   
   const rect = canvas.getBoundingClientRect();
   const scaleX = canvas.width / rect.width;
   const scaleY = canvas.height / rect.height;
   
-  let clientX = e.clientX;
-  let clientY = e.clientY;
-  
-  if (e.touches) {
-    clientX = e.touches[0].clientX;
-    clientY = e.touches[0].clientY;
-  }
+  let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  let clientY = e.touches ? e.touches[0].clientY : e.clientY;
   
   const x = Math.max(0, Math.min(canvas.width, (clientX - rect.left) * scaleX));
   const y = Math.max(0, Math.min(canvas.height, (clientY - rect.top) * scaleY));
