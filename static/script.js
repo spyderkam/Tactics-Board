@@ -60,8 +60,15 @@ function handleMouseDown(e) {
   });
 }
 
+let lastEmitTime = 0;
+const EMIT_THROTTLE = 1000 / 60; // 60fps
+
 function handleMouseMove(e) {
   if (!state.dragging || !state.selectedPlayer || !state.selectedPlayer.team) return;
+  
+  const now = Date.now();
+  if (now - lastEmitTime < EMIT_THROTTLE) return;
+  lastEmitTime = now;
   
   const rect = canvas.getBoundingClientRect();
   const scaleX = canvas.width / rect.width;
@@ -189,9 +196,26 @@ canvas.addEventListener('touchend', () => {
 });
 
 // Socket events
+// Animation frame handling
+let animationFrameId = null;
+let pendingImage = null;
+
+function draw() {
+  if (pendingImage) {
+    ctx.drawImage(pendingImage, 0, 0);
+    pendingImage = null;
+  }
+  animationFrameId = requestAnimationFrame(draw);
+}
+
 socket.on('board_update', (data) => {
   const img = new Image();
-  img.onload = () => ctx.drawImage(img, 0, 0);
+  img.onload = () => {
+    pendingImage = img;
+    if (!animationFrameId) {
+      animationFrameId = requestAnimationFrame(draw);
+    }
+  };
   img.src = 'data:image/png;base64,' + data.image;
 });
 
