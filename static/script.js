@@ -78,16 +78,18 @@ function handleMouseMove(e) {
   const x = Math.max(0, Math.min(canvas.width, (clientX - rect.left) * scaleX));
   const y = Math.max(0, Math.min(canvas.height, (clientY - rect.top) * scaleY));
 
-  requestAnimationFrame(() => {
+  // Only emit if position changed significantly
+  const dx = x - state.lastMousePos.x;
+  const dy = y - state.lastMousePos.y;
+  if (dx * dx + dy * dy > 1) {
     socket.emit('move_player', {
-      x: Math.round(x * 100) / 100,
-      y: Math.round(y * 100) / 100,
+      x: Math.round(x),
+      y: Math.round(y),
       team: state.selectedPlayer.team,
       index: state.selectedPlayer.index
     });
-  });
-  
-  state.lastMousePos = { x, y };
+    state.lastMousePos = { x, y };
+  }
 }
 
 // Tool toggles

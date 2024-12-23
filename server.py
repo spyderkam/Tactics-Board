@@ -92,8 +92,7 @@ def move_player(data):
   global triangle_points, triangle_points2
   new_pos = [x, y]
     
-  if show_numbers: #Prevent movement if numbers are toggled on
-    return
+  # Allow movement regardless of numbers being shown
 
   if team == 'ball':
     BALL_POS[0] = x
