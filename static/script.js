@@ -241,21 +241,21 @@ socket.on('formations_list', (formations) => {
 });
 
 socket.on('player_selected', (data) => {
+  state.dragging = false;
+  state.selectedPlayer = null;
+  
   if (data && data.team) {
-    state.dragging = true;
-    state.selectedPlayer = data;
-    state.lastMousePos = { x: 0, y: 0 };
-    
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    
-    if (state.tools.triangle || state.tools.triangle2 || state.tools.lines) {
-      state.dragging = false;
+    if (!state.tools.triangle && !state.tools.triangle2 && !state.tools.lines) {
+      state.dragging = true;
+      state.selectedPlayer = data;
+      state.lastMousePos = { x: 0, y: 0 };
+      
+      const rect = canvas.getBoundingClientRect();
+      state.lastMousePos = {
+        x: (event.clientX - rect.left) * (canvas.width / rect.width),
+        y: (event.clientY - rect.top) * (canvas.height / rect.height)
+      };
     }
-  } else {
-    state.dragging = false;
-    state.selectedPlayer = null;
   }
 });
 
