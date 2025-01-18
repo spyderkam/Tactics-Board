@@ -241,15 +241,10 @@ socket.on('formations_list', (formations) => {
 });
 
 socket.on('player_selected', (data) => {
-  if (data && data.team) {
+  if (data && typeof data.team !== 'undefined' && data.team !== null) {
     state.dragging = true;
     state.selectedPlayer = data;
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    const mouseX = event ? (event.clientX - rect.left) * scaleX : 0;
-    const mouseY = event ? (event.clientY - rect.top) * scaleY : 0;
-    state.lastMousePos = { x: mouseX, y: mouseY };
+    state.lastMousePos = { x: 0, y: 0 }; // Reset last position
   } else {
     state.dragging = false;
     state.selectedPlayer = null;
