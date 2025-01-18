@@ -70,6 +70,8 @@ function handleMouseMove(e) {
   if (now - lastEmitTime < EMIT_THROTTLE) return;
   lastEmitTime = now;
   
+  requestAnimationFrame(() => {
+  
   const rect = canvas.getBoundingClientRect();
   const scaleX = canvas.width / rect.width;
   const scaleY = canvas.height / rect.height;
@@ -97,6 +99,7 @@ function handleMouseMove(e) {
     });
     state.lastMousePos = { x, y };
   }
+  });
 }
 
 // Tool toggles
@@ -151,10 +154,10 @@ function stopTool() {
 // Formation management
 function changeFormation(team) {
   const select = document.getElementById(`${team}FormationSelect`);
-  const formation = select.options[select.selectedIndex].text;
-  if (formation !== `${team} Team:`) {
-    socket.emit('change_formation', { formation, team });
-  }
+  if (!select || select.selectedIndex < 0) return;
+  const option = select.options[select.selectedIndex];
+  if (!option || option.text === `${team} Team:`) return;
+  socket.emit('change_formation', { formation: option.text, team });
 }
 
 function resetBoard() {
