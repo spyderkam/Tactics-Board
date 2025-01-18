@@ -312,4 +312,10 @@ def toggle_shapes():
 if __name__ == '__main__':
   os.environ['SDL_VIDEODRIVER'] = 'dummy'
   pygame.init()
-  socketio.run(app, host='0.0.0.0', port=3000, allow_unsafe_werkzeug=True, debug=False)
+  port = 3000
+  while True:
+    try:
+      socketio.run(app, host='0.0.0.0', port=port, allow_unsafe_werkzeug=True, debug=False)
+      break
+    except OSError:
+      port = 3001 if port == 3000 else 3000

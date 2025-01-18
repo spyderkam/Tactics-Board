@@ -246,9 +246,11 @@ socket.on('player_selected', (data) => {
     state.dragging = true;
     state.selectedPlayer = data;
     const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
     state.lastMousePos = {
-      x: (e.clientX - rect.left) * scaleX,
-      y: (e.clientY - rect.top) * scaleY
+      x: (event.clientX - rect.left) * scaleX,
+      y: (event.clientY - rect.top) * scaleY
     };
   } else {
     state.dragging = false;
