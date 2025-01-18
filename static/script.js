@@ -151,11 +151,9 @@ function stopTool() {
 // Formation management
 function changeFormation(team) {
   const select = document.getElementById(`${team}FormationSelect`);
-  if (select && select.selectedIndex >= 0) {
-    const formation = select.options[select.selectedIndex].text;
-    if (formation !== `${team} Team:`) {
-      socket.emit('change_formation', { formation, team });
-    }
+  const selectedOption = select?.options?.[select.selectedIndex];
+  if (selectedOption && selectedOption.text !== `${team} Team:`) {
+    socket.emit('change_formation', { formation: selectedOption.text, team });
   }
 }
 
