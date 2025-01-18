@@ -35,7 +35,6 @@ show_triangle2 = False
 # Line settings
 line_points = []
 show_lines = False
-show_lines = False
 
 def draw_player(screen, pos, color, number=None, show_numbers=False):
   pygame.draw.circle(screen, color, pos, 27)               # Increased from 20 to 27

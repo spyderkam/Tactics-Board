@@ -23,6 +23,7 @@ show_ball = False
 show_triangle1 = False
 show_triangle2 = False
 show_lines = False # Added to track line visibility
+line_points = []  # Initialize line points array
 team_visibility = {'blue': True, 'red': True}
 player_numbers = {'blue': [i for i in range(1, 12)], 'red': [i for i in range(1, 12)]}
 
