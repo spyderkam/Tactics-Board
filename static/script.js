@@ -64,19 +64,11 @@ let lastEmitTime = 0;
 const EMIT_THROTTLE = 1000 / 60; // 60fps
 
 function handleMouseMove(e) {
-  if (!state.dragging || !state.selectedPlayer) return;
+  if (!state.dragging || !state.selectedPlayer || !state.selectedPlayer.team) return;
   
   const now = Date.now();
   if (now - lastEmitTime < EMIT_THROTTLE) return;
   lastEmitTime = now;
-
-  let clientX = e.clientX;
-  let clientY = e.clientY;
-  
-  if (e.touches && e.touches[0]) {
-    clientX = e.touches[0].clientX;
-    clientY = e.touches[0].clientY;
-  }
   
   const rect = canvas.getBoundingClientRect();
   const scaleX = canvas.width / rect.width;
@@ -105,7 +97,6 @@ function handleMouseMove(e) {
     });
     state.lastMousePos = { x, y };
   }
-  });
 }
 
 // Tool toggles
@@ -160,10 +151,10 @@ function stopTool() {
 // Formation management
 function changeFormation(team) {
   const select = document.getElementById(`${team}FormationSelect`);
-  if (!select || select.selectedIndex < 0) return;
-  const option = select.options[select.selectedIndex];
-  if (!option || option.text === `${team} Team:`) return;
-  socket.emit('change_formation', { formation: option.text, team });
+  const formation = select.options[select.selectedIndex].text;
+  if (formation !== `${team} Team:`) {
+    socket.emit('change_formation', { formation, team });
+  }
 }
 
 function resetBoard() {
@@ -250,11 +241,10 @@ socket.on('formations_list', (formations) => {
 });
 
 socket.on('player_selected', (data) => {
-  if (data && data.team && (data.team === 'red' || data.team === 'blue' || data.team === 'ball')) {
+  if (data && typeof data.team !== 'undefined' && data.team !== null) {
     state.dragging = true;
     state.selectedPlayer = data;
-    const rect = canvas.getBoundingClientRect();
-    state.lastMousePos = { x: 0, y: 0 };
+    state.lastMousePos = { x: 0, y: 0 }; // Reset last position
   } else {
     state.dragging = false;
     state.selectedPlayer = null;

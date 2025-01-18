@@ -25,7 +25,6 @@ show_triangle2 = False
 show_lines = False # Added to track line visibility
 team_visibility = {'blue': True, 'red': True}
 player_numbers = {'blue': [i for i in range(1, 12)], 'red': [i for i in range(1, 12)]}
-line_points = []
 
 @app.route('/')
 def home():
@@ -312,10 +311,4 @@ def toggle_shapes():
 if __name__ == '__main__':
   os.environ['SDL_VIDEODRIVER'] = 'dummy'
   pygame.init()
-  port = 3000
-  while True:
-    try:
-      socketio.run(app, host='0.0.0.0', port=port, allow_unsafe_werkzeug=True, debug=False)
-      break
-    except OSError:
-      port = 3001 if port == 3000 else 3000
+  socketio.run(app, host='0.0.0.0', port=80, allow_unsafe_werkzeug=True)
