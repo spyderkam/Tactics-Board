@@ -11,7 +11,7 @@
 
 🎯 **Interactive Field**
 - Drag-and-drop players with smooth animations
-- Multiple formation presets
+- Multiple formation presets (4-3-3, 4-4-2, 4-2-3-1, etc.)
 - Team visibility controls
 
 🎨 **Drawing Tools**
