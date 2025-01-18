@@ -70,8 +70,6 @@ function handleMouseMove(e) {
   if (now - lastEmitTime < EMIT_THROTTLE) return;
   lastEmitTime = now;
   
-  requestAnimationFrame(() => {
-  
   const rect = canvas.getBoundingClientRect();
   const scaleX = canvas.width / rect.width;
   const scaleY = canvas.height / rect.height;
@@ -244,13 +242,13 @@ socket.on('formations_list', (formations) => {
 });
 
 socket.on('player_selected', (data) => {
-  if (data && data.team) {
+  if (data && data.team && (data.team === 'red' || data.team === 'blue' || data.team === 'ball')) {
     state.dragging = true;
     state.selectedPlayer = data;
     const rect = canvas.getBoundingClientRect();
     state.lastMousePos = {
-      x: (rect.width / 2),
-      y: (rect.height / 2)
+      x: (e.clientX - rect.left) * scaleX,
+      y: (e.clientY - rect.top) * scaleY
     };
   } else {
     state.dragging = false;
