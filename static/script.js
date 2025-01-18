@@ -151,10 +151,9 @@ function stopTool() {
 // Formation management
 function changeFormation(team) {
   const select = document.getElementById(`${team}FormationSelect`);
-  if (!select) return;
-  const selectedOption = select.options[select.selectedIndex];
-  if (selectedOption && selectedOption.text && selectedOption.text !== `${team} Team:`) {
-    socket.emit('change_formation', { formation: selectedOption.text, team });
+  const formation = select.options[select.selectedIndex].text;
+  if (formation !== `${team} Team:`) {
+    socket.emit('change_formation', { formation, team });
   }
 }
 
@@ -269,15 +268,6 @@ function toggleRedTeam() {
 
 function toggleShapes() {
   socket.emit('toggle_shapes');
-}
-
-// Formation management
-function changeFormation(team) {
-  const select = document.getElementById(`${team}FormationSelect`);
-  const formation = select?.options?.[select.selectedIndex]?.text;
-  if (formation && formation !== `${team} Team:`) {
-    socket.emit('change_formation', { formation, team });
-  }
 }
 
 // Initialize formations
