@@ -270,5 +270,14 @@ function toggleShapes() {
   socket.emit('toggle_shapes');
 }
 
+// Formation management
+function changeFormation(team) {
+  const select = document.getElementById(`${team}FormationSelect`);
+  const formation = select?.options?.[select.selectedIndex]?.text;
+  if (formation && formation !== `${team} Team:`) {
+    socket.emit('change_formation', { formation, team });
+  }
+}
+
 // Initialize formations
 socket.emit('get_formations');
