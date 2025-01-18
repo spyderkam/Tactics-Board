@@ -25,6 +25,7 @@ show_triangle2 = False
 show_lines = False # Added to track line visibility
 team_visibility = {'blue': True, 'red': True}
 player_numbers = {'blue': [i for i in range(1, 12)], 'red': [i for i in range(1, 12)]}
+line_points = []
 
 @app.route('/')
 def home():
