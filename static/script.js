@@ -64,7 +64,7 @@ let lastEmitTime = 0;
 const EMIT_THROTTLE = 1000 / 60; // 60fps
 
 function handleMouseMove(e) {
-  if (!state.dragging || !state.selectedPlayer || !state.selectedPlayer.team) return;
+  if (!state.dragging || !state.selectedPlayer) return;
   
   const now = Date.now();
   if (now - lastEmitTime < EMIT_THROTTLE) return;
@@ -241,14 +241,19 @@ socket.on('formations_list', (formations) => {
 });
 
 socket.on('player_selected', (data) => {
-  if (data && typeof data.team !== 'undefined' && data.team !== null) {
-    if (!state.tools.triangle && !state.tools.triangle2 && !state.tools.lines) {
-      state.dragging = true;
-      state.selectedPlayer = data;
-      state.lastMousePos = { x: 0, y: 0 }; // Reset last position
+  if (data && data.team) {
+    state.dragging = true;
+    state.selectedPlayer = data;
+    state.lastMousePos = { x: 0, y: 0 };
+    
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    
+    if (state.tools.triangle || state.tools.triangle2 || state.tools.lines) {
+      state.dragging = false;
     }
-  }
-  if (!data || data.team === undefined || data.team === null) {
+  } else {
     state.dragging = false;
     state.selectedPlayer = null;
   }
