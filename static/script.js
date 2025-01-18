@@ -69,6 +69,14 @@ function handleMouseMove(e) {
   const now = Date.now();
   if (now - lastEmitTime < EMIT_THROTTLE) return;
   lastEmitTime = now;
+
+  let clientX = e.clientX;
+  let clientY = e.clientY;
+  
+  if (e.touches && e.touches[0]) {
+    clientX = e.touches[0].clientX;
+    clientY = e.touches[0].clientY;
+  }
   
   const rect = canvas.getBoundingClientRect();
   const scaleX = canvas.width / rect.width;
@@ -246,12 +254,7 @@ socket.on('player_selected', (data) => {
     state.dragging = true;
     state.selectedPlayer = data;
     const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    state.lastMousePos = {
-      x: (event.clientX - rect.left) * scaleX,
-      y: (event.clientY - rect.top) * scaleY
-    };
+    state.lastMousePos = { x: 0, y: 0 };
   } else {
     state.dragging = false;
     state.selectedPlayer = null;
