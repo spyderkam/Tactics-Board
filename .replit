@@ -5,7 +5,7 @@ modules = ["python-3.10", "flask"]
 
 audio = true
 
-hidden = [".pythonlibs"]
+hidden = [".pythonlibs", "generated-icon.png"]
 
 [nix]
 channel = "stable-23_05"
