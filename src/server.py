@@ -14,8 +14,8 @@ import json
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 socketio = SocketIO(app)
 
-# Read the HTML file
-with open('tactics_board.html', 'r', encoding='utf-8') as file:
+# Read the HTML file (note the path relative to the current file...)
+with open('src/tactics_board.html', 'r', encoding='utf-8') as file:
   HTML_TEMPLATE = file.read()
 
 show_numbers = False

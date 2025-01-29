@@ -1,5 +1,5 @@
 
-entrypoint = "server.py"
+entrypoint = "src/server.py"
 
 modules = ["python-3.10", "flask"]
 
